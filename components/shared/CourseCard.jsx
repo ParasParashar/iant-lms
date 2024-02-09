@@ -18,7 +18,7 @@ const CourseCard = ({ title, img_Url, category, id }) => {
   };
 
   return (
-    <Card className="flex flex-col justify-between">
+    <Card className="flex flex-col justify-between  hover:shadow-lg  ">
       <CardHeader className="flex justify-center">
         <div className="relative h-40 w-full object-cover">
           <Image
