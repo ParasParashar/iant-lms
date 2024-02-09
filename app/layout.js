@@ -23,9 +23,9 @@ export default function RootLayout({ children }) {
           disableTransitionOnChange
         >
           <div className="flex flex-col gap-y-3">
-            <div className="flex flex-col lg:px-40">
+            <div className="flex flex-col md:px-40 px-10">
               <Navbar />
-              <main className="pt-[90px] min-h-screen ">{children}</main>
+              <main className="mt-[65px] min-h-screen  max-sm:px-[20px]">{children}</main>
             </div>
             <Footer />
           </div>
