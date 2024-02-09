@@ -16,6 +16,8 @@ const page = () => {
     <div>
       {pathName.courseId}
       <article>
+        this isa agodo
+        bgklsdjflksjdflsjdfl;jsadl;fjasl;jfl;sdjflsjdl;fjsdl;fjl;sdjfl;jasdl;fjl;sdfjl;sdjfl;sjdfl;jsdlfjsl;dfjl;sdjfl;sajdfl;jsadl;fjl;sadjfl;sjdfl;sjdfljsdl;fjsl;djfjsldjfs
         {result?.map((item) => (
           <div>{item.title}</div>
         ))}

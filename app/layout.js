@@ -25,7 +25,9 @@ export default function RootLayout({ children }) {
           <div className="flex flex-col gap-y-3">
             <div className="flex flex-col md:px-40 px-10">
               <Navbar />
-              <main className="mt-[65px] min-h-screen  max-sm:px-[20px]">{children}</main>
+              <main className="mt-[65px] min-h-screen  max-sm:px-[20px]">
+                {children}
+              </main>
             </div>
             <Footer />
           </div>

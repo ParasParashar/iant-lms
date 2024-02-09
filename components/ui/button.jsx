@@ -22,14 +22,14 @@ const buttonVariants = cva(
           "bg-blue-400/90 text-secondary-foreground hover:bg-secondary",
 
         myAccessBtn:
-          "bg-blue-400/90 text-secondary-foreground hover:bg-blue-600",
+          "bg-blue-400/90 text-secondary-foreground hover:bg-blue-600 hover:text-white",
       },
       size: {
         default: "h-10 px-4 py-2",
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
-        icon2: "h-5 w-5 rounded-full",
+        icon2: "h-7 w-7 rounded-full",
       },
     },
     defaultVariants: {
