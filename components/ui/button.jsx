@@ -20,6 +20,9 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         accessButton:
           "bg-blue-400/90 text-secondary-foreground hover:bg-secondary",
+
+        myAccessBtn:
+          "bg-blue-400/90 text-secondary-foreground hover:bg-blue-600",
       },
       size: {
         default: "h-10 px-4 py-2",
