@@ -15,7 +15,7 @@ const ProfileButton = () => {
       <DropdownMenu>
         <DropdownMenuTrigger>
           <div className=" flex flex-col leading-none items-center justify-center px-2 pt-[2px]">
-            <div className="relative rounded-full w-[25px] h-[25px] border border-black items-center justify-center flex">
+            <div className="relative rounded-full w-[25px] h-[25px] items-center justify-center flex">
               <Image
                 src={"/profileimg.jpg"}
                 fill

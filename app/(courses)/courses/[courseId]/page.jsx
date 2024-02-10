@@ -13,11 +13,10 @@ const page = () => {
     setResult(result);
   }, [pathName.courseId]);
   return (
-    <div>
+    <div className=" bg-zinc-100 w-full h-full dark:bg-[#121832c8]">
       {pathName.courseId}
       <article>
         this isa agodo
-        bgklsdjflksjdflsjdfl;jsadl;fjasl;jfl;sdjflsjdl;fjsdl;fjl;sdjfl;jasdl;fjl;sdfjl;sdjfl;sjdfl;jsdlfjsl;dfjl;sdjfl;sajdfl;jsadl;fjl;sadjfl;sjdfl;sjdfljsdl;fjsl;djfjsldjfs
         {result?.map((item) => (
           <div>{item.title}</div>
         ))}

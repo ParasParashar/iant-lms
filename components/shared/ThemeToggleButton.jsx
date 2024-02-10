@@ -11,6 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 
 export function ThemeToggleButton() {
   const { setTheme } = useTheme();
@@ -19,9 +20,14 @@ export function ThemeToggleButton() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="icon2" className="rounded-full">
-          <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" style={{color:'3a3884'}}/>
-          <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" style={{color:'3a3884'}}/>
-          <span className="sr-only">Toggle theme</span>
+          <Sun
+            className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
+            style={{ color: "3a3884" }}
+          />
+          <Moon
+            className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
+            style={{ color: "3a3884" }}
+          />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="mt-5">
