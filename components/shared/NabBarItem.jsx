@@ -17,13 +17,15 @@ const NavBarItem = ({ href, name, icon: Icon }) => {
           size={23}
           className={cn(
             "text-[#a3a1e3] group-hover:text-black",
-            isActive && "text-[#221f56] group-hover:text-[#221f56]"
+            isActive &&
+              "text-[#221f56] group-hover:text-[#221f56] dark:text-white dark:group-hover:text-white"
           )}
         />
         <span
           className={cn(
             "text-[11px] font-semibold leading-none p-[2px] group-hover:text-black  text-zinc-500 max-sm:hidden",
-            isActive && "text-[#221f56] group-hover:text-[#221f56]"
+            isActive &&
+              "text-[#221f56] group-hover:text-[#221f56] dark:text-white  dark:group-hover:text-white"
           )}
         >
           {name}

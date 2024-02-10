@@ -5,6 +5,6 @@ export function getAllCourses() {
 }
 
 export function getParticularCourse(id) {
-  const data = courses.filter((item) => item.id === Number(id));
+  const data = courses.find((item) => item.id === Number(id));
   return data;
 }
