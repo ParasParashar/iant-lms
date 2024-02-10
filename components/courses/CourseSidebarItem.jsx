@@ -27,9 +27,9 @@ export const CourseSidebarItem = ({
       onClick={onClick}
       type="button"
       className={cn(
-        "flex items-center group gap-x-2 text-gray-500 dark:text-gray-300 text-sm font-[500] pl-6 transition-all hover:text-slate-800 hover:bg-slate-300 dark:hover:bg-secondary",
+        "flex items-center group gap-x-2 text-gray-500 dark:text-gray-300 text-sm font-[500] pl-6 transition-all hover:text-slate-800 hover:bg-slate-300 dark:hover:bg-secondary duration-200",
         isActive &&
-          "text-slate-900 bg-gray-800/20 hover:bg-slate-200/20 hover:text-slate-700 "
+          "text-slate-900 bg-sky-800/20 hover:bg-sky-800/20 hover:text-slate-700 "
       )}
     >
       <div className="flex items-center gap-x-2 py-4">
@@ -37,7 +37,7 @@ export const CourseSidebarItem = ({
           size={22}
           className={cn(
             "text-slate-500 group-hover:text-slate-700 dark:group-hover:text-white ",
-            isActive && "text-slate-700 "
+            isActive && "text-slate-white dark:text-white "
           )}
         />
         {label}

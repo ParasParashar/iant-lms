@@ -7,7 +7,7 @@ const CourseSidebar = ({ course }) => {
         <h1 className="font-semibold">{course.title}</h1>
       </div>
       <div className="flex flex-col w-full">
-        {course.chapters.map((chapter) => (
+        {course?.chapters?.map((chapter) => (
           <CourseSidebarItem
             key={chapter.id}
             id={chapter.id}
