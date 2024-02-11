@@ -18,6 +18,7 @@ const ChapterContent = ({ chapterDetails }) => {
       <h3 className="text-xl font-bold text-muted-foreground">
         {chapterDetails.description}
       </h3>
+      {/* course video */}
       <ChapterVideo src={chapterDetails.videoUrl} />
       {/* course attachment */}
       <Button variant="coursePage" size="lg" className="w-full">

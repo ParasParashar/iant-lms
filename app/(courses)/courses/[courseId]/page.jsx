@@ -6,7 +6,7 @@ const page = ({ params }) => {
   const result = getParticularCourse(params.courseId);
   return (
     <div className=" p-5 w-full flex  justify-center">
-      <article className="flex flex-col gap-2 md:gap-5 fixed  p-2 px-5 ">
+      <article className="flex flex-col gap-2 md:gap-5 fixed  p-6   rounded-lg  bg-sky-100/70 dark:bg-secondary shadow-lg">
         <h1 className="text-center font-extrabold text-xl text-muted-foreground">
           Course Overview
         </h1>
