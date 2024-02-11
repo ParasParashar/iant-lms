@@ -40,7 +40,7 @@ const page = ({ params }) => {
             Number of Chapters:
           </span>
           <p className="md:text-3xl text-2xl max-sm:text-[14px] font-bold font-serif text-gray-800 dark:text-gray-200">
-            {result?.chapters?.length}
+            {result?.chapters?.length || "Chapters will publish soon"}
           </p>
         </div>
         <div className="flex items-center flex-col">

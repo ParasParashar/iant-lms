@@ -9,10 +9,10 @@ const CourseLayout = ({ children, params }) => {
       <div className="h-[80px] md:pl-44 fixed inset-y-0 w-full z-50">
         <CourseHeader course={course} />
       </div>
-      <div className="hidden md:flex h-full w-74 flex-col fixed inset-y-0 z-50">
+      <div className="hidden md:flex h-full w-64  flex-col fixed inset-y-0 z-50">
         <CourseSidebar course={course} />
       </div>
-      <main className="md:pl-44 mt-[80px]  bg-zinc-100 h-full  dark:bg-[#121832c8]">
+      <main className="md:pl-64 w mt-[80px]  bg-zinc-100 h-full  dark:bg-[#121832c8]">
         {children}
       </main>
     </div>
