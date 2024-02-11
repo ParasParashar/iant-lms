@@ -5,7 +5,7 @@ import { courses } from "@/lib/Courses";
 const CourseLayout = ({ children, params }) => {
   const course = courses.find((item) => item.id === +params.courseId);
   return (
-    <div className="h-full overflow-y-auto">
+    <div className="h-full overflow-y-auto main-scrollbar">
       <div className="h-[80px] md:pl-44 fixed inset-y-0 w-full z-50">
         <CourseHeader course={course} />
       </div>

@@ -1,11 +1,14 @@
 import { getParticularCourse } from "@/actions/courses";
+import { purchaseCourse } from "@/actions/user.actions";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
-const page = ({ params }) => {
+const page = async ({ params }) => {
   const result = getParticularCourse(params.courseId);
+  const accessCourse = await purchaseCourse({ courseId: params.courseId });
+
   return (
-    <div className=" p-5 w-full flex  justify-center">
+    <form action={accessCourse} className=" p-5 w-full flex  justify-center">
       <article className="flex flex-col gap-2 md:gap-5 fixed  p-6   rounded-lg  bg-sky-100/70 dark:bg-secondary shadow-lg">
         <h1 className="text-center font-extrabold text-xl text-muted-foreground">
           Course Overview
@@ -49,15 +52,11 @@ const page = ({ params }) => {
             discussion feature to get your query solve.
           </p>
         </div>
-        <Button variant="myAccessBtn" className="text-lg ">
+        <Button type="submit" variant="myAccessBtn" className="text-lg ">
           Access
         </Button>
-
-        {/* <span className="text-[12px] md:text-lg text-muted-foreground dark:text-gray-500 font-light">
-          Click the button to access the course.
-        </span> */}
       </article>
-    </div>
+    </form>
   );
 };
 

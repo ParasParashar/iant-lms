@@ -9,7 +9,7 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="p-5 bg-slate-100 shadow-inner shadow-slate-400 w-full flex justify-between sm:p-10 max-[450px]: gap-3 ">
+    <footer className="p-5 bg-slate-100 shadow-inner shadow-slate-400 dark:shadow-neutral-500 w-full flex justify-between sm:p-10 max-[450px]: gap-3 dark:bg-secondary ">
       <div>
         <p className="text-[28px] max-[400px]:text-[20px] text-blue-900 max-[500px]:text-[24px]">
           Stay in touch

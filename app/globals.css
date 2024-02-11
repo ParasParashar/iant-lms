@@ -83,3 +83,21 @@ height: 100%;
     @apply bg-background text-foreground;
   }
 }
+/* notes content sidebar */
+.custom-scrollbar::-webkit-scrollbar{
+  background-color: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-track{
+  background-color: transparent;
+}
+
+/* main group sidebar */
+.main-scrollbar::-webkit-scrollbar{
+  background-color: transparent;
+}
+.main-scrollbar::-webkit-scrollbar-track{
+  background-color: transparent;
+}
+.main-scrollbar::-webkit-scrollbar-thumb{
+  @apply bg-gray-400/60 rounded-lg transition-all duration-200  hover:bg-gray-400/70 dark:bg-gray-700/60 dark:hover:bg-gray-700
+}

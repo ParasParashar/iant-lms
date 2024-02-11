@@ -1,5 +1,4 @@
 "use client";
-import { PiSignOutBold } from "react-icons/pi";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,7 +10,6 @@ import {
 import { IoMdArrowDropdown } from "react-icons/io";
 import Image from "next/image";
 import { SignOutButton, useUser } from "@clerk/nextjs";
-import { Button } from "../ui/button";
 
 const ProfileButton = () => {
   const { user } = useUser();
@@ -43,12 +41,7 @@ const ProfileButton = () => {
           <DropdownMenuItem>Team</DropdownMenuItem>
           <DropdownMenuItem>Subscription</DropdownMenuItem>
           <DropdownMenuItem>
-            <SignOutButton>
-              <>
-                <PiSignOutBold className=" text-muted-foreground mr-3" />
-                <p className="text-muted-foreground">Logout</p>
-              </>
-            </SignOutButton>
+            <SignOutButton />
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
