@@ -15,3 +15,8 @@ export function getSpecificChapter({ courseId, chapterId }) {
     .chapters.find((chapter) => chapter.id === +chapterId);
   return chapterData;
 }
+
+// getting courses categary
+export function getCourseCategary() {
+  return courseCategary;
+}
