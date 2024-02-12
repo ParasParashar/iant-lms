@@ -25,9 +25,9 @@ const page = async ({ params }) => {
   return (
     <form
       action={handleCourseAccess}
-      className=" p-5 w-full flex  justify-center"
+      className=" px-5 py-3 w-full flex  justify-center"
     >
-      <article className="flex flex-col gap-2 md:gap-5 fixed  p-6   rounded-lg  bg-sky-100/70 dark:bg-secondary shadow-lg">
+      <article className="flex flex-col gap-2 md:gap-5 fixed  px-6 py-2  rounded-lg  bg-sky-100/70 dark:bg-[#020617] shadow-lg">
         <h1 className="text-center font-extrabold text-xl text-muted-foreground">
           Course Overview
         </h1>

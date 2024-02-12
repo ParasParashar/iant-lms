@@ -18,7 +18,7 @@ const CourseCard = ({ title, img_Url, category, id }) => {
   };
 
   return (
-    <Card className="flex flex-col gap-4 justify-between hover:shadow-lg  ">
+    <Card className="flex flex-col gap-3 justify-between hover:shadow-lg  ">
       <CardHeader>
         <div className="relative h-64 w-80% object-cover overflow-hidden md:h-48 lg:h-60 ">
           <Image
@@ -43,12 +43,11 @@ const CourseCard = ({ title, img_Url, category, id }) => {
         <CardTitle className=" text-black/70 dark:text-white">
           {title}
         </CardTitle>
-
-        <span className="text-secondary-foreground px rounded-lg mt-1 bg-blue-500">
+        <span className="text-secondary-foreground text-sm rounded-lg mt-1 bg-blue-500">
           {category}
         </span>
       </CardContent>
-      <CardFooter className="bg-secondary p-4">
+      <CardFooter className=" bg-slate-300/80 dark:bg-secondary p-4">
         {/* here we use accessButton variant in button you can customise it in button.tsx component. */}
         <Button className="ml-auto" variant="myAccessBtn" onClick={handleClick}>
           Enroll

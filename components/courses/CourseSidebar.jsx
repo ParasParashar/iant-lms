@@ -10,6 +10,8 @@ const CourseSidebar = async ({ course }) => {
   const userEnrolled = await userEnrolledInCourse(course.id);
   const userCompleteChapter = await userChapterCompletion(course.id);
   const { completionPercentage } = await courseCompletionData(course.id);
+
+  console.log(userCompleteChapter);
   return (
     <aside className="h-full  flex flex-col overflow-y-auto  shadow-gray-800/40  bg-sky-100  dark:bg-slate-950 ">
       <div className=" p-5  flex flex-col  justify-start gap-y-5  ">
@@ -18,7 +20,8 @@ const CourseSidebar = async ({ course }) => {
       </div>
       <div className="flex flex-col w-full">
         {course?.chapters?.map((chapter) => {
-          const isCompleted = userCompleteChapter.includes(chapter.id);
+          const isCompleted = userCompleteChapter?.includes(chapter.id);
+
           return (
             <CourseSidebarItem
               key={chapter.id}
