@@ -1,44 +1,56 @@
 "use client";
 
-import { CheckCircle, Lock, PlayCircle } from "lucide-react";
+import { IoIosCheckmarkCircle } from "react-icons/io";
+import { Lock, PlayCircle } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 
-export const CourseSidebarItem = ({ label, id, isCompleted, courseId }) => {
+export const CourseSidebarItem = ({
+  label,
+  id,
+  isCompleted,
+  courseId,
+  isLock,
+}) => {
   const pathname = usePathname();
   const router = useRouter();
 
-  const Icon = isCompleted ? CheckCircle : PlayCircle;
+  const Icon = !isLock ? Lock : isCompleted ? IoIosCheckmarkCircle : PlayCircle;
   const isActive = pathname?.includes(id);
 
   const onClick = () => {
+    if (!isLock) return;
     router.push(`/courses/${courseId}/chapters/${id}`);
   };
 
   return (
     <button
+      disabled={!isLock}
       onClick={onClick}
       type="button"
       className={cn(
-        "flex items-center group gap-x-2 text-gray-500 dark:text-gray-300 text-sm font-[500] pl-6 transition-all hover:text-slate-800 hover:bg-slate-300 dark:hover:bg-secondary duration-200",
-        isActive &&
-          "text-slate-900 bg-sky-800/20 hover:bg-sky-800/20 hover:text-slate-700 "
+        "flex relative items-center gap-x-2 text-sm font-semibold pl-6 py-4 hover:bg-secondary",
+        isActive
+          ? " dark:text-secondary-foreground bg-sky-800/20 rounded-r-lg"
+          : "text-gray-500 dark:text-gray-300",
+        !isLock && "text-red-500 dark:text-red-500/80 cursor-not-allowed",
+        isCompleted && "text-blue-500 dark:text-blue-300"
       )}
     >
-      <div className="flex items-center gap-x-2 py-4">
-        <Icon
-          size={22}
-          className={cn(
-            "text-slate-500 group-hover:text-slate-700 dark:group-hover:text-white ",
-            isActive && "text-slate-white dark:text-white "
-          )}
-        />
-        {label}
-      </div>
+      <Icon
+        size={22}
+        className={cn(
+          "text-slate-500 dark:text-gray-100",
+          isActive && "text-slate-white",
+          !isLock && "text-red-500 dark:text-rose-500",
+          isCompleted && "text-blue-500 dark:text-blue-300"
+        )}
+      />
+      {label}
       <div
         className={cn(
-          "ml-auto opacity-0 border-2 border-slate-700 h-full transition-all",
+          "ml-auto absolute right-0 p-1 top-0  opacity-0 border-r-[5px] rounded-lg border-slate-700 h-full transition-all",
           isActive && "opacity-100"
         )}
       />

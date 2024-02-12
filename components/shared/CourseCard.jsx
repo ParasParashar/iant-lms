@@ -18,7 +18,7 @@ const CourseCard = ({ title, img_Url, category, id }) => {
   };
 
   return (
-    <Card className="flex flex-col gap-4 justify-between hover:shadow-lg hover:shadow-blue-600  ">
+    <Card className="flex flex-col gap-4 justify-between hover:shadow-lg  ">
       <CardHeader>
         <div className="relative h-64 w-80% object-cover overflow-hidden md:h-48 lg:h-60 ">
           <Image
@@ -28,6 +28,14 @@ const CourseCard = ({ title, img_Url, category, id }) => {
             className="rounded-md object-fill  "
           />
         </div>
+        {/* <div className="relative  aspect-square">
+          <Image
+            src={img_Url}
+            alt={title}
+            fill
+            className="rounded-md object-fill  "
+          />
+        </div> */}
       </CardHeader>
       <CardContent className="flex flex-col justify-center">
         {/* to customise the size of  image only edit below div don't add any class to image tag  */}
@@ -36,9 +44,9 @@ const CourseCard = ({ title, img_Url, category, id }) => {
           {title}
         </CardTitle>
 
-        <h3 className="text-secondary-foreground mt-1 bg-blue-500">
+        <span className="text-secondary-foreground px rounded-lg mt-1 bg-blue-500">
           {category}
-        </h3>
+        </span>
       </CardContent>
       <CardFooter className="bg-secondary p-4">
         {/* here we use accessButton variant in button you can customise it in button.tsx component. */}
