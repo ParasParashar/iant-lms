@@ -6,7 +6,7 @@ const CourseLayout = async ({ children, params }) => {
   const course = await getParticularCourse(params.courseId);
   return (
     <div className="h-full overflow-y-auto main-scrollbar">
-      <div className="h-[80px] md:pl-44 fixed inset-y-0 w-full z-50">
+      <div className="h-[80px] md:pl-64 fixed inset-y-0 w-full z-50">
         {/* not able to pass data directly from server to client component */}
         <CourseHeader course={JSON.parse(JSON.stringify(course))} />
       </div>
