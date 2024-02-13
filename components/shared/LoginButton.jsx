@@ -13,7 +13,11 @@ const LoginButton = () => {
     return (
       <>
         <SignInButton>
-          <Button size={"lg"} className="text-lg ">
+          <Button
+            variant="ghost"
+            size={"lg"}
+            className="text-lg border-2 border-white "
+          >
             <AiOutlineLogin className="mr-3 " />
             Login to continue.
           </Button>

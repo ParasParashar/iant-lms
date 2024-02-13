@@ -1,4 +1,4 @@
-import { getParticularCourse } from "@/actions/courses";
+import { getParticularCourse } from "@/actions/course.actions";
 import {
   courseCompletionData,
   enrollCourse,
@@ -9,35 +9,43 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
 const page = async ({ params }) => {
-  const result = getParticularCourse(params.courseId);
+  const result = await getParticularCourse(params.courseId);
+
   async function handleCourseAccess() {
     "use server";
     await enrollCourse({ courseId: params.courseId });
   }
-  const isUserEnrolled = await userEnrolledInCourse(+params.courseId); //convering params to number
+  const isUserEnrolled = await userEnrolledInCourse(params.courseId);
   const {
     notCompletedChapters,
     completionPercentage,
     totalChapter,
     completedChapters,
-  } = await courseCompletionData(+params.courseId);
+  } = await courseCompletionData(params.courseId);
+  // handle the fallback ui
+  if (!result) {
+    return (
+      <main className="p-30 text-center text-xl text-muted-foreground">
+        Course Not Found
+      </main>
+    );
+  }
 
   return (
     <form
       action={handleCourseAccess}
-      className=" px-5 py-3 w-full flex  justify-center"
+      className=" px-5 py-3 w-full  flex  justify-center"
     >
-      <article className="flex flex-col gap-2 md:gap-5 fixed  px-6 py-2  rounded-lg  bg-sky-100/70 dark:bg-[#020617] shadow-lg">
+      <article className="flex flex-col gap-2 md:gap-5 xl:w-[700px] fixed lg:py-4  px-6 py-2  rounded-lg  bg-sky-100/70 dark:bg-[#020617] shadow-lg">
         <h1 className="text-center font-extrabold text-xl text-muted-foreground">
           Course Overview
         </h1>
-        <div className="relative w-60 h-60 md:w-60 md:h-60">
+        <div className="relative mx-auto  w-60 h-60 md:w-60 md:h-60">
           <Image
             alt="Course Image"
-            src={result.img_Url}
+            src={result?.img_Url}
             fill
-            objectFit="cover"
-            className="rounded-md shadow-lg"
+            className="rounded-md object-fill shadow-lg"
           />
         </div>
         <div className="flex items-center gap-x-4">
@@ -45,7 +53,7 @@ const page = async ({ params }) => {
             Course Name:
           </span>
           <p className="md:text-3xl text-2xl max-sm:text-[14px] font-bold font-serif text-gray-800 dark:text-gray-200">
-            {result.title}
+            {result?.title}
           </p>
         </div>
         <div className="flex items-center gap-x-4">
@@ -53,7 +61,7 @@ const page = async ({ params }) => {
             Category:
           </span>
           <p className="md:text-3xl text-2xl max-sm:text-[14px] font-bold font-serif text-gray-800 dark:text-gray-200">
-            {result.categery}
+            {result?.category}
           </p>
         </div>
 
@@ -89,7 +97,7 @@ const page = async ({ params }) => {
           <ContinueLearningButton
             courseId={params.courseId}
             completionPercentage={completionPercentage}
-            chapters={notCompletedChapters}
+            chapters={JSON.parse(JSON.stringify(notCompletedChapters))}
           />
         ) : (
           <Button type="submit" variant="myAccessBtn" className="text-lg ">

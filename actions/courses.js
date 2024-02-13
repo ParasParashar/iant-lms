@@ -1,7 +1,17 @@
 import { courses } from "@/lib/Courses";
+import Course from "@/lib/models/course.model";
 //get all courses
-export function getAllCourses() {
-  return courses;
+export async function getAllCourses() {
+  try {
+    connectToDb();
+    const courses = await Course.find(
+      {},
+      { title: 1, img_Url: 1, category: 1 }
+    );
+    return courses;
+  } catch (error) {
+    console.log("error getting all courses", error);
+  }
 }
 // get specific course
 export function getParticularCourse(id) {

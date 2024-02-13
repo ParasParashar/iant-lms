@@ -3,9 +3,9 @@
 import User from "@/lib/models/user.model";
 import { connectToDb } from "@/lib/mongoose";
 import { currentUser } from "@clerk/nextjs";
-import { getParticularCourse } from "./courses";
 import { revalidatePath } from "next/cache";
 import Courseprogress from "@/lib/models/courseprogress.model";
+import { getParticularCourse } from "./course.actions";
 //  find or create user;
 export async function findOrCreateUser() {
   try {
@@ -19,7 +19,7 @@ export async function findOrCreateUser() {
     });
     if (!existingUser) {
       const createUser = await User.create({
-        name: user.fullname || user.name,
+        name: user.firstName,
         email: user.emailAddresses[0]?.emailAddress,
         authId: user.id,
       });
@@ -35,34 +35,31 @@ export async function findOrCreateUser() {
 export async function enrollCourse({ courseId }) {
   try {
     connectToDb();
-    const isCourseValid = getParticularCourse(courseId); //checking course is valid
-    if (!isCourseValid) return "Course not valid";
+
+    // getting user details
     const user = await findOrCreateUser();
     if (!user) return "user not found";
-    // courseData in which user enrolled
-    const courseData = {
-      courseId: isCourseValid?.id,
-      courseName: isCourseValid?.title,
-    };
+
+    // getting specific data  of particular chapter
+    const { _id, chapters } = await getParticularCourse(courseId);
+    if (!_id) return "Course not valid";
+
     // checking user is already enrolled in course
-    const userEnrolled = user.enrolledCourses.some(
-      (course) => course.courseId === courseData.courseId
-    );
+    const userEnrolled = user.enrolledCourses.includes(_id);
     if (!userEnrolled) {
       // if not add the course.
-      user.enrolledCourses.push(courseData);
+      user.enrolledCourses.push(_id);
       await user.save();
       // creating user Progress of  a course
       const userProgress = new Courseprogress({
         userId: user.id,
-        courseId: courseData.courseId,
-        chapterProgress: isCourseValid.chapters.map((chapter) => ({
-          chapterId: chapter.id,
+        courseId: _id,
+        chapterProgress: chapters.map((chapter) => ({
+          chapterId: chapter._id,
         })),
       });
       await userProgress.save();
     }
-
     revalidatePath(`/courses/${courseId}`);
   } catch (error) {
     console.log("Courses purchase error", error.message);
@@ -71,54 +68,47 @@ export async function enrollCourse({ courseId }) {
 
 // checking user enrolled in course
 export async function userEnrolledInCourse(courseId) {
-  const userCourses = await findOrCreateUser();
-  const userEnrolled = userCourses.enrolledCourses.some(
-    (item) => item.courseId === courseId
-  );
-  return userEnrolled;
-}
-
-// completing user chapter progress
-export async function markChapterProgress({ courseId, chapterId }) {
   try {
-    connectToDb();
-    const user = await findOrCreateUser();
-    const userProgress = await Courseprogress.findOne({
-      userId: user.id,
-      courseId,
-    });
-    const chapterIndex = userProgress.chapterProgress.findIndex(
-      (chapter) => chapter.chapterId === chapterId
-    );
-    if (chapterIndex !== -1) {
-      userProgress.chapterProgress[chapterIndex].isCompleted = true;
-      userProgress.save();
+    const userCourses = await findOrCreateUser();
+    if (!userCourses) {
+      throw new Error("User not found");
     }
-    revalidatePath(`/course/${courseId}/chapters/${chapterId}`);
+    const userEnrolled = userCourses.enrolledCourses.includes(courseId);
+    return userEnrolled;
   } catch (error) {
-    console.log("Course Progress error", error);
+    console.log("checking user enrolled course erro", error);
   }
 }
 
-// mark chapter as unComplete
-export async function markChapterUnComplete({ courseId, chapterId }) {
+// completing user chapter progress
+export async function markChapterProgress({ courseId, chapterId, type }) {
   try {
     connectToDb();
     const user = await findOrCreateUser();
+    if (!user) {
+      throw new Error("User not found");
+    }
     const userProgress = await Courseprogress.findOne({
       userId: user.id,
       courseId,
     });
     const chapterIndex = userProgress.chapterProgress.findIndex(
-      (chapter) => chapter.chapterId === chapterId
+      (chapter) =>
+        JSON.parse(JSON.stringify(chapter.chapterId)) ===
+        JSON.parse(JSON.stringify(chapterId))
     );
     if (chapterIndex !== -1) {
-      userProgress.chapterProgress[chapterIndex].isCompleted = false;
-      userProgress.save();
+      if (type === "complete") {
+        userProgress.chapterProgress[chapterIndex].isCompleted = true;
+        userProgress.save();
+      } else {
+        userProgress.chapterProgress[chapterIndex].isCompleted = false;
+        userProgress.save();
+      }
     }
     revalidatePath(`/course/${courseId}/chapters/${chapterId}`);
   } catch (error) {
-    console.log("Course Progress error", error);
+    console.log("Course Progress error", error.message);
   }
 }
 
@@ -126,13 +116,19 @@ export async function markChapterUnComplete({ courseId, chapterId }) {
 export async function checkingChapterProgress({ courseId, chapterId }) {
   try {
     connectToDb();
+    // getting user
     const user = await findOrCreateUser();
+    if (!user) {
+      throw new Error("User not found");
+    }
     const userProgress = await Courseprogress.findOne({
-      userId: user.id,
+      userId: user._id,
       courseId,
     }).select("chapterProgress");
     const chapterDetail = userProgress.chapterProgress.find(
-      (chapter) => chapter.chapterId === chapterId
+      (chapter) =>
+        JSON.parse(JSON.stringify(chapter.chapterId)) ===
+        JSON.parse(JSON.stringify(chapterId))
     );
     return chapterDetail.isCompleted;
   } catch (error) {
@@ -140,21 +136,27 @@ export async function checkingChapterProgress({ courseId, chapterId }) {
   }
 }
 
-// checking chapter completion
+// checking each chapter completion
 export async function userChapterCompletion(courseId) {
   try {
     connectToDb();
     const user = await findOrCreateUser();
+    if (!user) {
+      throw new Error("User not found");
+    }
+    // getting progress
     const userProgress = await Courseprogress.findOne({
-      userId: user.id,
+      userId: user._id,
       courseId,
-    });
-    const chapterCompletionIds = userProgress.chapterProgress
+    }).select("chapterProgress");
+    if (userProgress) return;
+    // getting only and convert to string
+    const chapterCompletionIds = userProgress?.chapterProgress
       .filter((course) => course.isCompleted)
       .map((item) => item.chapterId);
-    return chapterCompletionIds;
+    return JSON.parse(JSON.stringify(chapterCompletionIds));
   } catch (error) {
-    console.log("Course chapter completion check error", error);
+    console.log("Course chapter completion check error", error.message);
   }
 }
 
@@ -162,24 +164,33 @@ export async function userChapterCompletion(courseId) {
 export async function courseCompletionData(courseId) {
   try {
     connectToDb();
+    //getting user
     const user = await findOrCreateUser();
+    if (!user) {
+      throw new Error("User not found");
+    }
+    // getting user and course progress
     const courseProgress = await Courseprogress.findOne({
-      userId: user.id,
+      userId: user._id,
       courseId,
     });
-    const completedChapters = courseProgress.chapterProgress.filter(
+    // taking completed chapters length
+    const completedChapters = courseProgress?.chapterProgress.filter(
       (course) => course.isCompleted
     ).length;
-
-    const notCompletedChapters = courseProgress.chapterProgress
+    // taking chapter which are not completed
+    const notCompletedChapters = courseProgress?.chapterProgress
       .filter((course) => course.isCompleted === false)
       .map((item) => item.chapterId);
-
-    const totalChapter = courseProgress.chapterProgress.length;
-
-    const completionPercentage = Math.round(
+    // total Chapters
+    const totalChapter = courseProgress?.chapterProgress.length;
+    // completion percentage
+    let completionPercentage = Math.round(
       (completedChapters / totalChapter) * 100
     );
+    if (!courseProgress) {
+      return (completionPercentage = 0);
+    }
     return {
       completionPercentage,
       completedChapters,

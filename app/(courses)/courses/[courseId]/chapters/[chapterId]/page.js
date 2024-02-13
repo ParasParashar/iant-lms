@@ -1,4 +1,4 @@
-import { getSpecificChapter } from "@/actions/courses";
+import { getSpecificChapter } from "@/actions/course.actions";
 import {
   checkingChapterProgress,
   userEnrolledInCourse,
@@ -7,21 +7,26 @@ import ChapterContent from "@/components/courses/ChapterContent";
 import { redirect } from "next/navigation";
 
 const page = async ({ params }) => {
-  const chapterDetails = getSpecificChapter({
+  // checking user enrolled or not
+  const isUserEnrolled = await userEnrolledInCourse(params.courseId);
+  if (!isUserEnrolled) redirect("/courses");
+
+  // get specifc chapter
+  const chapterDetails = await getSpecificChapter({
     chapterId: params.chapterId,
     courseId: params.courseId,
   });
+
   //  checking chapter is completer or not
   const isChapterCompleted = await checkingChapterProgress({
-    chapterId: +params.chapterId, //using + to convert to number
-    courseId: +params.courseId,
+    chapterId: params.chapterId,
+    courseId: params.courseId,
   });
-  const isUserEnrolled = await userEnrolledInCourse(+params.courseId);
-  if (!isUserEnrolled) redirect("/courses");
+
   return (
     <main className="p-4">
       <ChapterContent
-        chapterDetails={chapterDetails}
+        chapterDetails={JSON.parse(JSON.stringify(chapterDetails))}
         courseId={params.courseId}
         isCompleted={isChapterCompleted}
       />
