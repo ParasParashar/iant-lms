@@ -43,7 +43,7 @@ const ChapterContent = ({ isCompleted, chapterDetails, courseId }) => {
   };
 
   return (
-    <section className="flex flex-col items-center md:items-start gap-3 w-full lg:w-3/5">
+    <section className="flex flex-col items-center md:items-start gap-3 w-full">
       <h3 className="text-xl font-bold text-muted-foreground">
         {chapterDetails.description || "Chapter not found"}
       </h3>

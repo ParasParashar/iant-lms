@@ -1,9 +1,11 @@
 import { getSpecificChapter } from "@/actions/course.actions";
+import { getUserCourseNote } from "@/actions/note.actions";
 import {
   checkingChapterProgress,
   userEnrolledInCourse,
 } from "@/actions/user.actions";
 import ChapterContent from "@/components/courses/ChapterContent";
+import { NoteEditor } from "@/components/notes/NoteEditor";
 import { redirect } from "next/navigation";
 
 const page = async ({ params }) => {
@@ -22,14 +24,25 @@ const page = async ({ params }) => {
     chapterId: params.chapterId,
     courseId: params.courseId,
   });
+  // getting notes of course
+  const courseNote = await getUserCourseNote({ courseId: params.courseId });
 
   return (
-    <main className="p-4">
-      <ChapterContent
-        chapterDetails={JSON.parse(JSON.stringify(chapterDetails))}
-        courseId={params.courseId}
-        isCompleted={isChapterCompleted}
-      />
+    <main className="p-4 flex flex-col lg:flex-row  gap-5">
+      <section className="w-full lg:w-3/5">
+        <ChapterContent
+          chapterDetails={JSON.parse(JSON.stringify(chapterDetails))}
+          courseId={params.courseId}
+          isCompleted={isChapterCompleted}
+        />
+      </section>
+      <section className="w-full lg:w-2/5 ">
+        <NoteEditor
+          courseId={params.courseId}
+          chapterId={params.chapterId}
+          defaultValue={courseNote?.content}
+        />
+      </section>
     </main>
   );
 };
