@@ -148,10 +148,10 @@ export async function userChapterCompletion(courseId) {
     const userProgress = await Courseprogress.findOne({
       userId: user._id,
       courseId,
-    }).select("chapterProgress");
-    if (userProgress) return;
+    });
+    if (!userProgress) return;
     // getting only and convert to string
-    const chapterCompletionIds = userProgress?.chapterProgress
+    const chapterCompletionIds = userProgress.chapterProgress
       .filter((course) => course.isCompleted)
       .map((item) => item.chapterId);
     return JSON.parse(JSON.stringify(chapterCompletionIds));

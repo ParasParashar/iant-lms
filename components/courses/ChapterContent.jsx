@@ -48,9 +48,9 @@ const ChapterContent = ({ isCompleted, chapterDetails, courseId }) => {
         {chapterDetails.description || "Chapter not found"}
       </h3>
       {/* Course video */}
-      <ChapterVideo src={chapterDetails.videoUrl} />
+      <ChapterVideo src={chapterDetails?.videoUrl} />
       {/* Course attachment */}
-      <div className="flex items-center w-full gap-x-4">
+      <div className="flex max-sm:flex-wrap items-center w-full gap-4">
         <Button variant="coursePage" size="lg" className="w-full">
           <Link
             href={chapterDetails.pdf}
