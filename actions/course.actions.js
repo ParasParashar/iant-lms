@@ -48,8 +48,8 @@ export async function getSpecificChapter({ courseId, chapterId }) {
 // get course category
 export async function getCourseCategory() {
   try {
-    const Courses = await getAllCourses();
-    const getCourseCategory = Courses.map((item) => item.category);
+    const courses = await getAllCourses();
+    const getCourseCategory = courses.map((item) => item.category);
     return getCourseCategory;
   } catch (error) {
     console.log("get course category error", error);

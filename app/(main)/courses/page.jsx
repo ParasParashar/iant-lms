@@ -2,11 +2,11 @@ import { getAllCourses, getCourseCategory } from "@/actions/course.actions";
 import { courseCompletionData, findOrCreateUser } from "@/actions/user.actions";
 import { Button } from "@/components/ui/button";
 import CourseCard from "@/components/shared/CourseCard";
+import CategoryBarItem from "@/components/shared/CategoryBarItem";
 
 export default async function Courses() {
   const data = await getAllCourses();
   const user = await findOrCreateUser();
-  console.log(user);
   // handle the ui if data is not present
 
   const courseCategoryArr = await getCourseCategory();
@@ -14,10 +14,9 @@ export default async function Courses() {
 
   return (
     <div className="flex flex-col gap-4">
-      <section className="flex gap-2 overflow-x-scroll whitespace-nowrap scroll-smooth">
-        <Button>All</Button>
+      <section className="flex gap-2 mt-4 overflow-x-auto w-full  flex-nowrap scroll-smooth custom-scrollbar  items-center ">
         {category.map((item) => (
-          <Button key="item">{item}</Button>
+          <CategoryBarItem item={item} />
         ))}
       </section>
       <main className=" grid max-sm:grid-cols-1 grid-cols-2 gap-3 md:grid-cols-3 ">

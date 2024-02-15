@@ -23,10 +23,18 @@ const CourseCard = ({ title, isEnrollred, img_Url, category, id, value }) => {
     // <Link href={`coursels/${id}`}>
     <Card
       onClick={handleClick}
-      className="flex flex-col justify-between hover:shadow-lg cursor-pointer  "
+      className="flex flex-col justify-between hover:shadow-lg cursor-pointer  group"
     >
       <CardHeader>
-        <div className="relative object-contain max-[500px]:h-48 sm:h-48 md:h-52 lg:h-56  aspect-video">
+        {/* <div className="relative object-contain max-[500px]:h-48 sm:h-48 md:h-52 lg:h-56  aspect-video">
+          <Image
+            src={img_Url}
+            alt={title}
+            fill
+            className="rounded-lg object-fill  "
+          />
+        </div> */}
+        <div className="relative aspect-square">
           <Image
             src={img_Url}
             alt={title}
@@ -37,7 +45,7 @@ const CourseCard = ({ title, isEnrollred, img_Url, category, id, value }) => {
       </CardHeader>
       <CardContent className="flex flex-col gap-1 justify-center">
         {/* to customise the size of  image only edit below div don't add any class to image tag  */}
-        <CardTitle className=" font-bold hover:underline text-lg text-black/70 dark:text-white">
+        <CardTitle className=" font-bold group-hover:underline text-lg text-black/70 dark:text-white">
           {title}
         </CardTitle>
         <span className="text-white px-3 max-w-[200px] min-w-[100px] text-xs rounded-lg  bg-blue-500">

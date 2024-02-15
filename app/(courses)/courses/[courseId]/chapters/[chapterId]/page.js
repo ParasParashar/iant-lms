@@ -4,7 +4,9 @@ import {
   checkingChapterProgress,
   userEnrolledInCourse,
 } from "@/actions/user.actions";
+import EditorSkeleton from "@/components/SkeletonLoaders/EditorSkeleton";
 import ChapterContent from "@/components/courses/ChapterContent";
+import CreateNotes from "@/components/courses/CreateNotes";
 import { NoteEditor } from "@/components/notes/NoteEditor";
 import { redirect } from "next/navigation";
 
@@ -37,10 +39,10 @@ const page = async ({ params }) => {
         />
       </section>
       <section className="w-full lg:w-2/5 ">
-        <NoteEditor
+        <CreateNotes
           courseId={params.courseId}
           chapterId={params.chapterId}
-          defaultValue={courseNote?.content}
+          data={JSON.parse(JSON.stringify(courseNote))}
         />
       </section>
     </main>

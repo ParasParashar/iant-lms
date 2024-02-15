@@ -67,8 +67,7 @@ const ChapterContent = ({ isCompleted, chapterDetails, courseId }) => {
           disabled={!chapterDetails || isLoading}
           type="button"
           variant="outline"
-          size="lg"
-          className="text-lg font-semibold"
+          className="text-lg font-[500] flex items-center justify-between w-full"
           onClick={
             isCompleted ? handleChapterUnComplete : handleChapterCompletion
           }
@@ -77,13 +76,13 @@ const ChapterContent = ({ isCompleted, chapterDetails, courseId }) => {
             <Loader className="animate-spin  text-muted-foreground" />
           ) : isCompleted ? (
             <>
-              <FaTimesCircle size={20} className="text-rose-500 mr-3" />
               Mark as Incomplete
+              <FaTimesCircle size={20} className="text-rose-500 " />
             </>
           ) : (
             <>
-              <FaCheckCircle size={20} className="text-blue-500 mr-3" />
               Mark as Complete
+              <FaCheckCircle size={20} className="text-blue-500" />
             </>
           )}
         </Button>
