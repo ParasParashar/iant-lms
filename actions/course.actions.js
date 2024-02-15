@@ -44,3 +44,14 @@ export async function getSpecificChapter({ courseId, chapterId }) {
     console.log("get specific chapter error", error.message);
   }
 }
+
+// get course category
+export async function getCourseCategory() {
+  try {
+    const Courses = await getAllCourses();
+    const getCourseCategory = Courses.map((item) => item.category);
+    return getCourseCategory;
+  } catch (error) {
+    console.log("get course category error", error);
+  }
+}
