@@ -2,14 +2,26 @@ import Course from "@/lib/models/course.model";
 import { connectToDb } from "@/lib/mongoose";
 
 //get all courses
-export async function getAllCourses() {
+export async function getAllCourses({ category }) {
   try {
     connectToDb();
-    const courses = await Course.find(
-      {},
-      { title: 1, img_Url: 1, category: 1 }
-    );
-    return courses;
+    if (category) {
+      const cateogoryCourses = await Course.find(
+        {
+          category: category,
+        },
+        { title: 1, img_Url: 1, category: 1 },
+        { sort: { title: 1 } }
+      );
+      return cateogoryCourses;
+    } else {
+      const courses = await Course.find(
+        {},
+        { title: 1, img_Url: 1, category: 1 },
+        { sort: { title: 1 } }
+      );
+      return courses;
+    }
   } catch (error) {
     console.log("error getting all courses", error.message);
   }
@@ -48,7 +60,11 @@ export async function getSpecificChapter({ courseId, chapterId }) {
 // get course category
 export async function getCourseCategory() {
   try {
-    const courses = await getAllCourses();
+    const courses = await Course.find(
+      {},
+      { category: 1 },
+      { sort: { category: 1 } }
+    );
     const getCourseCategory = courses.map((item) => item.category);
     return getCourseCategory;
   } catch (error) {
