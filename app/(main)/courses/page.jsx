@@ -4,6 +4,7 @@ import CourseCardSkeleton from "@/components/SkeletonLoaders/CourseCardSkeleton"
 // import CourseCard from "@/components/shared/CourseCard";
 import CategoryBarItem from "@/components/shared/CategoryBarItem";
 import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
 export default async function Courses({ searchParams }) {
   const user = await findOrCreateUser();
@@ -16,6 +17,7 @@ export default async function Courses({ searchParams }) {
 
   const CourseCard = dynamic(() => import("@/components/shared/CourseCard"), {
     loading: () => <CourseCardSkeleton />,
+    ssr: false,
   });
 
   return (
@@ -25,6 +27,7 @@ export default async function Courses({ searchParams }) {
           <CategoryBarItem key={item._id} item={item} />
         ))}
       </section>
+      {/* <Suspense fallback="loading....."> */}
       <main className=" grid max-sm:grid-cols-1 grid-cols-2 gap-3 md:grid-cols-3 ">
         {data?.map(async (item) => {
           const { completionPercentage } = await courseCompletionData(item._id);
@@ -42,6 +45,7 @@ export default async function Courses({ searchParams }) {
           );
         })}
       </main>
+      {/* </Suspense> */}
     </div>
   );
 }
