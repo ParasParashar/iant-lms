@@ -52,7 +52,7 @@ const page = async ({ params }) => {
           <span className="text-xl max-sm:text-[12px] font-semibold text-gray-600 dark:text-gray-300">
             Course Name:
           </span>
-          <p className="md:text-3xl text-2xl max-sm:text-[14px] font-bold font-serif text-gray-800 dark:text-gray-200">
+          <p className="md:text-2xl  max-sm:text-[14px] font-bold font-serif text-gray-800 dark:text-gray-200">
             {result?.title}
           </p>
         </div>
@@ -60,7 +60,7 @@ const page = async ({ params }) => {
           <span className="text-xl max-sm:text-[12px]  font-semibold text-gray-600 dark:text-gray-300">
             Category:
           </span>
-          <p className="md:text-3xl text-2xl max-sm:text-[14px] font-bold font-serif text-gray-800 dark:text-gray-200">
+          <p className="md:text-2xl  max-sm:text-[14px] font-bold font-serif text-gray-800 dark:text-gray-200">
             {result?.category}
           </p>
         </div>
@@ -71,7 +71,7 @@ const page = async ({ params }) => {
               <span className="text-xl max-sm:text-[12px]  font-semibold text-gray-600 dark:text-gray-300">
                 Number of Chapters:
               </span>
-              <p className="md:text-3xl text-2xl max-sm:text-[14px] font-bold font-serif text-gray-800 dark:text-gray-200">
+              <p className="md:text-2xl max-sm:text-[14px] font-bold font-serif text-gray-800 dark:text-gray-200">
                 {result?.chapters?.length || "Chapters will publish soon"}
               </p>
             </div>
@@ -87,7 +87,7 @@ const page = async ({ params }) => {
             <span className="text-xl max-sm:text-[12px]  font-semibold text-gray-600 dark:text-gray-300">
               Number of Completed:
             </span>
-            <p className="md:text-3xl text-2xl max-sm:text-[14px] font-bold font-serif text-gray-800 dark:text-gray-200">
+            <p className="md:text-2xl max-sm:text-[14px] font-bold font-serif text-gray-800 dark:text-gray-200">
               <span className="text-blue-500">{completedChapters}</span>/
               {totalChapter}
             </p>
