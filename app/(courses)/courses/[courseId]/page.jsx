@@ -64,7 +64,6 @@ const page = async ({ params }) => {
             {result?.category}
           </p>
         </div>
-
         {!isUserEnrolled ? (
           <>
             <div className="flex items-center gap-x-4">

@@ -76,3 +76,21 @@ export async function deleteCourseNote({ courseId, noteId, chapterId }) {
     throw new Error("notes find error");
   }
 }
+
+// display user notes
+export async function getAllUserNotes() {
+  try {
+
+    connectToDb();
+    const user = await findOrCreateUser();
+    console.log(user,"user")
+    if (!user) throw new Error("User not found");
+    const note = await Note.find({
+     userId:user._id
+    });
+    return note
+  } catch (error) {
+    console.log("notes find error", error.message);
+    throw new Error("notes find error");
+  }
+}
