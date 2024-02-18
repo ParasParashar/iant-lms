@@ -69,28 +69,60 @@ export async function deleteCourseNote({ courseId, noteId, chapterId }) {
       _id: noteId,
       courseId: courseId,
     });
-    console.log(note, "delete");
     revalidatePath(`/courses/${courseId}/chapters/${chapterId}`);
   } catch (error) {
-    console.log("notes find error", error.message);
-    throw new Error("notes find error");
+    console.log("notes delete error", error.message);
+    throw new Error("notes delete  error");
   }
 }
 
 // display user notes
 export async function getAllUserNotes() {
   try {
-
     connectToDb();
     const user = await findOrCreateUser();
-    console.log(user,"user")
     if (!user) throw new Error("User not found");
     const note = await Note.find({
-     userId:user._id
+      userId: user._id,
     });
-    return note
+    return note;
   } catch (error) {
-    console.log("notes find error", error.message);
-    throw new Error("notes find error");
+    console.log("user notes find error", error.message);
+    throw new Error("user notes find error");
+  }
+}
+// publish user note
+export async function publishUserNote({ noteId }) {
+  try {
+    connectToDb();
+    const user = await findOrCreateUser();
+    if (!user) throw new Error("User not found");
+    await Note.findByIdAndUpdate(
+      {
+        _id: noteId,
+      },
+      {
+        isPublished: true,
+      }
+    );
+    revalidatePath("/notes/mynotes");
+  } catch (error) {
+    console.log("user notes find error", error.message);
+    throw new Error("user notes find error");
+  }
+}
+// delete user note
+export async function deleteUserNote({ noteId }) {
+  try {
+    connectToDb();
+    const user = await findOrCreateUser();
+    if (!user) throw new Error("User not found");
+    await Note.findByIdAndDelete({
+      _id: noteId,
+    });
+    revalidatePath("/notes/mynotes");
+  } catch (error) {
+    console.log("user notes delete error", error.message);
+    throw new Error("user notes delete error");
   }
 }

@@ -56,7 +56,7 @@ const CreateNotes = ({ data, courseId, chapterId }) => {
             onClick={() => handleDeleteNote(item._id)}
             variant="ghost"
             size="icon2"
-            className="absolute  top-[-7px] left-[-8px]"
+            className="absolute  top-[-7px] left-[-1px]"
           >
             <CgCloseO size={25} className="text-red-500" />
           </Button>
