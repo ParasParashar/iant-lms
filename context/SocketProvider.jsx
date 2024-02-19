@@ -21,34 +21,9 @@
 //           userId: user.id,
 //         },
 //       });
-//       setSocket(socketData);
-//       console.log(socketData);
-//       // socket.on() is used to listen to the events. can be used both on client and server side
-//       // handling the online user event from the backend.
-//       socket.on("connect", () => {
-//         console.log("a user connected");
-//       });
-//       socket.on("getOnlineUsers", (users) => {
-//         setOnlineUsers(users);
-//       });
-//       return () => socket.close();
-//     } else {
-//       if (socket) {
-//         socket.close();
-//         setSocket(null);
-//       }
-//     }
-//   }, [user]);
-
-//   return (
-//     <SocketProvider.Provider value={{ socket, onlineUsers }}>
-//       {children}
-//     </SocketProvider.Provider>
-//   );
-// };
 "use client";
 import io from "socket.io-client";
-import { useUser } from "@clerk/nextjs";
+import { useAuth, useUser } from "@clerk/nextjs";
 import { createContext, useContext, useEffect, useState } from "react";
 
 const SocketProvider = createContext(null);
@@ -61,13 +36,12 @@ export const SocketContextProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState();
   const [isConnected, setIsConnected] = useState(false);
-  const { isSignedIn, user, isLoaded } = useUser();
-
+  const { userId } = useAuth();
   useEffect(() => {
-    if (user) {
+    if (userId) {
       const socketData = io(process.env.NEXT_PUBLIC_SERVER_URL, {
         query: {
-          userId: user.id,
+          userId: userId,
         },
       });
       // const socketInstance = io(process.env.NEXT_PUBLIC_SERVER_URL);
@@ -86,7 +60,7 @@ export const SocketContextProvider = ({ children }) => {
         socketData.disconnect();
       };
     }
-  }, [user]);
+  }, [userId]);
 
   return (
     <SocketProvider.Provider value={{ socket, onlineUsers, isConnected }}>

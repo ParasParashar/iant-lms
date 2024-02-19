@@ -2,7 +2,7 @@
 
 import User from "@/lib/models/user.model";
 import { connectToDb } from "@/lib/mongoose";
-import { currentUser } from "@clerk/nextjs";
+import { auth, currentUser } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
 import Courseprogress from "@/lib/models/courseprogress.model";
 import { getParticularCourse } from "./course.actions";
@@ -197,6 +197,29 @@ export async function courseCompletionData(courseId) {
       notCompletedChapters,
       totalChapter,
     };
+  } catch (error) {
+    console.log("Course overall completion check error", error);
+    return 0;
+  }
+}
+
+// search user by name
+
+export async function searchUserByName(search) {
+  try {
+    connectToDb();
+    const { userId } = auth();
+    const users = await User.find(
+      {
+        authId: { $ne: userId },
+      },
+      { name: 1, email: 1, authId: 1 }
+    );
+    // const result =
+    const result = users.filter((item) =>
+      item.name.toLowerCase().trim().includes(search.toLowerCase().trim())
+    );
+    return JSON.parse(JSON.stringify(result));
   } catch (error) {
     console.log("Course overall completion check error", error);
     return 0;

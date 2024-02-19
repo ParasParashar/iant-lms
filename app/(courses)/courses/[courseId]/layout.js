@@ -13,7 +13,7 @@ const CourseLayout = async ({ children, params }) => {
       <div className="hidden md:flex h-full w-64  flex-col fixed inset-y-0 z-50">
         <CourseSidebar course={JSON.parse(JSON.stringify(course))} />
       </div>
-      <main className="md:pl-64 w mt-[80px]  ">{children}</main>
+      <main className="md:pl-64  mt-[80px]  ">{children}</main>
     </div>
   );
 };
