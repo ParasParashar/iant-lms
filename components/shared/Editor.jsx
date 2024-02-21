@@ -18,7 +18,7 @@ const Editor = ({ content, handleContentChange, title, handleTitleChange }) => {
   return (
     <>
       <input
-        className="p-2 text-xl rounded-md bg-transparent border-[#cccccc] border outline-none"
+        className="p-2 w-full  text-xl rounded-md bg-transparent border-[#cccccc] border outline-none"
         value={title}
         onChange={handleTitleChange}
         placeholder="Enter your Title"
@@ -28,7 +28,7 @@ const Editor = ({ content, handleContentChange, title, handleTitleChange }) => {
         theme="snow"
         value={content}
         onChange={handleContentChange}
-        className="dark:text-white dark:bg-transparitent border-none outline-none custom-scrollbar pb-12  h-72 lg:h-[400px]"
+        className="dark:text-white dark:bg-transparitent border-none outline-none custom-scrollbar pb-12 h-72 lg:h-[400px] mainEditerHight"
       />
     </>
   );

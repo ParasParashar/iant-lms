@@ -86,7 +86,7 @@ height: 100%;
 /* notes content sidebar */
 .custom-scrollbar::-webkit-scrollbar{
   background-color: transparent;
-
+width: 0;
 }
 .custom-scrollbar::-webkit-scrollbar-track{
   background-color: transparent;
