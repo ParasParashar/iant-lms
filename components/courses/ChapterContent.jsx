@@ -51,7 +51,11 @@ const ChapterContent = ({ isCompleted, chapterDetails, courseId }) => {
       <ChapterVideo src={chapterDetails?.videoUrl} />
       {/* Course attachment */}
       <div className="flex max-sm:flex-wrap items-center w-full gap-4">
-        <Button variant="coursePage" size="lg" className="w-full">
+        <Button
+          variant="outline"
+          size="lg"
+          className="w-full bg-white dark:bg-[#020617] hover:bg-slate-200/70 dark:hover:bg-[#121832]"
+        >
           <Link
             href={chapterDetails.pdf}
             target="_blank"
@@ -67,7 +71,7 @@ const ChapterContent = ({ isCompleted, chapterDetails, courseId }) => {
           disabled={!chapterDetails || isLoading}
           type="button"
           variant="outline"
-          className="text-lg font-[500] flex items-center justify-between w-full"
+          className="text-lg font-[500] flex items-center justify-between w-full  bg-white dark:bg-[#020617] hover:bg-slate-200/70 dark:hover:bg-[#121832]"
           onClick={
             isCompleted ? handleChapterUnComplete : handleChapterCompletion
           }

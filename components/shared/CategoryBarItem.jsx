@@ -28,11 +28,10 @@ const CategoryBarItem = ({ item }) => {
   return (
     <Button
       onClick={debouncedHandleClick}
-      variant="category"
       size="sm"
-      key="item"
+      variant="outline"
       className={cn(
-        "rounded-full text-sm ",
+        "rounded-full text-sm  hover:out  bg-secondary text-muted-foreground hover:border-blue-400 border-collapse",
         isSelected &&
           " border-blue-600 hover:border-blue-600 text-black dark:text-white"
       )}

@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 const page = async () => {
   const user = await findOrCreateUser();
   if (!user) redirect("/");
-  return <div>this is a home route or a dashboard route.</div>;
+  return <h1>This is a dashboard</h1>;
 };
 
 export default page;

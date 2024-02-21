@@ -4,7 +4,6 @@ import CourseCardSkeleton from "@/components/SkeletonLoaders/CourseCardSkeleton"
 // import CourseCard from "@/components/shared/CourseCard";
 import CategoryBarItem from "@/components/shared/CategoryBarItem";
 import dynamic from "next/dynamic";
-import { Suspense } from "react";
 
 export default async function Courses({ searchParams }) {
   const user = await findOrCreateUser();
@@ -17,7 +16,6 @@ export default async function Courses({ searchParams }) {
 
   const CourseCard = dynamic(() => import("@/components/shared/CourseCard"), {
     loading: () => <CourseCardSkeleton />,
-    ssr: false,
   });
 
   return (

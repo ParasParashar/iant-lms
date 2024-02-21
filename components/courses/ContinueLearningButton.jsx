@@ -22,8 +22,7 @@ const ContinueLearningButton = ({
       <UserProgress value={completionPercentage} />
       <Button
         onClick={handleClick}
-        variant="myAccessBtn"
-        className="text-lg w-full flex items-center justify-center gap-x-6"
+        className="text-lg w-full flex  myAccessBtn items-center justify-center gap-x-6 hover:bg-blue-600"
       >
         <LuBookOpenCheck size={25} />
         Continue Learning

@@ -60,8 +60,7 @@ const CourseCard = ({ title, isEnrollred, img_Url, category, id, value }) => {
         ) : (
           <Button
             onClick={handleClick}
-            className=" w-full"
-            variant="myAccessBtn"
+            className=" w-full myAccessBtn hover:bg-blue-600"
           >
             Enroll
           </Button>

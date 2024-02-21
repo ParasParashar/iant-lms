@@ -99,7 +99,10 @@ const page = async ({ params }) => {
             chapters={JSON.parse(JSON.stringify(notCompletedChapters))}
           />
         ) : (
-          <Button type="submit" variant="myAccessBtn" className="text-lg ">
+          <Button
+            type="submit"
+            className="text-lg  myAccessBtn hover:bg-blue-600"
+          >
             Access
           </Button>
         )}
