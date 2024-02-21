@@ -9,14 +9,14 @@ const ChatCard = ({ conversation }) => {
   const params = useParams();
   // Check if the current user is the receiver
   const isReceiver = senderId._id === params.messageId;
-  const senderName = isReceiver ? receiverId?.name : "Me";
+  const senderName = isReceiver ? senderId?.name : "Me";
   return (
     <section
       className={cn(
         "flex gap-2 items-start p-2 rounded-lg min-w-[25%] shadow-lg max-w-[80%]",
         isReceiver
-          ? "bg-zinc-300 dark:bg-slate-700"
-          : "bg-zinc-200/90 dark:bg-slate-600/80"
+          ? "bg-sky-200 dark:bg-sky-950"
+          : "bg-zinc-200/90 dark:bg-slate-900"
       )}
     >
       <UserAvatar name={senderName} />

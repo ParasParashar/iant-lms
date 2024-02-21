@@ -12,7 +12,7 @@ const page = async ({ params }) => {
     receiverId: params.messageId,
   });
   return (
-    <main className="flex flex-col justify-between items-center mb-2  h-full w-full ">
+    <main className="flex px-2 lg:px-0 flex-col justify-around items-center w-full h-[90%]  ">
       <MessageHeader
         title={messageReceiver.name}
         email={messageReceiver.email}

@@ -5,15 +5,20 @@ import { Button } from "../ui/button";
 import { BiSolidMessageDetail } from "react-icons/bi";
 import SearchUsers from "./SearchUsers";
 import { getAllConversationsOfUser } from "@/actions/messages.actions";
+import { usePathname, useRouter } from "next/navigation";
+import UserSearchSkeleton from "../SkeletonLoaders/UserSearchSkeleton";
+import UserCard from "./UserCard";
+import CreateGroup from "./CreateGroup";
 import UserAvatar from "./UserAvatar";
-import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 const MessageSidebar = ({ data }) => {
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const pathName = usePathname();
   const [userConversations, setUserConversations] = useState(
     data ? [...data] : []
   );
-  const router = useRouter();
   useEffect(() => {
     async function getData() {
       try {
@@ -28,7 +33,7 @@ const MessageSidebar = ({ data }) => {
     getData();
   }, [data]);
   const handleClick = (id) => {
-    router.push(`/messages/${id}`);
+    router.push(`/messages/group/${id}`);
   };
 
   return (
@@ -36,42 +41,65 @@ const MessageSidebar = ({ data }) => {
       {/* Search bar */}
       <div className="flex items-center justify-between bg-slate-300/90 dark:bg-slate-700 h-14 rounded-lg px-2">
         <SearchUsers>
-          <Button variant="ghost" size="icon" className="rounded-full">
+          <Button variant="outline" size="icon" className="rounded-full">
             <BiSolidMessageDetail
               size={25}
               className="text-blue-500 rounded-full"
             />
           </Button>
         </SearchUsers>
-        <Button variant="outline" size="icon" className="rounded-full">
-          <HiUserGroup size={20} className="text-gray-500" />
-        </Button>
+        <CreateGroup>
+          <Button variant="outline" size="icon" className="rounded-full">
+            <HiUserGroup size={20} className="text-gray-500" />
+          </Button>
+        </CreateGroup>
       </div>
 
       {/* User conversations */}
       {loading ? (
-        <p className="text-sm text-muted-foreground flex items-center text-center justify-center h-[80%] p-2">
-          {Array.from({ length: 3 }, (_, index) => index + 1).map(
-            (item) => " Loading..."
-          )}
-        </p>
-      ) : userConversations && userConversations.length > 0 ? (
-        <div className="flex flex-col">
-          {userConversations.map((item) => (
-            <section
-              key={item._id}
-              onClick={() => handleClick(item._id)}
-              className="flex cursor-pointer rounded-sm items-center gap-2 border-b-2 border-slate-300 shadow-inner dark:border-slate-700 p-1 hover:bg-white dark:hover:bg-slate-600/80 hover:shadow-lg"
-            >
-              <UserAvatar name={item.name} />
-              <div className="flex flex-col p-1">
-                <p className="text-sm font-light">{item.name}</p>
-                <p className="text-xs font-light text-muted-foreground">
-                  {item.email}
-                </p>
-              </div>
-            </section>
+        <div className="flex flex-col gap-1  items-start  pt-1">
+          {Array.from({ length: 3 }, (_, index) => index + 1).map((item) => (
+            <UserSearchSkeleton key={item._id} />
           ))}
+        </div>
+      ) : userConversations && userConversations.length > 0 ? (
+        <div className="flex flex-col px-1 pt-2  gap-1 pb-4 overflow-y-auto h-full main-scrollbar">
+          {userConversations.map((item) => {
+            const isActive = pathName.includes(item._id);
+            console.log(item, "data");
+            if (item.users) {
+              return (
+                <UserCard
+                  key={item.users._id}
+                  id={item.users._id}
+                  name={item.users.name}
+                  email={item.users.email}
+                  isActive={isActive}
+                />
+              );
+            } else {
+              return (
+                <section
+                  key={item.group._id}
+                  onClick={() => handleClick(item.group._id)}
+                  className={cn(
+                    "flex cursor-pointer   group  rounded-lg items-center gap-2 border-b-2 border-slate-300 shadow-inner dark:border-slate-700 p-1 hover:bg-white dark:hover:bg-slate-600/80 hover:shadow-lg ",
+                    isActive && " bg-white dark:bg-slate-600/80  "
+                  )}
+                >
+                  <UserAvatar group name={item.group.name} />
+                  <p
+                    className={cn(
+                      "text-sm font-light uppercase group-hover:font-semibold",
+                      isActive && "font-semibold p-1"
+                    )}
+                  >
+                    {item.group.name}
+                  </p>
+                </section>
+              );
+            }
+          })}
         </div>
       ) : (
         <p className="text-sm text-muted-foreground flex items-center text-center justify-center h-[80%] p-2">

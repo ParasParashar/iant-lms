@@ -43,10 +43,10 @@ height: 100%;
   }
  
   .dark {
-    /* --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%; */
-    --background: 102.2 84% 4.9%;
-    --foreground: 20.3 40% 98%;
+    --background: 222.2 84% 4.9%;
+    /* --foreground: 210 40% 98%; */
+     /* --background: 102.2 84% 4.9%; */
+    --foreground: 20.3 40% 98%; 
  
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
