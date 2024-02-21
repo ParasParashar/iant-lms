@@ -7,6 +7,7 @@ import { findOrCreateUser } from "./user.actions";
 import Message from "@/lib/models/message.model";
 import Conversation from "@/lib/models/conversation.model";
 import { revalidatePath } from "next/cache";
+import Group from "@/lib/models/group.model";
 
 // getting online user details
 export async function getOnlineUsers(userIds) {
@@ -59,21 +60,29 @@ export async function createMessage({ receiverId, content }) {
       receiverId: receiver._id,
       content: content,
     });
-    // checking if a conversation between sender and receiver already exists
+    // getting user conversatoions.
     let conversation = await Conversation.findOne({
       participants: { $all: [sender._id, receiver._id] },
     });
-    // if note conversations exists
     if (!conversation) {
       conversation = await Conversation.create({
         participants: [sender._id, receiver._id],
       });
     }
     conversation.messages.push(message._id);
-    await conversation.save();
+    conversation.save();
+    // Populate sender and receiver information for the message
+    const populatedMessage = await Message.findById(message._id)
+      .populate("senderId", "_id name image authId")
+      .populate("receiverId", "_id name image authId");
+
     revalidatePath(`/messages/${receiverId}`);
+    return {
+      message: JSON.parse(JSON.stringify(populatedMessage)),
+      receiverAuthId: receiver.authId,
+    };
   } catch (error) {
-    console.log("message create error", error);
+    console.log("message create error", error.message);
   }
 }
 // getting user chats with other persons
@@ -97,6 +106,7 @@ export async function getPersonalConversations({ receiverId }) {
       populate: {
         path: "senderId receiverId",
         model: "User",
+        select: "_id name image",
       },
     });
 
@@ -109,8 +119,43 @@ export async function getPersonalConversations({ receiverId }) {
     console.log("message create error", error);
   }
 }
-// getting user all the conversations
+// ==========================creating group functionality
+export async function createGroup({ groupName, participants }) {
+  try {
+    connectToDb();
+    // console.log(...participants, "data of ");
+    const user = await findOrCreateUser();
+    if (!user) throw new Error("user not found");
+    // creating Group
+    const group = await Group.create({
+      name: groupName,
+      members: [
+        {
+          userId: user._id,
+          isAdmin: true,
+        },
+      ],
+    });
+    // pushing member in the group
+    for (let item of participants) {
+      group.members.push({ userId: item });
+      await group.save();
+    }
+    // getting or creating a conversation
+    participants.push(user._id);
 
+    let conversation = await Conversation.findOneAndUpdate(
+      { group: group._id },
+      { $addToSet: { participants: { $each: participants } } },
+      { upsert: true, new: true }
+    );
+    return conversation._id;
+  } catch (error) {
+    console.log("group creation error", error);
+  }
+}
+
+// getting user all the conversations
 export async function getAllConversationsOfUser() {
   try {
     connectToDb();
@@ -127,24 +172,43 @@ export async function getAllConversationsOfUser() {
         modle: "User",
         select: "name email authId _id image",
       })
-      .select("participants")
+      .populate({
+        path: "group",
+        model: "Group",
+        select: "name",
+      })
+      .select("participants group")
       .lean();
-
+    // if not conversation.
     if (!conversation) {
       return [];
     }
-    // filter out the all the participant who excluded sender or currentUser
-    const userChats = JSON.parse(
-      JSON.stringify(
-        conversation.map((conversation) =>
-          conversation.participants.find(
-            (user) => user._id.toString() !== sender._id.toString()
+    const formattedConversations = conversation?.map((conversation) => {
+      if (conversation.group) {
+        return {
+          group: {
+            _id: conversation._id,
+            name: conversation.group.name,
+          },
+        };
+      } else {
+        const users = conversation.participants
+          .filter(
+            (participant) =>
+              participant._id.toString() !== sender._id.toString()
           )
-        )
-      )
-    );
-    userChats;
-    return userChats;
+          .map((participant) => ({
+            _id: participant._id,
+            name: participant.name,
+            email: participant.email,
+          }));
+        return {
+          users: users.length > 0 ? users[0] : null,
+        };
+      }
+    });
+    return JSON.parse(JSON.stringify(formattedConversations));
+    // return userChats;
   } catch (error) {
     console.log("getting user conversations error", error);
   }

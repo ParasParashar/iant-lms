@@ -114,7 +114,7 @@ export const NoteEditor = ({
               disabled={isLoading || isDeleting}
             >
               {isDeleting ? (
-                <Loader className="text-red-500 animate-spin" />
+                <Loader className="text-red-500  animate-spin" />
               ) : (
                 <MdDelete size={20} className="text-red-500" />
               )}

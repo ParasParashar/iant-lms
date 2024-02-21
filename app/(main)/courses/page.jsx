@@ -1,7 +1,6 @@
 import { getAllCourses, getCourseCategory } from "@/actions/course.actions";
 import { courseCompletionData, findOrCreateUser } from "@/actions/user.actions";
 import CourseCardSkeleton from "@/components/SkeletonLoaders/CourseCardSkeleton";
-// import CourseCard from "@/components/shared/CourseCard";
 import CategoryBarItem from "@/components/shared/CategoryBarItem";
 import dynamic from "next/dynamic";
 

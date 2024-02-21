@@ -1,12 +1,11 @@
 "use client";
 import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { FaRegBookmark } from "react-icons/fa";
-import Preview from "../shared/Preview";
 import { NotePopover } from "./NotePopover";
 import { deleteUserNote, publishUserNote } from "@/actions/note.actions";
-import { cn } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 import Link from "next/link";
-const Notescard = ({ noteId, time, content, isPublished, title, myNote }) => {
+const Notescard = ({ noteId, time, content, isPublished, title, myNote,name }) => {
   const handlePublish = async (e) => {
     e.preventDefault();
     await publishUserNote({ noteId });
@@ -15,12 +14,12 @@ const Notescard = ({ noteId, time, content, isPublished, title, myNote }) => {
     e.preventDefault();
     await deleteUserNote({ noteId });
   };
-
+  const newtime =formatDate(time)
   return (
     <Link href={`/notes/${noteId}`}>
       <Card
         className={cn(
-          "w-[210px] h-[250px]  px-2 gap-2 flex flex-col py-1 ",
+          "w-full h-[220px]  px-2 gap-2 flex flex-col py-1 bg-[#e5e5fe]",
           isPublished && "bg-yellow-300/90"
         )}
       >
@@ -38,15 +37,16 @@ const Notescard = ({ noteId, time, content, isPublished, title, myNote }) => {
           </div>
         </CardHeader>
         <CardTitle className="m-0 mt-2">
-          <p className=" font-normal text-[20px]">{title}</p>
+          <p className=" font-normal text-[18px]">{title}</p>
         </CardTitle>
-        <div className=" cursor-pointer w-full h-[120px] overflow-hidden  truncate ">
-          <Preview value={content} />
+        <div className=" cursor-pointer w-full h-full overflow-hidden">
+          {/* <Preview value={content} className="text-[12px]" /> */}
+          <div dangerouslySetInnerHTML={{__html:content}} className="truncate text-[12px] text-wrap"/>
         </div>
         <CardFooter className="flex flex-col gap-2 items-start p-0 leading-none">
-          <div className="text-[16px]">By-alok singh</div>
+          <div className="text-[16px]">By-{name}</div>
           <div className=" text-[12px]">
-            {new Date(time).toLocaleDateString()}
+            {newtime}
           </div>
         </CardFooter>
       </Card>

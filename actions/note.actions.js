@@ -91,6 +91,27 @@ export async function getAllUserNotes() {
     throw new Error("user notes find error");
   }
 }
+
+// display public notes
+export async function getAllPublicNotes() {
+  try {
+    connectToDb();
+    const user = await findOrCreateUser();
+    if (!user) throw new Error("User not found");
+    const PublicNote = await Note.find({
+      isPublished:true
+    }).populate({
+      path:'userId',
+      model:'User',
+      select:'name _id  email'
+    });
+    return PublicNote;
+  } catch (error) {
+    console.log("user notes find error", error.message);
+    throw new Error("user notes find error");
+  }
+}
+
 // publish user note
 export async function publishUserNote({ noteId }) {
   try {

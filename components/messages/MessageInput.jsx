@@ -4,22 +4,25 @@ import { BiSolidSend } from "react-icons/bi";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { createMessage } from "@/actions/messages.actions";
+import { useSocket } from "@/context/SocketProvider";
 
 const MessageInput = ({ receiverId }) => {
   const [value, setValue] = useState("");
+  const { socket } = useSocket();
   const handleCreateMessage = async (e) => {
     e.preventDefault();
-    await createMessage({
+    const response = await createMessage({
       receiverId: receiverId,
       content: value,
     });
+    socket?.emit("newMessages", response);
     setValue("");
   };
 
   return (
     <form
       onSubmit={handleCreateMessage}
-      className="flex p-2   items-center w-full sticky bottom-2 right-0   bg-slate-300/90 dark:bg-slate-700 rounded-lg"
+      className="flex  p-0.5  items-center w-full   bg-slate-300/90 dark:bg-slate-700 rounded-lg"
     >
       <input
         value={value}

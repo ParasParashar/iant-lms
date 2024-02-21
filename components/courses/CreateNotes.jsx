@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { NoteEditor } from "../notes/NoteEditor";
 import { Button } from "../ui/button";
 import { PlusCircleIcon } from "lucide-react";
-import { CgCloseO } from "react-icons/cg";
+import { IoIosRemoveCircleOutline } from "react-icons/io";
 
 const CreateNotes = ({ data, courseId, chapterId }) => {
   const [notes, setNotes] = useState([...data]);
@@ -58,7 +58,10 @@ const CreateNotes = ({ data, courseId, chapterId }) => {
             size="icon2"
             className="absolute  top-[-7px] left-[-1px]"
           >
-            <CgCloseO size={25} className="text-red-500" />
+            <IoIosRemoveCircleOutline
+              size={30}
+              className="text-red-500 hover:text-red-700 "
+            />
           </Button>
         </section>
       ))}
