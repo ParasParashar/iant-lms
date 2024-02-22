@@ -107,3 +107,32 @@ body,
 .myAccessBtn {
   @apply bg-blue-500 text-white;
 }
+
+.notecardbg {
+  background-image: linear-gradient(to top, #6691c983 0%, #61aae27c 100%);
+}
+
+           
+           
+         
+.btn-grad {
+  background-image: linear-gradient(to right, #314755 0%, #26a0da  51%, #314755  100%);
+  transition: 1s;
+  background-size: 200% auto;
+  
+}
+
+.btn-grad:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+
+.notescardhover:hover{
+  transform: translateY(5px)  scale(1.01) translateZ(0) ;
+  
+  box-shadow: 0 6px 9px rgba(212, 194, 194, 0.11),
+    0 6px 12px rgba(2, 81, 134, 0.322);
+}
+ 
+  

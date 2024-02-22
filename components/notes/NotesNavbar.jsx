@@ -16,10 +16,10 @@ const NotesNavbar = () => {
       <div className="flex justify-center items-center gap-2">
         <MobileSearchBar>
         <div className="lg:hidden">
-        <IoSearch size={25} className='text-[#343080]' />
+        <IoSearch size={32} className='text-[#226eb4bb] hover:text-[#4d69b8] rounded-lg p-1 hover:bg-[#b7cffc] notescardhover' />
           </div>
           </MobileSearchBar>
-        <Link  href={"/notes/creates"}><IoCreateSharp size={25}  className="text-[#9670f8] hover:text-[#b09eff]"/></Link>
+        <Link  href={"/notes/creates"}><IoCreateSharp size={32}  className="text-[#226eb4bb] hover:text-[#4d69b8] rounded-lg p-1 hover:bg-[#b7cffc] notescardhover"/></Link>
       </div>
     </nav>
   );

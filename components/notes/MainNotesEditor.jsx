@@ -2,26 +2,19 @@
 import { useState } from "react"
 import BigEditor from "../shared/BigEditor"
 import { Button } from "../ui/button"
+import { createNote } from "@/actions/note.actions"
 
 const MainNotesEditor = () => {
-    const [title , setTitle]=useState("")
-    const [content , setContent]=useState("")
-    const handleTitleChange=(e)=>{
-        setTitle(e.target.value)
-    }
-    const handleContentChange=(e)=>{
-        setContent(e.target.value)
-    }
-    
-  
+
     return (
         <div className="flex flex-col items-center justify-center gap-1">
-            <Button className="text-lg bg-[#9670f8] w-full hover:bg-[#b09eff]">Save</Button>
+            <Button
+            className="text-lg btn-grad btn-grad:hover w-full">Save</Button>
             <BigEditor
-            Content={title}
-            HandleContentChange={handleContentChange}
-            Title={content}
-            HandleTitleChange={handleTitleChange}
+            // Content={content}
+            // HandleContentChange={handleContentChange}
+            // Title={title}
+            // HandleTitleChange={handleTitleChange}
             />
         </div>
     )

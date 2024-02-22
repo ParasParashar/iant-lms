@@ -18,7 +18,7 @@ const Editor = ({ content, handleContentChange, title, handleTitleChange }) => {
   return (
     <>
       <input
-        className="p-2 w-full  text-xl rounded-md bg-transparent border-[#cccccc] border outline-none"
+        className="p-2 text-xl rounded-md bg-transparent border-[#cccccc] border outline-none"
         value={title}
         onChange={handleTitleChange}
         placeholder="Enter your Title"

@@ -14,9 +14,9 @@ export function NotePopover({ isPublished, handlePublish, handleDeleteNote }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon2">
-          <HiDotsVertical size={20} />
-        </Button>
+        <div>
+          <HiDotsVertical size={25} className="rounded-lg p-1 hover:bg-[#90b7ff]" />
+        </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w">
         <DropdownMenuItem onClick={handlePublish}>
