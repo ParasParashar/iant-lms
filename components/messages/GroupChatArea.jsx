@@ -4,14 +4,14 @@ import { useEffect, useRef, useState } from "react";
 import ChatCard from "./ChatCard";
 import { useSocket } from "@/context/SocketProvider";
 
-const ChatArea = ({ userConversations }) => {
+const GroupChatArea = ({ groupConversation }) => {
   const { socket } = useSocket();
-  const [conversation, setConversation] = useState(userConversations);
+  const [conversation, setConversation] = useState(groupConversation);
   const messageRef = useRef(null);
   // setting the conversations.
   useEffect(() => {
-    setConversation(userConversations);
-  }, [userConversations]);
+    setConversation(groupConversation);
+  }, [groupConversation]);
 
   // handleing socket io message
   const handleNewMessage = (message) => {
@@ -20,11 +20,10 @@ const ChatArea = ({ userConversations }) => {
 
   // listen for receive-message event
   useEffect(() => {
-    socket?.on("receive-message", handleNewMessage);
-
+    socket?.on("receive-group-message", handleNewMessage);
     // cleanup event the istener
     return () => {
-      socket?.off("receive-message", handleNewMessage);
+      socket?.off("receive-group-message", handleNewMessage);
     };
   }, [socket]);
   // using useRef to scroll to bottom to the message.
@@ -44,4 +43,4 @@ const ChatArea = ({ userConversations }) => {
   );
 };
 
-export default ChatArea;
+export default GroupChatArea;

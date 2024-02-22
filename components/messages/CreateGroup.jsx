@@ -77,6 +77,7 @@ const CreateGroup = ({ children }) => {
       groupName: name,
       participants: selectUser.map((item) => item.userId),
     });
+    setSelectUser([]);
     router.push(`/messages/group/${routeId}`);
   };
 

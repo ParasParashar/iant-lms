@@ -1,32 +1,9 @@
-// "use client";
-// import io from "socket.io-client";
-// import { useUser } from "@clerk/nextjs";
-// import { createContext, useContext, useEffect, useState } from "react";
-
-// const SocketProvider = createContext(null);
-// // creating hook to use the context;
-// export const useSocket = () => {
-//   return useContext(SocketProvider);
-// };
-
-// export const SocketContextProvider = ({ children }) => {
-//   const [socket, setSocket] = useState(null);
-//   const [onlineUsers, setOnlineUsers] = useState();
-//   const { isSignedIn, user, isLoaded } = useUser();
-
-//   useEffect(() => {
-//     if (user) {
-//       const socketData = io(process.env.NEXT_PUBLIC_SERVER_URL, {
-//         query: {
-//           userId: user.id,
-//         },
-//       });
 "use client";
 import io from "socket.io-client";
-import { useAuth, useUser } from "@clerk/nextjs";
+import { useAuth } from "@clerk/nextjs";
 import { createContext, useContext, useEffect, useState } from "react";
 
-const SocketProvider = createContext(null);
+const SocketProvider = createContext({});
 // creating hook to use the context;
 export const useSocket = () => {
   return useContext(SocketProvider);
@@ -44,7 +21,6 @@ export const SocketContextProvider = ({ children }) => {
           userId: userId,
         },
       });
-      // const socketInstance = io(process.env.NEXT_PUBLIC_SERVER_URL);
       socketData.on("connect", () => {
         setIsConnected(true);
         socketData.on("getOnlineUsers", (users) => {
@@ -60,7 +36,7 @@ export const SocketContextProvider = ({ children }) => {
         socketData.disconnect();
       };
     }
-  }, [userId]);
+  }, []);
 
   return (
     <SocketProvider.Provider value={{ socket, onlineUsers, isConnected }}>

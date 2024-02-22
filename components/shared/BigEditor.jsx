@@ -4,11 +4,16 @@ import dynamic from "next/dynamic";
 import { useMemo } from "react";
 import EditorSkeleton from "../SkeletonLoaders/EditorSkeleton";
 
-const BigEditor = ({ Content, HandleContentChange, Title, HandleTitleChange }) => {
+const BigEditor = ({
+  Content,
+  HandleContentChange,
+  Title,
+  HandleTitleChange,
+}) => {
   // here i use useMemo and dynamic to load it only on a client side
   const ReactQuill = useMemo(
     () =>
-      dynamic(() => import("react-quill"),{
+      dynamic(() => import("react-quill"), {
         loading: () => <EditorSkeleton />,
         ssr: false,
       }),
@@ -33,4 +38,4 @@ const BigEditor = ({ Content, HandleContentChange, Title, HandleTitleChange }) =
   );
 };
 
-export default BigEditor
+export default BigEditor;

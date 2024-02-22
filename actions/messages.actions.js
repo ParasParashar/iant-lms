@@ -63,7 +63,9 @@ export async function createMessage({ receiverId, content }) {
     // getting user conversatoions.
     let conversation = await Conversation.findOne({
       participants: { $all: [sender._id, receiver._id] },
+      isForGroup: false,
     });
+
     if (!conversation) {
       conversation = await Conversation.create({
         participants: [sender._id, receiver._id],
@@ -101,6 +103,7 @@ export async function getPersonalConversations({ receiverId }) {
       participants: {
         $all: [sender._id, receiver._id],
       },
+      isForGroup: false,
     }).populate({
       path: "messages",
       populate: {
@@ -144,18 +147,22 @@ export async function createGroup({ groupName, participants }) {
     // getting or creating a conversation
     participants.push(user._id);
 
-    let conversation = await Conversation.findOneAndUpdate(
+    const conversation = await Conversation.findOneAndUpdate(
       { group: group._id },
-      { $addToSet: { participants: { $each: participants } } },
+      {
+        $addToSet: { participants: { $each: participants } },
+        isForGroup: true,
+      },
       { upsert: true, new: true }
     );
-    return conversation._id;
+
+    return JSON.parse(JSON.stringify(group._id));
   } catch (error) {
     console.log("group creation error", error);
   }
 }
 
-// getting user all the conversations
+// getting user all the conversations with personal and group chats
 export async function getAllConversationsOfUser() {
   try {
     connectToDb();
@@ -166,6 +173,7 @@ export async function getAllConversationsOfUser() {
     // find the conversatoins between sender and receiver
     const conversation = await Conversation.find({
       participants: { $in: sender._id },
+      // isForGroup: false,
     })
       .populate({
         path: "participants",
@@ -187,7 +195,7 @@ export async function getAllConversationsOfUser() {
       if (conversation.group) {
         return {
           group: {
-            _id: conversation._id,
+            _id: conversation.group._id,
             name: conversation.group.name,
           },
         };
@@ -211,5 +219,207 @@ export async function getAllConversationsOfUser() {
     // return userChats;
   } catch (error) {
     console.log("getting user conversations error", error);
+  }
+}
+// getting the information of the group
+export async function getGroupUsersInfo({ groupId }) {
+  try {
+    connectToDb();
+    const groupInfo = await Group.findById({
+      _id: groupId,
+    }).populate({
+      path: "members.userId",
+      model: "User",
+      select: "image name _id authId email",
+    });
+    return JSON.parse(JSON.stringify(groupInfo));
+  } catch (error) {
+    console.log("getting group info error", error);
+  }
+}
+
+// making other people admin
+export async function createAdminUser({ groupId, userId }) {
+  try {
+    connectToDb();
+    // finding the exists group and mebers
+    const updatedGroup = await Group.findOneAndUpdate(
+      {
+        _id: groupId,
+        "members.userId": userId,
+        "members.isAdmin": true, // Only update if the user is not already an admin
+      },
+      {
+        $set: { "members.$.isAdmin": true },
+      },
+      {
+        new: true,
+        upsert: false,
+      }
+    );
+    revalidatePath(`/messages/group/${groupId}`);
+  } catch (error) {
+    console.log("admin creation error", error);
+  }
+}
+// remove member from the group
+export async function removeMembersFromGroup({
+  groupId,
+  userId,
+  isAdmin = false,
+}) {
+  try {
+    connectToDb();
+    // finding the exists group and members
+    const updatedGroup = await Group.findOneAndUpdate(
+      {
+        _id: groupId,
+        "members.userId": userId,
+        "members.isAdmin": isAdmin,
+      },
+      {
+        $pull: { members: { userId: userId } },
+      },
+      {
+        new: true,
+      }
+    );
+    // delteting the conversation of user
+    const conversation = await Conversation.findOneAndUpdate(
+      {
+        group: groupId,
+        participants: userId,
+        isForGroup: true,
+      },
+      {
+        $pull: { participants: userId },
+      },
+      {
+        new: true,
+      }
+    );
+    // deleting user messages
+    await Message.deleteMany({
+      groupId: groupId,
+      senderId: userId,
+    });
+    revalidatePath(`/messages/group/${groupId}`);
+  } catch (error) {
+    console.log("member remove error", error);
+  }
+}
+
+// edit group Name
+export async function editGroupName({ groupId, newName }) {
+  try {
+    connectToDb();
+    // finding the exists group
+    await Group.findByIdAndUpdate(
+      {
+        _id: groupId,
+      },
+      {
+        name: newName,
+      },
+      {
+        new: true,
+      }
+    );
+    revalidatePath(`/messages/group/${groupId}`);
+  } catch (error) {
+    console.log("group name error", error);
+  }
+}
+
+// exit the group
+export async function exitTheGroup({ groupId }) {
+  try {
+    connectToDb();
+    // finding the exists user
+    const user = await findOrCreateUser();
+    if (!user._id) throw new Error("User not found");
+    await removeMembersFromGroup({
+      groupId: groupId,
+      userId: user?._id,
+      isAdmin: true,
+    });
+    revalidatePath(`/messages/group/${groupId}`);
+  } catch (error) {
+    console.log("group name error", error);
+  }
+}
+
+// delete the group
+export async function deleteGroup({ groupId }) {
+  try {
+    connectToDb();
+    // deleting all the group related stafs
+    const group = await Group.findByIdAndDelete({
+      _id: groupId,
+    });
+    const conversation = await Conversation.findOneAndDelete({
+      group: groupId,
+    });
+    const messages = await Message.findOneAndDelete({
+      groupId: groupId,
+    });
+    revalidatePath(`/messages`);
+  } catch (error) {
+    console.log("group name error", error.message);
+  }
+}
+
+//  creating group messages
+export async function createGroupMessage({ groupId, content }) {
+  try {
+    connectToDb();
+    const { _id } = await findOrCreateUser();
+    if (!_id) throw new Error("User not found");
+    // finding the group
+    const groupConversation = await Conversation.findOne({
+      group: groupId,
+      isForGroup: true,
+    });
+    if (!groupConversation) throw new Error("Something went wrong");
+    // creating the message
+    const message = await Message.create({
+      groupId: groupId,
+      content: content,
+      senderId: _id,
+    });
+    groupConversation.messages.push(message._id);
+    groupConversation.save();
+    // populating the group message
+    const populatedMessage = await Message.findById(message._id).populate(
+      "senderId",
+      "_id name image "
+    );
+
+    revalidatePath(`/messages/group/${groupId}`);
+    return JSON.parse(JSON.stringify(populatedMessage));
+  } catch (error) {
+    console.log("Group creation message", error.message);
+  }
+}
+
+// getting conversations of the group
+export async function getGroupConversation({ groupId }) {
+  try {
+    connectToDb();
+    const conversation = await Conversation.findOne({
+      group: groupId,
+      isForGroup: true,
+    }).populate({
+      path: "messages",
+      select: "senderId content groupId timestamp",
+      populate: {
+        path: "senderId",
+        model: "User",
+        select: "_id name image",
+      },
+    });
+    return JSON.parse(JSON.stringify(conversation.messages));
+  } catch (error) {
+    console.log("group conversation found error", error.message);
   }
 }

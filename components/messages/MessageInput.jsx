@@ -3,28 +3,37 @@
 import { BiSolidSend } from "react-icons/bi";
 import { Button } from "../ui/button";
 import { useState } from "react";
-import { createMessage } from "@/actions/messages.actions";
+import { createGroupMessage, createMessage } from "@/actions/messages.actions";
 import { useSocket } from "@/context/SocketProvider";
 
-const MessageInput = ({ receiverId }) => {
+const MessageInput = ({ receiverId, group, groupId }) => {
   const [value, setValue] = useState("");
   const { socket } = useSocket();
   const handleCreateMessage = async (e) => {
     e.preventDefault();
-    const response = await createMessage({
-      receiverId: receiverId,
-      content: value,
-    });
-    socket?.emit("newMessages", response);
+    if (group && groupId) {
+      const groupResponse = await createGroupMessage({
+        groupId: groupId,
+        content: value,
+      });
+      socket?.emit("groupMessages", groupResponse);
+    } else {
+      const response = await createMessage({
+        receiverId: receiverId,
+        content: value,
+      });
+      socket?.emit("newMessages", response);
+    }
     setValue("");
   };
 
   return (
     <form
       onSubmit={handleCreateMessage}
-      className="flex  p-0.5  items-center w-full   bg-slate-300/90 dark:bg-slate-700 rounded-lg"
+      className="flex sticky  bottom-0 right-0  p-0.5  items-center w-full   bg-slate-300  dark:bg-slate-700 rounded-lg"
     >
       <input
+        autoFocus
         value={value}
         onChange={(e) => setValue(e.target.value)}
         className="w-full font-light p-2 text-sm lg:text-lg bg-transparent outline-none border-none  rounded-l-full"

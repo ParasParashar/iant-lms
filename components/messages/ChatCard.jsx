@@ -13,7 +13,7 @@ const ChatCard = ({ conversation }) => {
   return (
     <section
       className={cn(
-        "flex gap-2 items-start p-2 rounded-lg min-w-[25%] shadow-lg max-w-[80%]",
+        "flex gap-2 items-start p-2 rounded-lg min-w-[30%] shadow-lg max-w-[80%]",
         isReceiver
           ? "bg-sky-200 dark:bg-sky-950"
           : "bg-zinc-200/90 dark:bg-slate-900"
@@ -25,7 +25,7 @@ const ChatCard = ({ conversation }) => {
           {senderName}
           <span className="text-[10px]">{formatDate(timestamp)}</span>
         </p>
-        <div className="text-sm font-light text-break break-words   text-ellipsis ">
+        <div className="text-sm font-light text-break break-words  text-ellipsis ">
           {content}
         </div>
       </div>

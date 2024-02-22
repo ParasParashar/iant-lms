@@ -65,9 +65,8 @@ const MessageSidebar = ({ data }) => {
       ) : userConversations && userConversations.length > 0 ? (
         <div className="flex flex-col px-1 pt-2  gap-1 pb-4 overflow-y-auto h-full main-scrollbar">
           {userConversations.map((item) => {
-            const isActive = pathName.includes(item._id);
-            console.log(item, "data");
             if (item.users) {
+              const isActive = pathName?.includes(item.users._id);
               return (
                 <UserCard
                   key={item.users._id}
@@ -78,6 +77,7 @@ const MessageSidebar = ({ data }) => {
                 />
               );
             } else {
+              const isActive = pathName?.includes(item.group._id);
               return (
                 <section
                   key={item.group._id}
@@ -90,7 +90,7 @@ const MessageSidebar = ({ data }) => {
                   <UserAvatar group name={item.group.name} />
                   <p
                     className={cn(
-                      "text-sm font-light uppercase group-hover:font-semibold",
+                      "text-sm font-light uppercase line-clamp-2 group-hover:font-semibold",
                       isActive && "font-semibold p-1"
                     )}
                   >
@@ -103,7 +103,7 @@ const MessageSidebar = ({ data }) => {
         </div>
       ) : (
         <p className="text-sm text-muted-foreground flex items-center text-center justify-center h-[80%] p-2">
-          Currently you don&apos;t have any previous Messages.
+          Currently you don&apos;t have any previous conversations.
         </p>
       )}
     </aside>

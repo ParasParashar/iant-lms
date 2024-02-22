@@ -1,3 +1,4 @@
+import MobileSidebar from "@/components/messages/MobileSidebar";
 import SearchUsers from "@/components/messages/SearchUsers";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -9,9 +10,12 @@ const page = () => {
       <section className="relative h-1/2 w-1/2">
         <Image src={"/chatImage.png"} alt="Chat Image" fill />
       </section>
-      <h3 className="text-lg font-mono text-muted-foreground">
-        Select a chat to start messaging.
-      </h3>
+      <div className="text-lg font-mono text-muted-foreground flex items-center">
+        <h4>Select a conversation to start messaging.</h4>
+        <div className="block lg:hidden">
+          <MobileSidebar />
+        </div>
+      </div>
       <SearchUsers>
         <Button
           variant="secondary"
