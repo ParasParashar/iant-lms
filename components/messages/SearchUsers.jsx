@@ -16,23 +16,29 @@ const SearchUsers = ({ children }) => {
   const [search, setSearch] = useState("");
   const [result, setResult] = useState([]);
   const router = useRouter();
-  // searchUser function
+
+  // Debounce search function
+  const debounceSearch = useDebounce(searchUser, 200);
+
+  // Handle search on input change
+  useEffect(() => {
+    if (search.trim() !== "") {
+      debounceSearch();
+    } else {
+      setResult([]);
+    }
+  }, [search]);
+
+  // Search user function
   async function searchUser() {
     const data = await searchUserByName(search);
     setResult(data);
   }
-  // using debounce to create latency in search
-  const debounce = useDebounce(searchUser, 200);
 
-  useEffect(() => {
-    debounce();
-  }, [search]);
-
-  const handleSearch = (e) => {
-    if (e.key === "Enter") {
-      if (result) {
-        router.push(`/messages/${result[0]._id}`);
-      }
+  // Handle search on Enter key press
+  const handleSearchKeyPress = (e) => {
+    if (e.key === "Enter" && result.length > 0) {
+      router.push(`/messages/${result[0]._id}`);
     }
   };
 
@@ -44,11 +50,11 @@ const SearchUsers = ({ children }) => {
           <DialogTitle>Search User</DialogTitle>
           <input
             autoFocus
-            className="w-full rounded-lg border-none outline-none text-lg p-1   bg-secondary "
+            className="w-full rounded-lg border-none outline-none text-lg p-1 bg-secondary"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search User"
-            onKeyDown={handleSearch}
+            onKeyDown={handleSearchKeyPress}
           />
           {result?.length > 0 ? (
             <div className="flex transition-all duration-300 ease-in-out  flex-col gap-2 mt-2 p-1">
@@ -62,7 +68,7 @@ const SearchUsers = ({ children }) => {
               ))}
             </div>
           ) : (
-            <p className="text-lg text-muted-foreground mt-4 text-center">
+            <p className="text-lg text-muted-foreground p-2 mt-4 text-center">
               No User Found
             </p>
           )}

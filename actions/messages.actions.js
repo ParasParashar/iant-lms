@@ -117,7 +117,9 @@ export async function getPersonalConversations({ receiverId }) {
       return [];
     }
 
-    return conversation.messages;
+    return JSON.parse(
+      JSON.stringify({ messages: conversation.messages, _id: conversation._id })
+    );
   } catch (error) {
     console.log("message create error", error);
   }
@@ -415,10 +417,79 @@ export async function getGroupConversation({ groupId }) {
       populate: {
         path: "senderId",
         model: "User",
-        select: "_id name image",
+        select: "_id name authId",
       },
     });
-    return JSON.parse(JSON.stringify(conversation.messages));
+    return JSON.parse(
+      JSON.stringify({ messages: conversation.messages, _id: conversation._id })
+    );
+  } catch (error) {
+    console.log("group conversation found error", error.message);
+  }
+}
+
+// adding member to group
+export async function addMemberToGroup({ groupId, members }) {
+  try {
+    connectToDb();
+    console.log(groupId);
+    const { _id } = await findOrCreateUser();
+    const group = await Group.findOne({
+      _id: groupId,
+      members: {
+        $elemMatch: {
+          userId: _id,
+          isAdmin: true,
+        },
+      },
+    });
+    const conversation = await Conversation.findOne({
+      group: groupId,
+      isForGroup: true,
+    });
+    if (!group || !conversation) throw new Error("Group not found");
+    for (const item of members) {
+      group.members.push({ userId: item });
+      conversation.participants.push(item);
+    }
+    await Promise.all([group.save(), conversation.save()]);
+  } catch (error) {
+    console.log("add group member error", error.message);
+  }
+}
+
+// delete conversation messages
+export async function deleteConversationMessages({
+  conversationId,
+  path,
+  isGroup = false,
+}) {
+  try {
+    connectToDb();
+    const conversation = await Conversation.findById({
+      _id: conversationId,
+    });
+    conversation.messages = [];
+    await conversation.save();
+    if (isGroup) {
+      revalidatePath(`/messages/group/${path}`);
+    } else {
+      revalidatePath(`/messages/${path}`);
+    }
+  } catch (error) {
+    console.log("group conversation found error", error.message);
+  }
+}
+// delete conversation completely for personal user
+export async function deletePersonalUserConversations({ receiverId }) {
+  try {
+    connectToDb();
+    const { _id } = await findOrCreateUser();
+    const conversation = await Conversation.findOneAndDelete({
+      participants: { $all: [_id, receiverId] },
+      isForGroup: false,
+    });
+    revalidatePath("/messages");
   } catch (error) {
     console.log("group conversation found error", error.message);
   }

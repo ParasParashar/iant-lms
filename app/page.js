@@ -1,7 +1,13 @@
-import LoginButton from "@/components/shared/LoginButton";
+// import LoginButton from "@/components/shared/LoginButton";
+import { Button } from "@/components/ui/button";
+import { SignInButton, auth } from "@clerk/nextjs";
 import Image from "next/image";
+import { redirect } from "next/navigation";
+import { AiOutlineLogin } from "react-icons/ai";
 
 const LoginPage = () => {
+  const { userId } = auth();
+  if (userId) redirect("/home");
   return (
     <>
       <main className=" w-screen h-full relative overflow-hidden m-auto ">
@@ -24,7 +30,19 @@ const LoginPage = () => {
                   Management System
                 </div>
                 <div>
-                  <LoginButton />
+                  {!userId && (
+                    <SignInButton>
+                      <Button
+                        variant="ghost"
+                        size={"lg"}
+                        className="text-lg border-2 border-white "
+                      >
+                        <AiOutlineLogin className="mr-3 " />
+                        Login to continue.
+                      </Button>
+                    </SignInButton>
+                  )}
+                  {/* <LoginButton /> */}
                 </div>
               </div>
               <div>

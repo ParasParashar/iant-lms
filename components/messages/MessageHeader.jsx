@@ -3,8 +3,9 @@
 import { useSocket } from "@/context/SocketProvider";
 import MobileSidebar from "./MobileSidebar";
 import UserAvatar from "./UserAvatar";
+import MessageHeaderPopover from "./MessageHeaderPopover";
 
-const MessageHeader = ({ title, email, authId, group }) => {
+const MessageHeader = ({ title, email, authId, group, path, converId }) => {
   const { onlineUsers } = useSocket();
   const onlineUser = onlineUsers?.includes(authId);
   return (
@@ -30,15 +31,16 @@ const MessageHeader = ({ title, email, authId, group }) => {
         </div>
       </div>
       {!group && (
-        <>
+        <div className="flex items-center gap-x-0.5">
           {onlineUser ? (
-            <p className="text-lg font-mono text-neutral-900/50 dark:text-white  animate-pulse">
+            <p className="text-lg font-mono  text-primary  animate-pulse">
               {onlineUser && "Online"}
             </p>
           ) : (
             <p className="text-sm text-muted-foreground ">Offline</p>
           )}
-        </>
+          <MessageHeaderPopover converId={converId} path={path} />
+        </div>
       )}
     </header>
   );

@@ -1,19 +1,23 @@
 "use client";
 
 import { cn, formatDate } from "@/lib/utils";
-import { useParams } from "next/navigation";
 import UserAvatar from "./UserAvatar";
+import { useAuth } from "@clerk/nextjs";
 
-const ChatCard = ({ conversation }) => {
+const ChatCard = ({ conversation, group }) => {
   const { senderId, receiverId, content, timestamp } = conversation;
-  const params = useParams();
-  // Check if the current user is the receiver
-  const isReceiver = senderId._id === params.messageId;
-  const senderName = isReceiver ? senderId?.name : "Me";
+  const { userId } = useAuth();
+  const isReceiver = senderId.authId === userId;
+  let senderName;
+  if (group) {
+    senderName = senderId?.name;
+  } else {
+    senderName = isReceiver ? senderId?.name : "Me";
+  }
   return (
     <section
       className={cn(
-        "flex gap-2 items-start p-2 rounded-lg min-w-[30%] shadow-lg max-w-[80%]",
+        "flex gap-2 items-start p-2 rounded-md min-w-[30%] shadow-lg max-w-[80%]",
         isReceiver
           ? "bg-sky-200 dark:bg-sky-950"
           : "bg-zinc-200/90 dark:bg-slate-900"

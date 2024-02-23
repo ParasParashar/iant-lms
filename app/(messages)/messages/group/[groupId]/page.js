@@ -6,6 +6,7 @@ import { findOrCreateUser } from "@/actions/user.actions";
 import GroupChatArea from "@/components/messages/GroupChatArea";
 import GroupUsersSidebar from "@/components/messages/GroupUsersSidebar";
 import MessageHeader from "@/components/messages/MessageHeader";
+import MessageHeaderPopover from "@/components/messages/MessageHeaderPopover";
 import MessageInput from "@/components/messages/MessageInput";
 import MobileGroupSidebar from "@/components/messages/MobileGroupSidebar";
 import { redirect } from "next/navigation";
@@ -32,14 +33,21 @@ const GroupPage = async ({ params }) => {
     <div className=" flex pb-3 w-full items-center h-full  gap-3">
       <main className="flex flex-col items-center w-full h-full rounded-lg bg-secondary">
         {/* group header */}
-        <header className="w-full rounded-lg flex justify-between items-center  bg-slate-300/90 dark:bg-slate-700 pr-1">
+        <header className="w-full rounded-lg flex  justify-between items-center  bg-slate-300/90 dark:bg-slate-700 pr-1">
           <MessageHeader title={groupInfo?.name} group />
-          <div className="block xl:hidden  ">
-            <MobileGroupSidebar id={params.groupId} />
+          <div className="flex gap-1 items-center">
+            <div className="block xl:hidden  ">
+              <MobileGroupSidebar id={params.groupId} />
+            </div>
+            <MessageHeaderPopover
+              converId={groupConversation._id}
+              path={params.groupId}
+              isGroup
+            />
           </div>
         </header>
         {/* group chat section */}
-        <GroupChatArea groupConversation={groupConversation} />
+        <GroupChatArea groupConversation={groupConversation.messages} />
         {/* group input section */}
         <MessageInput group groupId={params.groupId} />
       </main>

@@ -7,8 +7,10 @@ import { Button } from "../ui/button";
 import { ImExit } from "react-icons/im";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { ConfirmModel } from "../shared/ConfirmModel";
+import { MdPersonAddAlt1 } from "react-icons/md";
+import AddUsersToGroup from "./AddUserToGroup";
 
-const GroupSidebarAction = ({ groupId, isUserAdmin }) => {
+const GroupSidebarAction = ({ groupId, isUserAdmin, members, groupName }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -53,27 +55,44 @@ const GroupSidebarAction = ({ groupId, isUserAdmin }) => {
             loading && "opacity-50 cursor-not-allowed"
           }`}
         >
-          <ImExit size={18} className="text-rose-300" /> Exit group
+          <ImExit size={18} className="text-primary" /> Exit group
         </Button>
       </ConfirmModel>
       {isUserAdmin && (
-        <ConfirmModel
-          onConfirm={handleDeleteGroup}
-          message={
-            "This action will delete your group permanetly with all conversations of the group. "
-          }
-        >
-          <Button
-            variant="outline"
-            size="sm"
-            disabled={loading}
-            className={`flex justify-between hover:dark:border-muted-foreground items-center gap-x-1 w-full ${
-              loading && "opacity-50 cursor-not-allowed"
-            }`}
+        <>
+          <AddUsersToGroup
+            groupId={groupId}
+            groupName={groupName}
+            members={members}
           >
-            <RiDeleteBin5Fill size={18} className="text-red-500" /> Delete group
-          </Button>
-        </ConfirmModel>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={loading}
+              className={`flex justify-between hover:dark:border-muted-foreground items-center gap-x-1 w-full ${
+                loading && "opacity-50 cursor-not-allowed"
+              }`}
+            >
+              <MdPersonAddAlt1 size={18} className="text-sky-500" /> Add Members
+            </Button>
+          </AddUsersToGroup>
+          <ConfirmModel
+            onConfirm={handleDeleteGroup}
+            message={`This action will delete your group ${groupName} permanetly with all conversations of the group.`}
+          >
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={loading}
+              className={`flex justify-between hover:dark:border-muted-foreground items-center gap-x-1 w-full ${
+                loading && "opacity-50 cursor-not-allowed"
+              }`}
+            >
+              <RiDeleteBin5Fill size={18} className="text-red-500" /> Delete
+              group
+            </Button>
+          </ConfirmModel>
+        </>
       )}
     </footer>
   );

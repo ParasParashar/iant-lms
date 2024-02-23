@@ -49,7 +49,12 @@ const GroupUsersSidebar = async ({ id }) => {
         })}
       </section>
       {/* group actions */}
-      <GroupSidebarAction groupId={id} isUserAdmin={isUserAdmin} />
+      <GroupSidebarAction
+        groupName={name}
+        groupId={id}
+        isUserAdmin={isUserAdmin}
+        members={members.map((user) => user.userId._id)}
+      />
     </aside>
   );
 };

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import UserCardPopover from "./UserCardPopover";
 import { FaUser } from "react-icons/fa";
 import { useSocket } from "@/context/SocketProvider";
+import MessageHeaderPopover from "./MessageHeaderPopover";
 
 const UserCard = ({
   id,
@@ -15,6 +16,7 @@ const UserCard = ({
   group,
   isAdmin,
   isUserAdmin,
+  isForSidebar,
 }) => {
   const router = useRouter();
   const handleClick = () => {
@@ -70,6 +72,9 @@ const UserCard = ({
         </div>
       </div>
       {group && isUserAdmin && !isAdmin && <UserCardPopover userId={id} />}
+      {!group && isForSidebar && (
+        <MessageHeaderPopover receiverId={id} personal />
+      )}
     </section>
   );
 };

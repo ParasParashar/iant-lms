@@ -65,6 +65,7 @@ const MessageSidebar = ({ data }) => {
       ) : userConversations && userConversations.length > 0 ? (
         <div className="flex flex-col px-1 pt-2  gap-1 pb-4 overflow-y-auto h-full main-scrollbar">
           {userConversations.map((item) => {
+            // for users or personal
             if (item.users) {
               const isActive = pathName?.includes(item.users._id);
               return (
@@ -74,10 +75,12 @@ const MessageSidebar = ({ data }) => {
                   name={item.users.name}
                   email={item.users.email}
                   isActive={isActive}
+                  isForSidebar
                 />
               );
             } else {
               const isActive = pathName?.includes(item.group._id);
+              // for groups
               return (
                 <section
                   key={item.group._id}

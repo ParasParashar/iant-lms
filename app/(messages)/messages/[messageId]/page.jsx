@@ -23,10 +23,10 @@ const page = async ({ params }) => {
           title={messageReceiver.name}
           email={messageReceiver.email}
           authId={messageReceiver.authId}
+          converId={userConversations._id}
+          path={params.messageId}
         />
-        <ChatArea
-          userConversations={JSON.parse(JSON.stringify(userConversations))}
-        />
+        <ChatArea userConversations={userConversations.messages} />
         <MessageInput receiverId={params.messageId} />
       </main>
     </div>
