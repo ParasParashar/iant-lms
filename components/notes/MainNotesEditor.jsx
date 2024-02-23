@@ -25,6 +25,7 @@ const MainNotesEditor = ({ defaultTitle, defaultContent, type, noteId }) => {
         content: data.content,
         noteId: noteId,
       });
+      router.refresh();
       router.push(`/notes/${response}`);
     }
   };
