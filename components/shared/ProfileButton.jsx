@@ -10,9 +10,19 @@ import {
 import { IoMdArrowDropdown } from "react-icons/io";
 import Image from "next/image";
 import { SignOutButton, useUser } from "@clerk/nextjs";
+import Link from "next/link";
+import { usePathname, useParams } from "next/navigation";
 
 const ProfileButton = () => {
   const { user } = useUser();
+  const pathName = usePathname();
+  // const isShow =
+  // pathName?.includes("/courses/6") && pathName?.includes("/chapters");
+
+  const params = useParams();
+  const isActive =
+    pathName?.includes("/courses") && pathName?.includes(params.courseId);
+
   return (
     <>
       <DropdownMenu>
@@ -34,12 +44,23 @@ const ProfileButton = () => {
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          {isActive && (
+            <>
+              <Link href="/">
+                <DropdownMenuItem>Home</DropdownMenuItem>
+              </Link>
+              <Link href="/courses">
+                <DropdownMenuItem>Courses</DropdownMenuItem>
+              </Link>
+              <Link href="/notes">
+                <DropdownMenuItem>Notes</DropdownMenuItem>
+              </Link>
+              <Link href="/messages">
+                <DropdownMenuItem>Messages</DropdownMenuItem>
+              </Link>
+            </>
+          )}
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Billing</DropdownMenuItem>
-          <DropdownMenuItem>Team</DropdownMenuItem>
-          <DropdownMenuItem>Subscription</DropdownMenuItem>
           <DropdownMenuItem>
             <SignOutButton />
           </DropdownMenuItem>
