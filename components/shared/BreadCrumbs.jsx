@@ -36,7 +36,9 @@ export default function BreadCrumbs() {
         return (
           <>
             {isLastPath ? (
-              <span className="p-2  font-[350] text-blue-500">{item}</span>
+              <span className="p-2  font-[350] text-blue-500">
+                {item.toUpperCase().slice(0, 1) + item.slice(1).toLowerCase()}
+              </span>
             ) : (
               <Link
                 className="p-2  hover:text-black  hover:bg-sky-300/50 dark:hover:bg-[#020617a0]

@@ -84,10 +84,10 @@ export async function getAllUserNotes() {
     if (!user) throw new Error("User not found");
     const note = await Note.find({
       userId: user._id,
-    });
+    }).sort({ timestamp: -1 });
     return note;
   } catch (error) {
-    console.log("user notes find error", error.message);
+    console.error("user notes find error", error.message);
     throw new Error("user notes find error");
   }
 }
@@ -98,14 +98,14 @@ export async function getAllPublicNotes() {
     connectToDb();
     const user = await findOrCreateUser();
     if (!user) throw new Error("User not found");
-    const PublicNote = await Note.find({
-      isPublished:true
+    const notes = await Note.find({
+      isPublished: true,
     }).populate({
-      path:'userId',
-      model:'User',
-      select:'name _id  email'
+      path: "userId",
+      model: "User",
+      select: "name _id  email",
     });
-    return PublicNote;
+    return JSON.parse(JSON.stringify(notes));
   } catch (error) {
     console.log("user notes find error", error.message);
     throw new Error("user notes find error");
@@ -132,6 +132,26 @@ export async function publishUserNote({ noteId }) {
     throw new Error("user notes find error");
   }
 }
+// unpublish user note
+export async function unPublishUserNote({ noteId }) {
+  try {
+    connectToDb();
+    const user = await findOrCreateUser();
+    if (!user) throw new Error("User not found");
+    await Note.findByIdAndUpdate(
+      {
+        _id: noteId,
+      },
+      {
+        isPublished: false,
+      }
+    );
+    revalidatePath("/notes/mynotes");
+  } catch (error) {
+    console.log("user notes find error", error.message);
+    throw new Error("user notes find error");
+  }
+}
 // delete user note
 export async function deleteUserNote({ noteId }) {
   try {
@@ -145,5 +165,57 @@ export async function deleteUserNote({ noteId }) {
   } catch (error) {
     console.log("user notes delete error", error.message);
     throw new Error("user notes delete error");
+  }
+}
+// create note primately
+export async function createOrUpdateNote({ title, content, noteId }) {
+  try {
+    connectToDb();
+    const { _id } = await findOrCreateUser();
+    if (!_id) throw new Error("User not found");
+    let note;
+    if (!noteId) {
+      note = await Note.create({
+        title,
+        content,
+        userId: _id,
+        isPublished: false,
+      });
+    } else {
+      note = await Note.findByIdAndUpdate(
+        {
+          _id: noteId,
+        },
+        {
+          title: title,
+          content: content,
+        },
+        {
+          new: true,
+        }
+      );
+    }
+    return JSON.parse(JSON.stringify(note._id));
+  } catch (error) {
+    console.error("Private note creation error", error.message);
+  }
+}
+// get full note details
+export async function getFullNoteDetails({ noteId }) {
+  try {
+    const { _id } = await findOrCreateUser();
+    if (!_id) throw new Error("user not found");
+    const note = await Note.findById({
+      _id: noteId,
+    }).populate("userId", "name _id ");
+    if (!note) throw new Error("Note not found");
+    const isUserNote = note.userId._id.toString() === _id.toString();
+    const response = {
+      note: JSON.parse(JSON.stringify(note)),
+      isUserNote: isUserNote,
+    };
+    return response;
+  } catch (error) {
+    console.error("Full note details error", error.message);
   }
 }

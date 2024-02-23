@@ -16,7 +16,6 @@ const NavBarItem = ({ href, name, icon: Icon }) => {
         <Icon
           size={23}
           className={cn(
-            // "text-[#a3a1e3] group-hover:text-muted-foreground",
             "text-muted-foreground group-hover:text-[#6a83d3e2]",
             isActive &&
               "text-[#221f56] group-hover:text-[#221f56] dark:text-white dark:group-hover:text-white"

@@ -1,10 +1,9 @@
 import BreadCrumbs from "../shared/BreadCrumbs";
-import { IoCreateSharp } from "react-icons/io5"
 import MobileNotesSideBar from "./MobileNotesSideBar";
 import MobileSearchBar from "./MobileSearchBar";
-import { IoSearch } from "react-icons/io5"
-import Link from "next/link";
-
+import { IoSearch } from "react-icons/io5";
+import { Button } from "../ui/button";
+import LinkButton from "./LinkButton";
 
 const NotesNavbar = () => {
   return (
@@ -15,11 +14,15 @@ const NotesNavbar = () => {
       </div>
       <div className="flex justify-center items-center gap-2">
         <MobileSearchBar>
-        <div className="lg:hidden">
-        <IoSearch size={32} className='text-[#226eb4bb] hover:text-[#4d69b8] rounded-lg p-1 hover:bg-[#b7cffc] notescardhover' />
-          </div>
-          </MobileSearchBar>
-        <Link  href={"/notes/creates"}><IoCreateSharp size={32}  className="text-[#226eb4bb] hover:text-[#4d69b8] rounded-lg p-1 hover:bg-[#b7cffc] notescardhover"/></Link>
+          <Button
+            variant="outline"
+            size="icon"
+            className="lg:hidden rounded-full"
+          >
+            <IoSearch size={24} className="text-[#226eb4bb]   " />
+          </Button>
+        </MobileSearchBar>
+        <LinkButton href="/notes/create" type="create" />
       </div>
     </nav>
   );
