@@ -17,6 +17,7 @@ const Notescard = ({
   title,
   myNote,
   name,
+  email
 }) => {
   const handleActions = async () => {
     if (isPublished) {
@@ -33,7 +34,7 @@ const Notescard = ({
   return (
     <Card
       className={cn(
-        "w-full h-[250px]  px-2 gap-2 flex flex-col py-1 notescardhover notecardbg dark:notecardbgdark shadow-md hover:transition duration-150 ease-in-out ",
+        "w-full h-[250px]   notescardhover notecardbg dark:notecardbgdark shadow-md hover:transition duration-150 ease-in-out",
         isPublished && "bg-yellow-300/90"
       )}
     >
@@ -53,21 +54,23 @@ const Notescard = ({
           )}
         </div>
       </CardHeader>
-      <Link href={`/notes/${noteId}`} className="">
-        <CardTitle className="m-0 ">
-          <span className=" font-semibold text-[18px] px-[1px] rounded-md py-[2px] shadow-inner">
-            {title}
+      <Link href={`/notes/${noteId}`} className="px-2 h-full gap-2 flex flex-col py-1 ">
+        <CardTitle className="">
+          <span className=" font-semibold text-[1.2rem] px-[1px] rounded-md py-[2px] shadow-inner ">
+            {title.slice(0,15)}
           </span>
         </CardTitle>
-        <div className=" cursor-pointer w-full h-full overflow-hidden  mt-2 text-center font-[400]">
+        <div className=" cursor-pointer w-full h-[80%]  text-start font-[400]  mt-2 ">
           {/* <Preview value={content} className="text-[12px]" /> */}
           <div
-            dangerouslySetInnerHTML={{ __html: content }}
-            className="truncate text-[12px] text-wrap leading-tight "
+            dangerouslySetInnerHTML={{ __html: content.split(' ').slice(0,20).join(' ')}}
+            className="truncate text-[1rem] text-wrap leading-tight "
           />
         </div>
         <CardFooter className="flex flex-col gap-1 items-start p-0 leading-none">
-          <div className="text-[16px] font-[500]">{name}</div>
+          <div className="text-[1rem] font-[500]">{name}</div>
+          <div className="text-[0.7rem] font-[500]">{email}</div>
+
           <div className=" text-[10px]">{newtime}</div>
         </CardFooter>
       </Link>

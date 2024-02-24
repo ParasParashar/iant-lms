@@ -93,7 +93,7 @@ export async function getAllUserNotes() {
 }
 
 // display public notes
-export async function getAllPublicNotes() {
+export async function getAllPublicNotes({search}) {
   try {
     connectToDb();
     const user = await findOrCreateUser();
@@ -105,6 +105,13 @@ export async function getAllPublicNotes() {
       model: "User",
       select: "name _id  email",
     });
+    console.log('search',search)
+    if(search){
+      const data  = notes.filter((item)=>item.title.toLowerCase().trim().includes(search.toLowerCase().trim()))
+     
+    return JSON.parse(JSON.stringify(data));
+
+    }
     return JSON.parse(JSON.stringify(notes));
   } catch (error) {
     console.log("user notes find error", error.message);
@@ -219,3 +226,12 @@ export async function getFullNoteDetails({ noteId }) {
     console.error("Full note details error", error.message);
   }
 }
+// search note
+// export async function searchNote({name}) {
+//   try {
+//     connectToDb();
+//     const note = await Note.find({})
+//   } catch (error) {
+//     console.log('error search note',error.message)
+//   }
+// }
