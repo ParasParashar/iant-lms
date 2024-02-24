@@ -6,7 +6,7 @@ import { useState } from "react";
 import { createGroupMessage, createMessage } from "@/actions/messages.actions";
 import { useSocket } from "@/context/SocketProvider";
 
-const MessageInput = ({ receiverId, group, groupId }) => {
+const MessageInput = ({ receiverId, group, groupId, senderId }) => {
   const [value, setValue] = useState("");
   const { socket } = useSocket();
   const handleCreateMessage = async (e) => {
@@ -27,6 +27,10 @@ const MessageInput = ({ receiverId, group, groupId }) => {
     setValue("");
   };
 
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  };
+
   return (
     <form
       onSubmit={handleCreateMessage}
@@ -35,7 +39,7 @@ const MessageInput = ({ receiverId, group, groupId }) => {
       <input
         autoFocus
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(e) => handleChange(e)}
         className="w-full font-light p-2 text-sm lg:text-lg bg-transparent outline-none border-none  rounded-l-full"
         placeholder="Enter your message........"
       />

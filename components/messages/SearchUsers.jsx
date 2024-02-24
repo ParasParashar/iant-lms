@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 const SearchUsers = ({ children }) => {
   const [search, setSearch] = useState("");
   const [result, setResult] = useState([]);
+  const [open, setOpen] = useState(false);
   const router = useRouter();
 
   // Debounce search function
@@ -22,11 +23,7 @@ const SearchUsers = ({ children }) => {
 
   // Handle search on input change
   useEffect(() => {
-    if (search.trim() !== "") {
-      debounceSearch();
-    } else {
-      setResult([]);
-    }
+    debounceSearch();
   }, [search]);
 
   // Search user function
@@ -39,11 +36,13 @@ const SearchUsers = ({ children }) => {
   const handleSearchKeyPress = (e) => {
     if (e.key === "Enter" && result.length > 0) {
       router.push(`/messages/${result[0]._id}`);
+      setOpen(false);
+      setSearch("");
     }
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>{children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>

@@ -3,15 +3,19 @@
 import { cn, formatDate } from "@/lib/utils";
 import UserAvatar from "./UserAvatar";
 import { useAuth } from "@clerk/nextjs";
+import { useParams } from "next/navigation";
 
 const ChatCard = ({ conversation, group }) => {
   const { senderId, receiverId, content, timestamp } = conversation;
   const { userId } = useAuth();
-  const isReceiver = senderId.authId === userId;
+  const params = useParams();
+  let isReceiver;
   let senderName;
   if (group) {
+    isReceiver = senderId.authId === userId;
     senderName = senderId?.name;
   } else {
+    isReceiver = senderId._id === params.messageId;
     senderName = isReceiver ? senderId?.name : "Me";
   }
   return (
