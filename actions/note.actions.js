@@ -4,7 +4,6 @@ import Note from "@/lib/models/note.model";
 import { connectToDb } from "@/lib/mongoose";
 import { findOrCreateUser } from "./user.actions";
 import { revalidatePath } from "next/cache";
-import User from "@/lib/models/user.model";
 
 export async function createNote({
   courseId,
@@ -281,37 +280,5 @@ export async function unSaveNoteTrigger({ noteId }) {
     return false;
   } catch (error) {
     console.log("note Unsave  error", error.message);
-  }
-}
-//  get all saved notes
-export async function getAllSavedNotes({ search }) {
-  try {
-    connectToDb();
-    const { _id } = await findOrCreateUser();
-    if (!_id) throw new Error("User not found");
-    const notes = await User.findById({
-      _id: _id,
-    })
-      .populate({
-        path: "savedNotes",
-        model: "Note",
-        populate: {
-          path: "userId",
-          model: "User",
-          select: "name _id email",
-        },
-      })
-      .select("savedNotes");
-
-    if (search) {
-      const data = notes?.savedNotes.filter((item) =>
-        item.title.toLowerCase().trim().includes(search.toLowerCase().trim())
-      );
-      return JSON.parse(JSON.stringify(data));
-    }
-    return JSON.parse(JSON.stringify(notes.savedNotes));
-  } catch (error) {
-    console.error("user saved notes error", error.message);
-    throw new Error("user saved notes find error");
   }
 }

@@ -204,7 +204,6 @@ export async function courseCompletionData(courseId) {
 }
 
 // search user by name
-
 export async function searchUserByName(search) {
   try {
     connectToDb();
@@ -223,5 +222,38 @@ export async function searchUserByName(search) {
   } catch (error) {
     console.log("Course overall completion check error", error);
     return 0;
+  }
+}
+
+//  get all saved notes
+export async function getAllSavedNotes({ search }) {
+  try {
+    connectToDb();
+    const { _id } = await findOrCreateUser();
+    if (!_id) throw new Error("User not found");
+    const notes = await User.findById({
+      _id: _id,
+    })
+      .populate({
+        path: "savedNotes",
+        model: "Note",
+        populate: {
+          path: "userId",
+          model: "User",
+          select: "name _id email",
+        },
+      })
+      .select("savedNotes");
+
+    if (search) {
+      const data = notes?.savedNotes.filter((item) =>
+        item.title.toLowerCase().trim().includes(search.toLowerCase().trim())
+      );
+      return JSON.parse(JSON.stringify(data));
+    }
+    return JSON.parse(JSON.stringify(notes.savedNotes));
+  } catch (error) {
+    console.error("user saved notes error", error.message);
+    throw new Error("user saved notes find error");
   }
 }

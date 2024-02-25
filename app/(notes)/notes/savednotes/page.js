@@ -1,4 +1,4 @@
-import { getAllSavedNotes } from "@/actions/note.actions";
+import { getAllSavedNotes } from "@/actions/user.actions";
 import Notescard from "@/components/notes/Notescard";
 
 const SaveNotePage = async ({ searchParams }) => {
