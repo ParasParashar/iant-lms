@@ -1,6 +1,5 @@
 "use client";
 import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { FaRegBookmark } from "react-icons/fa";
 import { NotePopover } from "./NotePopover";
 import {
   deleteUserNote,
@@ -9,15 +8,16 @@ import {
 } from "@/actions/note.actions";
 import { cn, formatDate } from "@/lib/utils";
 import Link from "next/link";
+import SaveNote from "./SaveNote";
 const Notescard = ({
   noteId,
   time,
   content,
   isPublished,
   title,
-  myNote,
   name,
-  email
+  email,
+  isUserNote,
 }) => {
   const handleActions = async () => {
     if (isPublished) {
@@ -40,30 +40,31 @@ const Notescard = ({
     >
       <CardHeader className="p-0  w-full relative">
         <div className=" absolute right-0 top-[2px]">
-          {myNote ? (
+          {isUserNote ? (
             <NotePopover
               isPublished={isPublished}
               handleDeleteNote={handleDeleteNote}
               handleActions={handleActions}
             />
           ) : (
-            <FaRegBookmark
-              size={25}
-              className="rounded-lg p-1 hover:bg-[#90b7ff]"
-            />
+            <SaveNote noteId={noteId} />
           )}
         </div>
       </CardHeader>
-      <Link href={`/notes/${noteId}`} className="px-2 h-full gap-2 flex flex-col py-1 ">
+      <Link
+        href={`/notes/${noteId}`}
+        className="px-2 h-full gap-2 flex flex-col py-1 "
+      >
         <CardTitle className="">
           <span className=" font-semibold text-[1.2rem] px-[1px] rounded-md py-[2px] shadow-inner ">
-            {title.slice(0,15)}
+            {title.slice(0, 15)}
           </span>
         </CardTitle>
         <div className=" cursor-pointer w-full h-[80%]  text-start font-[400]  mt-2 ">
-          {/* <Preview value={content} className="text-[12px]" /> */}
           <div
-            dangerouslySetInnerHTML={{ __html: content.split(' ').slice(0,20).join(' ')}}
+            dangerouslySetInnerHTML={{
+              __html: content.split(" ").slice(0, 20).join(" "),
+            }}
             className="truncate text-[1rem] text-wrap leading-tight "
           />
         </div>

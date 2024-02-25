@@ -9,7 +9,7 @@ const NotePage = async ({ params }) => {
   if (!notes?.note) {
     return (
       <p className="flex  items-center h-full w-full text-lg text-muted">
-        Note note found
+        Note not found
       </p>
     );
   }
@@ -18,8 +18,8 @@ const NotePage = async ({ params }) => {
       {notes?.isUserNote && (
         <LinkButton href={`/notes/edit/${notes.note._id}`} type="edit" />
       )}
-      <h4>{notes.note?.title}</h4>
-      <Preview value={notes.note?.content} />
+      <h4>{notes?.note?.title}</h4>
+      <Preview value={notes?.note?.content} />
     </main>
   );
 };

@@ -1,15 +1,15 @@
-import { getAllUserNotes } from "@/actions/note.actions";
+import { getAllSavedNotes } from "@/actions/note.actions";
 import Notescard from "@/components/notes/Notescard";
 
-const page = async ({ searchParams }) => {
-  const notes = await getAllUserNotes({ search: searchParams?.note });
+const SaveNotePage = async ({ searchParams }) => {
+  const notes = await getAllSavedNotes({ search: searchParams?.note });
   if (notes?.length < 1) {
     return (
-      <div className=" flex h-full w-full items-center  justify-center">
+      <section className=" flex h-full w-full items-center  justify-center">
         <p className="text-muted-foreground text-xl">
-          Currently you don&apos;t have any note.
+          You don&apos;t have any saved notes.
         </p>
-      </div>
+      </section>
     );
   }
   return (
@@ -22,11 +22,13 @@ const page = async ({ searchParams }) => {
           noteId={JSON.parse(JSON.stringify(item._id))}
           isPublished={item.isPublished}
           time={item.timestamp}
-          isUserNote
+          name={item?.userId?.name}
+          email={item?.userId?.email}
+          isUserNote={false}
         />
       ))}
     </main>
   );
 };
 
-export default page;
+export default SaveNotePage;

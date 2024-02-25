@@ -10,12 +10,13 @@ export function NotePopover({ isPublished, handleActions, handleDeleteNote }) {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <div>
-          <HiDotsVertical
-            size={25}
-            className="rounded-lg p-1 hover:bg-[#90b7ff]"
-          />
-        </div>
+        <Button
+          varinat="link"
+          size="icon"
+          className="rounded-full bg-transparent  hover:bg-secondary/50 p-0  "
+        >
+          <HiDotsVertical size={25} className="text-black dark:text-primary" />
+        </Button>
       </PopoverTrigger>
       <PopoverContent className=" divide-y-2 space-y-2 w-auto bg-secondary">
         <Button

@@ -4,6 +4,7 @@ import Note from "@/lib/models/note.model";
 import { connectToDb } from "@/lib/mongoose";
 import { findOrCreateUser } from "./user.actions";
 import { revalidatePath } from "next/cache";
+import User from "@/lib/models/user.model";
 
 export async function createNote({
   courseId,
@@ -77,15 +78,21 @@ export async function deleteCourseNote({ courseId, noteId, chapterId }) {
 }
 
 // display user notes
-export async function getAllUserNotes() {
+export async function getAllUserNotes({ search }) {
   try {
     connectToDb();
     const user = await findOrCreateUser();
     if (!user) throw new Error("User not found");
-    const note = await Note.find({
+    const notes = await Note.find({
       userId: user._id,
     }).sort({ timestamp: -1 });
-    return note;
+    if (search) {
+      const data = notes.filter((item) =>
+        item.title.toLowerCase().trim().includes(search.toLowerCase().trim())
+      );
+      return JSON.parse(JSON.stringify(data));
+    }
+    return JSON.parse(JSON.stringify(notes));
   } catch (error) {
     console.error("user notes find error", error.message);
     throw new Error("user notes find error");
@@ -93,24 +100,26 @@ export async function getAllUserNotes() {
 }
 
 // display public notes
-export async function getAllPublicNotes({search}) {
+export async function getAllPublicNotes({ search }) {
   try {
     connectToDb();
     const user = await findOrCreateUser();
     if (!user) throw new Error("User not found");
     const notes = await Note.find({
       isPublished: true,
-    }).populate({
-      path: "userId",
-      model: "User",
-      select: "name _id  email",
-    });
-    console.log('search',search)
-    if(search){
-      const data  = notes.filter((item)=>item.title.toLowerCase().trim().includes(search.toLowerCase().trim()))
-     
-    return JSON.parse(JSON.stringify(data));
+    })
+      .populate({
+        path: "userId",
+        model: "User",
+        select: "name _id  email",
+      })
+      .sort({ timestamp: -1 });
+    if (search) {
+      const data = notes.filter((item) =>
+        item.title.toLowerCase().trim().includes(search.toLowerCase().trim())
+      );
 
+      return JSON.parse(JSON.stringify(data));
     }
     return JSON.parse(JSON.stringify(notes));
   } catch (error) {
@@ -214,7 +223,11 @@ export async function getFullNoteDetails({ noteId }) {
     if (!_id) throw new Error("user not found");
     const note = await Note.findById({
       _id: noteId,
-    }).populate("userId", "name _id ");
+    }).populate({
+      path: "userId",
+      model: "User",
+      select: "_id name email",
+    });
     if (!note) throw new Error("Note not found");
     const isUserNote = note.userId._id.toString() === _id.toString();
     const response = {
@@ -226,12 +239,79 @@ export async function getFullNoteDetails({ noteId }) {
     console.error("Full note details error", error.message);
   }
 }
-// search note
-// export async function searchNote({name}) {
-//   try {
-//     connectToDb();
-//     const note = await Note.find({})
-//   } catch (error) {
-//     console.log('error search note',error.message)
-//   }
-// }
+
+// checking note is saved to user or note.
+export async function isNoteAlreadySave({ noteId }) {
+  try {
+    connectToDb();
+    // getting user save note or not.
+    const user = await findOrCreateUser();
+    if (!user) throw new Error("User not found");
+    const isSaved = user.savedNotes?.includes(noteId);
+    return isSaved;
+  } catch (error) {
+    console.log("note save checking error", error.message);
+  }
+}
+// save note
+export async function saveNoteTrigger({ noteId }) {
+  try {
+    connectToDb();
+    const user = await findOrCreateUser();
+    const isNoteSave = await isNoteAlreadySave({ noteId: noteId });
+    if (!isNoteSave) {
+      user.savedNotes.push(noteId);
+      await user.save();
+    }
+    return true;
+  } catch (error) {
+    console.log("note save  error", error.message);
+  }
+}
+// un save user notes
+export async function unSaveNoteTrigger({ noteId }) {
+  try {
+    connectToDb();
+    const user = await findOrCreateUser();
+    const isNoteSave = await isNoteAlreadySave({ noteId: noteId });
+    if (isNoteSave) {
+      user.savedNotes.pull(noteId);
+    }
+    await user.save();
+    return false;
+  } catch (error) {
+    console.log("note Unsave  error", error.message);
+  }
+}
+//  get all saved notes
+export async function getAllSavedNotes({ search }) {
+  try {
+    connectToDb();
+    const { _id } = await findOrCreateUser();
+    if (!_id) throw new Error("User not found");
+    const notes = await User.findById({
+      _id: _id,
+    })
+      .populate({
+        path: "savedNotes",
+        model: "Note",
+        populate: {
+          path: "userId",
+          model: "User",
+          select: "name _id email",
+        },
+      })
+      .select("savedNotes");
+
+    if (search) {
+      const data = notes?.savedNotes.filter((item) =>
+        item.title.toLowerCase().trim().includes(search.toLowerCase().trim())
+      );
+      return JSON.parse(JSON.stringify(data));
+    }
+    return JSON.parse(JSON.stringify(notes.savedNotes));
+  } catch (error) {
+    console.error("user saved notes error", error.message);
+    throw new Error("user saved notes find error");
+  }
+}

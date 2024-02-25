@@ -1,19 +1,24 @@
+"use client";
 import { Menu } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
-import Notestypes from "./Notestypes";
 import { Button } from "../ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import LinkButton from "./LinkButton";
 const MobileNotesSideBar = () => {
   return (
-    <Sheet>
-      <SheetTrigger className="lg:hidden pr-5 hover:opacity-75 transition ">
+    <Popover>
+      <PopoverTrigger asChild className="lg:hidden">
         <Button variant="outline" size="icon" className="rounded-full">
           <Menu size={32} className="text-[#226eb4bb] hover:text-[#4d69b8] " />
         </Button>
-      </SheetTrigger>
-      <SheetContent side="left" className="pt-4 mt-[55px] w-72">
-        <Notestypes />
-      </SheetContent>
-    </Sheet>
+      </PopoverTrigger>
+      {/* <PopoverContent side="bottom" className=" w-56"> */}
+      <PopoverContent className="w-36 flex flex-col  lg:hidden gap-1 justify-around">
+        <LinkButton href="/notes/mynotes" type="myNotes" />
+        <LinkButton href="/notes/savednotes" type="savedNotes" />
+        <LinkButton href="/notes/create" type="create" />
+      </PopoverContent>
+      {/* </PopoverContent> */}
+    </Popover>
   );
 };
 

@@ -34,7 +34,7 @@ export default function BreadCrumbs() {
         breadcrubPath += `/${item}`;
         const isLastPath = index === result.length - 1;
         return (
-          <>
+          <div key={item}>
             {isLastPath ? (
               <span className="p-2  font-[350] text-blue-500">
                 {item.toUpperCase().slice(0, 1) + item.slice(1).toLowerCase()}
@@ -48,7 +48,7 @@ export default function BreadCrumbs() {
                 {item.toUpperCase().slice(0, 1) + item.slice(1).toLowerCase()}
               </Link>
             )}
-          </>
+          </div>
         );
       })}
     </nav>

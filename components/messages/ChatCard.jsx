@@ -21,7 +21,7 @@ const ChatCard = ({ conversation, group }) => {
   return (
     <section
       className={cn(
-        "flex gap-2 items-start p-2 rounded-md min-w-[30%] shadow-lg max-w-[80%]",
+        "flex gap-2 items-start  p-2 rounded-md min-w-[30%] shadow-lg max-w-[80%]",
         isReceiver
           ? "bg-sky-200 dark:bg-sky-950"
           : "bg-zinc-200/90 dark:bg-slate-900"

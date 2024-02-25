@@ -4,6 +4,7 @@ import MobileSearchBar from "./MobileSearchBar";
 import { IoSearch } from "react-icons/io5";
 import { Button } from "../ui/button";
 import LinkButton from "./LinkButton";
+import Searchbar from "./Searchbar";
 
 const NotesNavbar = () => {
   return (
@@ -13,6 +14,9 @@ const NotesNavbar = () => {
         <BreadCrumbs />
       </div>
       <div className="flex justify-center items-center gap-2">
+        <div className="w-full  hidden lg:flex ">
+          <Searchbar />
+        </div>
         <MobileSearchBar>
           <Button
             variant="outline"
@@ -22,7 +26,11 @@ const NotesNavbar = () => {
             <IoSearch size={24} className="text-[#226eb4bb]   " />
           </Button>
         </MobileSearchBar>
-        <LinkButton href="/notes/create" type="create" />
+        <div className="w-full hidden lg:flex gap-1 justify-around">
+          <LinkButton href="/notes/mynotes" type="myNotes" />
+          <LinkButton href="/notes/savednotes" type="savedNotes" />
+          <LinkButton href="/notes/create" type="create" />
+        </div>
       </div>
     </nav>
   );
