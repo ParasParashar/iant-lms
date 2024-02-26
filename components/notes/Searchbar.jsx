@@ -25,17 +25,18 @@ const Searchbar = () => {
     debouncedSearch(searchTerm);
   };
   return (
-    <div className=" flex items-center w-full">
-      <div className="notecardbg  w-full flex justify-between bg-none items-center rounded-2xl px-4   text-white border  dark:border-neutral-600">
+    <div className=' flex items-center '>
+      <button className=' m-auto  notecardbg  w-full flex justify-between bg-none items-center rounded-2xl px-2 mx-1  text-white border  dark:border-neutral-600'>
         <input
           type="text"
           value={search}
           onChange={handleChange}
-          className=" px-2 p-1 w-full outline-none text-primary   dark:placeholder-white placeholder-[#000000] rounded-sm text-lg bg-transparent  "
+          className=" px-2 p-1 w-full outline-none text-primary dark:placeholder-white placeholder-[#000000] rounded-sm  bg-transparent"
           placeholder="Search Notes"
         />
-        <IoSearch size={22} className="text-black" />
-      </div>
+        <IoSearch size={22} className='text-black dark:text-white' />
+      
+      </button>
     </div>
   );
 };

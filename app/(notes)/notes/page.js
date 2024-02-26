@@ -1,19 +1,18 @@
 import { getAllPublicNotes, getAllUserNotes } from "@/actions/note.actions";
 import Notescard from "@/components/notes/Notescard";
+import NotFoundPage from "@/components/notes/NotFoundPage";
 
 const page = async ({ searchParams }) => {
   const PublicNotes = await getAllPublicNotes({ search: searchParams?.note });
   const userNotes = await getAllUserNotes({ search: "" });
   const uesrNoteIds = userNotes?.map((note) => note._id.toString());
-  if (PublicNotes?.length < 1) {
-    return (
-      <div className=" flex h-full w-full items-center  justify-center">
-        <p className="text-muted-foreground text-xl">Sorry!! Notes not found</p>
-      </div>
-    );
+  if (PublicNotes?.length <1) {
+    return <NotFoundPage
+    message={'Sorry!! Notes not found'}
+    />
   }
   return (
-    <main className="grid custom-scrollbar grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 lg:grid-cols-3  h-full overflow-y-auto gap-2 px-2 ">
+    <main className="grid custom-scrollbar grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4  h-full overflow-y-auto gap-2 px-2  rounded-lg ">
       {PublicNotes?.map((items) => {
         const isUserNote = uesrNoteIds?.includes(items._id);
         return (
@@ -27,11 +26,10 @@ const page = async ({ searchParams }) => {
             time={items.timestamp}
             isUserNote={isUserNote}
             isPublished={items.isPublished}
-          />
+            />
         );
       })}
     </main>
   );
 };
-
-export default page;
+export default page

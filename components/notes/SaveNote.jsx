@@ -15,7 +15,7 @@ const SaveNote = ({ noteId }) => {
       onClick={toggleSaveButton}
       className=" rounded-full"
     >
-      {isSaved ? <FaBookmark size={22} /> : <FaRegBookmark size={25} />}
+      {isSaved ? <FaBookmark size={18} /> : <FaRegBookmark size={18} />}
     </Button>
   );
 };

@@ -12,6 +12,8 @@ import Image from "next/image";
 import { SignOutButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { usePathname, useParams } from "next/navigation";
+import { navbarRoutes } from "@/lib/Routes";
+
 
 const ProfileButton = () => {
   const { user } = useUser();
@@ -44,22 +46,16 @@ const ProfileButton = () => {
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          {isActive && (
-            <>
-              <Link href="/">
-                <DropdownMenuItem>Home</DropdownMenuItem>
-              </Link>
-              <Link href="/courses">
-                <DropdownMenuItem>Courses</DropdownMenuItem>
-              </Link>
-              <Link href="/notes">
-                <DropdownMenuItem>Notes</DropdownMenuItem>
-              </Link>
-              <Link href="/messages">
-                <DropdownMenuItem>Messages</DropdownMenuItem>
-              </Link>
-            </>
-          )}
+        <div className={!isActive ?"sm:hidden":""}>
+        {navbarRoutes.map((item)=>(
+          <Link href={item.href}>
+          <DropdownMenuItem className="flex items-center gap-2">
+            <item.icon/>
+            <div>{item.name}</div>
+          </DropdownMenuItem>
+          </Link>
+        ))}
+        </div>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
             <SignOutButton />

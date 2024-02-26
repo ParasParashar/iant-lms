@@ -23,7 +23,7 @@ const NavBarItem = ({ href, name, icon: Icon }) => {
         />
         <span
           className={cn(
-            "text-[11px] font-semibold leading-none p-[2px]  text-muted-foreground group-hover:text-[#6a83d3e2] max-sm:hidden",
+            "text-[11px] font-semibold leading-none p-[2px]  text-muted-foreground group-hover:text-[#6a83d3e2]",
             isActive &&
               "text-[#221f56] group-hover:text-[#221f56] dark:text-white  dark:group-hover:text-white"
           )}

@@ -1,19 +1,18 @@
 import { getAllUserNotes } from "@/actions/note.actions";
 import Notescard from "@/components/notes/Notescard";
+import NotFoundPage from "@/components/notes/NotFoundPage";
 
 const page = async ({ searchParams }) => {
   const notes = await getAllUserNotes({ search: searchParams?.note });
   if (notes?.length < 1) {
     return (
-      <div className=" flex h-full w-full items-center  justify-center">
-        <p className="text-muted-foreground text-xl">
-          Currently you don&apos;t have any note.
-        </p>
-      </div>
+    <NotFoundPage
+        message={'You Can Create Some Future Assets.📘'}
+        />
     );
   }
   return (
-    <main className="grid grid-cols-2 lg:grid-cols-3 gap-2 p-2 lg:p-3">
+    <main className="grid custom-scrollbar grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4  h-full overflow-y-auto gap-2 px-2  rounded-lg ">
       {notes?.map((item) => (
         <Notescard
           key={item._id}

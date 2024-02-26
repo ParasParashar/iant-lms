@@ -34,12 +34,12 @@ const Notescard = ({
   return (
     <Card
       className={cn(
-        "w-full h-[250px]   notescardhover notecardbg dark:notecardbgdark shadow-md hover:transition duration-150 ease-in-out",
-        isPublished && "bg-yellow-300/90"
+        "w-full h-[250px]   notescardhover notecardbg dark:notecardbgdark shadow-md ",
+        isPublished && "notecardbg"
       )}
     >
       <CardHeader className="p-0  w-full relative">
-        <div className=" absolute right-0 top-[2px]">
+        <div className=" absolute right-1 top-[2px]">
           {isUserNote ? (
             <NotePopover
               isPublished={isPublished}
@@ -57,7 +57,7 @@ const Notescard = ({
       >
         <CardTitle className="">
           <span className=" font-semibold text-[1.2rem] px-[1px] rounded-md py-[2px] shadow-inner ">
-            {title.slice(0, 15)}
+            {title.slice(0,15)}
           </span>
         </CardTitle>
         <div className=" cursor-pointer w-full h-[80%]  text-start font-[400]  mt-2 ">

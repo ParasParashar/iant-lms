@@ -15,26 +15,26 @@ export function NotePopover({ isPublished, handleActions, handleDeleteNote }) {
           size="icon"
           className="rounded-full bg-transparent  hover:bg-secondary/50 p-0  "
         >
-          <HiDotsVertical size={25} className="text-black dark:text-primary" />
+          <HiDotsVertical size={18} className="text-black dark:text-primary" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className=" divide-y-2 space-y-2 w-auto bg-secondary">
+      <PopoverContent className=" divide-y-2 space-y-2 w-auto bg-[#132233]">
         <Button
           varinat="outline"
           size="sm"
           onClick={handleActions}
-          className="flex hover:text-muted-foreground w-full text-sm items-center justify-between"
+          className=" w-full text-sm flex bg-tranperent hover:bg-white/30 dark:text-primary"
         >
           {isPublished ? (
-            <>
-              <IoIosRemoveCircle size={20} className="text-blue-500" />
+            <div className="flex items-center justify-center gap-1">
+              <IoIosRemoveCircle size={18} className="text-blue-500" />
               <span>Unpublish Note</span>
-            </>
+            </div>
           ) : (
-            <>
-              <MdPublish size={20} className="text-blue-500" />
+            <div className="flex items-center justify-center gap-1">
+              <MdPublish size={18} className="text-blue-500" />
               <span>Publish Note</span>
-            </>
+            </div>
           )}
         </Button>
         <ConfirmModel
@@ -44,10 +44,12 @@ export function NotePopover({ isPublished, handleActions, handleDeleteNote }) {
           <Button
             varinat="outline"
             size="sm"
-            className="flex hover:text-muted-foreground w-full text-sm items-center justify-between"
+            className=" w-full bg-tranperent hover:bg-white/30 mt-1"
           >
-            <MdDeleteForever size={20} className="text-red-500" />
-            <span>Delete Note</span>
+            <div className="flex items-center justify-center gap-1">
+            <MdDeleteForever size={18} className="text-red-500" />
+            <span className="text-sm dark:text-primary">Delete Note</span>
+            </div>
           </Button>
         </ConfirmModel>
       </PopoverContent>
