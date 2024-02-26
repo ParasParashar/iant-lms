@@ -44,7 +44,7 @@ body,
   .dark {
     /* --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%; */
-    --background: 102.2 84% 4.9%;
+    --background: #33333344;
     --foreground: 20.3 40% 98%;
 
     --card: 222.2 84% 4.9%;
@@ -112,14 +112,15 @@ body,
   background-image: linear-gradient(to top, #6691c983 0%, #61aae27c 100%);
 }
 
-           
-           
-         
 .btn-grad {
-  background-image: linear-gradient(to right, #314755 0%, #26a0da  51%, #314755  100%);
+  background-image: linear-gradient(
+    to right,
+    #314755 0%,
+    #26a0da 51%,
+    #314755 100%
+  );
   transition: 1s;
   background-size: 200% auto;
-  
 }
 
 .btn-grad:hover {
@@ -128,12 +129,10 @@ body,
   text-decoration: none;
 }
 
-.notescardhover:hover{
-  transform: translateY(5px)  scale(1.01) translateZ(0) ;
-  
+.notescardhover:hover {
+  transform: translateY(5px) scale(1.01) translateZ(0);
+
   box-shadow: 0 6px 9px rgba(212, 194, 194, 0.11),
     0 6px 12px rgba(2, 81, 134, 0.322);
     text-decoration: none;
 }
- 
-  

@@ -1,13 +1,15 @@
 import { findOrCreateUser } from "@/actions/user.actions";
-import UserDetails from "@/components/home/UserDetails";
+import EnrolledCourses from "@/components/home/EnrolledCourses";
+import ProfileDetails from "@/components/home/ProfileDetails";
 import { redirect } from "next/navigation";
 
 const page = async () => {
   const user = await findOrCreateUser();
   if (!user) redirect("/");
   return (
-    <div className="border-2 border-red-500 h-full">
-      <UserDetails />
+    <div className="flex flex-col justify-between gap-2 w-full h-full">
+      <ProfileDetails />
+      <EnrolledCourses />
     </div>
   );
 };

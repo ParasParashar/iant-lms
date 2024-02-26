@@ -19,7 +19,7 @@ export default async function Courses({ searchParams }) {
 
   return (
     <div className="flex flex-col gap-4">
-      <section className="flex gap-2 mt-4 overflow-x-auto w-full  flex-nowrap scroll-smooth custom-scrollbar  items-center ">
+      <section className="flex gap-2 mt-4 overflow-x-auto w-full   flex-nowrap scroll-smooth custom-scrollbar  items-center ">
         {category.map((item) => (
           <CategoryBarItem key={item._id} item={item} />
         ))}

@@ -23,7 +23,7 @@ const CourseCard = ({ title, isEnrollred, img_Url, category, id, value }) => {
     // <Link href={`coursels/${id}`}>
     <Card
       onClick={handleClick}
-      className="flex flex-col justify-between hover:shadow-lg cursor-pointer  group"
+      className="flex flex-col justify-between hover:shadow-lg cursor-pointer group"
     >
       <CardHeader>
         {/* <div className="relative object-contain max-[500px]:h-48 sm:h-48 md:h-52 lg:h-56  aspect-video">
