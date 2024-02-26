@@ -257,3 +257,67 @@ export async function getAllSavedNotes({ search }) {
     throw new Error("user saved notes find error");
   }
 }
+
+// get userProgress of all the courses
+export async function getUserAnalytics() {
+  try {
+    connectToDb();
+    const { _id } = await findOrCreateUser();
+    if (!_id) throw new Error("User not found");
+
+    const userProgress = await Courseprogress.find({
+      userId: _id,
+    })
+      .populate({
+        path: "courseId",
+        model: "Course",
+        select: "title chapters",
+      })
+      .select("chapterProgress");
+    // calculate completion percentage of each course
+    const totalCourseProgress = userProgress.map((item) => {
+      const totalChapters = item.chapterProgress.length;
+      const completedChapters = item.chapterProgress.filter(
+        (chapter) => chapter.isCompleted
+      ).length;
+      const completionPercentage =
+        totalChapters === 0
+          ? 0
+          : Math.round((completedChapters / totalChapters) * 100);
+
+      return {
+        courseId: item.courseId._id,
+        courseTitle: item.courseId.title,
+        Course_Complete: completionPercentage,
+        Total_Percent: Math.round((totalChapters / totalChapters) * 100),
+      };
+    });
+
+    // console.log(totalCourseProgress);
+    return JSON.parse(JSON.stringify(totalCourseProgress));
+  } catch (error) {
+    console.error("all userProgress error", error.message);
+  }
+}
+
+// get all userEnrolled courses
+export async function getAllUserEnrolledCourses() {
+  try {
+    connectToDb();
+    const { _id } = await findOrCreateUser();
+    if (!_id) throw new Error("User not found");
+    const userCourses = await User.findById({
+      _id: _id,
+    })
+      .populate({
+        path: "enrolledCourses",
+        model: "Course",
+        select: "_id title img_Url category",
+      })
+      .select("enrolledCourses");
+    if (!userCourses) return [];
+    return JSON.parse(JSON.stringify(userCourses.enrolledCourses));
+  } catch (error) {
+    console.log("get all user enrolled courses error", error.message);
+  }
+}

@@ -2,7 +2,6 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -11,7 +10,6 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import UserProgress from "./UserProgress";
-import Link from "next/link";
 
 const CourseCard = ({ title, isEnrollred, img_Url, category, id, value }) => {
   const router = useRouter();
@@ -20,20 +18,11 @@ const CourseCard = ({ title, isEnrollred, img_Url, category, id, value }) => {
   };
 
   return (
-    // <Link href={`coursels/${id}`}>
     <Card
       onClick={handleClick}
       className="flex flex-col justify-between hover:shadow-lg cursor-pointer group"
     >
       <CardHeader>
-        {/* <div className="relative object-contain max-[500px]:h-48 sm:h-48 md:h-52 lg:h-56  aspect-video">
-          <Image
-            src={img_Url}
-            alt={title}
-            fill
-            className="rounded-lg object-fill  "
-          />
-        </div> */}
         <div className="relative aspect-square">
           <Image
             src={img_Url}
@@ -44,7 +33,6 @@ const CourseCard = ({ title, isEnrollred, img_Url, category, id, value }) => {
         </div>
       </CardHeader>
       <CardContent className="flex flex-col gap-1 justify-center">
-        {/* to customise the size of  image only edit below div don't add any class to image tag  */}
         <CardTitle className=" font-bold group-hover:underline text-lg text-black/70 dark:text-white">
           {title}
         </CardTitle>
@@ -67,7 +55,6 @@ const CourseCard = ({ title, isEnrollred, img_Url, category, id, value }) => {
         )}
       </CardFooter>
     </Card>
-    // </Link>
   );
 };
 

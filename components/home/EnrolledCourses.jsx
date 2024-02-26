@@ -1,27 +1,58 @@
 import { getAllCourses } from "@/actions/course.actions";
 import CourseCard from "../shared/CourseCard";
+import {
+  courseCompletionData,
+  getAllUserEnrolledCourses,
+} from "@/actions/user.actions";
+import { Card } from "../ui/card";
 
 const EnrolledCourses = async () => {
   const allCourse = await getAllCourses({ category: "" });
-  // console.log(allCourse);
-
+  const userEnrolledCourses = await getAllUserEnrolledCourses();
   return (
-    <div className=" p-4 rounded-lg  w-full h-[40%] flex flex-col gap-2 overflow-auto flex-nowrap scroll-smooth custom-scrollbar bg-[#f1f5f9] dark:bg-[#1e293bd7] ">
-      <p>Enrolled Courses</p>
-      <div className="flex gap-2">
-        {allCourse.slice(0, 4).map((item) => {
-          return (
-            <CourseCard
-              key={item._id}
-              id={JSON.parse(JSON.stringify(item._id))}
-              title={item.title}
-              category={item.category}
-              img_Url={item.img_Url}
-            />
-          );
-        })}
-      </div>
-    </div>
+    <Card className=" p-4 rounded-lg  w-full  flex flex-col gap-2 overflow-auto flex-nowrap scroll-smooth custom-scrollbar  bg-secondary   ">
+      <h3 className="text-lg lg:text-xl text-muted-foreground font-semibold font-serif">
+        Enrolled Courses
+      </h3>
+      <section
+        id="enrolledCourses"
+        className="flex w-full  overflow-x-auto scroll-smooth custom-scrollbar gap-2"
+      >
+        {userEnrolledCourses ? (
+          userEnrolledCourses?.map(async (item) => {
+            const { completionPercentage } = await courseCompletionData(
+              item._id
+            );
+            return (
+              <div key={item._id} className="h-full min-w-[250px] max-w-[300px">
+                <CourseCard
+                  id={JSON.parse(JSON.stringify(item._id))}
+                  title={item.title}
+                  category={item.category}
+                  img_Url={item.img_Url}
+                  isEnrollred={true}
+                  value={completionPercentage}
+                />
+              </div>
+            );
+          })
+        ) : (
+          <>
+            {allCourse?.slice(0, 4).map((item) => {
+              return (
+                <CourseCard
+                  key={item._id}
+                  id={JSON.parse(JSON.stringify(item._id))}
+                  title={item.title}
+                  category={item.category}
+                  img_Url={item.img_Url}
+                />
+              );
+            })}
+          </>
+        )}
+      </section>
+    </Card>
   );
 };
 

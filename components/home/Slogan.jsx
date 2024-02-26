@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { Card } from "../ui/card";
 
 const Slogan = () => {
   const slogans = [
@@ -24,7 +25,7 @@ const Slogan = () => {
       if (index === 10) {
         index = 0;
       }
-    }, 1500);
+    }, 5000);
 
     return () => {
       clearInterval(intervalID);
@@ -32,11 +33,11 @@ const Slogan = () => {
   }, [index]);
 
   return (
-    <div className=" h-[20%]">
-      <div className=" w-full h-full text-xl text-center rounded-full flex justify-center items-center p-4 bg-[#DDEBF9] dark:bg-[#1e293bd7]">
+    <Card className=" h-[20%] rounded-full p-4">
+      <h4 className=" font-serif transition-all duration-300 ease-in w-full h-full text-xl text-center">
         {slogans[index]}
-      </div>
-    </div>
+      </h4>
+    </Card>
   );
 };
 

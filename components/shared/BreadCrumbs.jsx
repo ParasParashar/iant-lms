@@ -26,7 +26,7 @@ export default function BreadCrumbs() {
       <Link
         className=" text-muted-foreground hover:text-black dark:hover:text-muted-foreground
         hover:bg-sky-300/50 dark:hover:bg-[#020617a0]  p-2  rounded-r-full"
-        href={"/"}
+        href={"/home"}
       >
         Home
       </Link>
