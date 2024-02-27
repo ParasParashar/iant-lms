@@ -31,11 +31,19 @@ const ChatArea = ({ userConversations }) => {
   useEffect(() => {
     const div = messageRef.current;
     div?.scrollTo(0, div.scrollHeight);
-  }, [conversation]);
+  }, [conversation])
+
+  if(!conversation[0]){
+    return(
+      <div className="flex flex-col items-center justify-center text-2xl bg-gray-600 h-screen">
+        haa ji chate start kro
+      </div>
+    )
+  }
   return (
     <section
       ref={messageRef}
-      className=" flex-1 flex-col items-start flex gap-2 pb-24  p-2  overflow-y-auto w-full  border-secondary  transition-all duration-300 ease-in-out  main-scrollbar "
+      className=" flex-1 flex-col items-start flex gap-2 pb-24  p-2  overflow-y-auto w-full  border-secondary  transition-all duration-300 ease-in-out  main-scrollbar"
     >
       {conversation?.map((item) => (
         <ChatCard key={item._id} conversation={item} />

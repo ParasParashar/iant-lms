@@ -22,7 +22,7 @@ const LinkButton = ({ href, type }) => {
       {type === "create" && (
         <div className="flex items-center justify-center gap-1">
           <IoCreateSharp
-            size={18}
+            size={20}
             className="text-[#226eb4bb] group-hover:text-blue-500"
           />
           <span className=" text-primary group-hover:text-muted-foreground">
@@ -33,10 +33,10 @@ const LinkButton = ({ href, type }) => {
       {type === "edit" && (
         <div className="flex items-center justify-center gap-1">
           <CiEdit
-            size={18}
-            className="text-[#226eb4bb] group-hover:text-blue-500"
+            size={20}
+            className="text-[#0486ff] group-hover:text-blue-500"
           />
-          <span className=" text-primary group-hover:text-muted-foreground text-xs">
+          <span className=" text-primary group-hover:text-muted-foreground text-sm">
             Edit
           </span>
         </div>
@@ -44,7 +44,7 @@ const LinkButton = ({ href, type }) => {
       {type === "myNotes" && (
         <div className="flex items-center justify-center gap-1">
           <PiNotebookBold
-            size={18}
+            size={20}
             className="text-[#226eb4bb] group-hover:text-blue-500"
           />
           <span className=" text-primary group-hover:text-muted-foreground">

@@ -15,19 +15,19 @@ const NotePage = async ({ params }) => {
   return (
     <main className=" bg-secondary relative h-full custom-scrollbar overflow-y-auto dark:border-neutral-600 dark:text-white flex flex-col">
       <div className="flex justify-between ">
-        <section className="flex text-xs  flex-col ">
+        <section className="flex flex-col space-y-1">
           <p className="font-bold text-[14px] font-sans">
-            {notes.note.userId.name}
+           By - {notes.note.userId.name}
           </p>
-          <p>{notes.note.userId.email}</p>
-          <p>{newtime}</p>
+          <p className="dark:text-white/60 text-xs">{notes.note.userId.email}</p>
+          <p className="dark:text-white/60 text-xs">{newtime}</p>
         </section>
         {notes?.isUserNote && (
           <LinkButton href={`/notes/edit/${notes.note._id}`} type="edit" />
         )}
       </div>
 
-      <div className=" py-2 ">
+      <div className=" py-3 ">
         <div className="flex flex-col items-start justify-start gap-1">
           <span className="text-[#f85151] font-semibold text-xl">
             Title :-{" "}

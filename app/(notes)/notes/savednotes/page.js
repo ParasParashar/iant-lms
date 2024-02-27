@@ -1,6 +1,8 @@
 import { getAllSavedNotes } from "@/actions/user.actions";
 import Notescard from "@/components/notes/Notescard";
 import NotFoundPage from "@/components/notes/NotFoundPage";
+import NotesCardSkeleton from "@/components/SkeletonLoaders/NotesCardSkeleton";
+import { Suspense } from "react";
 
 const SaveNotePage = async ({ searchParams }) => {
   const notes = await getAllSavedNotes({ search: searchParams?.note });
@@ -14,6 +16,8 @@ const SaveNotePage = async ({ searchParams }) => {
   return (
     <main className="grid custom-scrollbar grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4  h-full overflow-y-auto gap-2 px-2  rounded-lg ">
       {notes?.map((item) => (
+        <Suspense fallback={<NotesCardSkeleton />}>
+
         <Notescard
           key={item._id}
           title={item.title}
@@ -24,7 +28,8 @@ const SaveNotePage = async ({ searchParams }) => {
           name={item?.userId?.name}
           email={item?.userId?.email}
           isUserNote={false}
-        />
+          />
+          </Suspense>
       ))}
     </main>
   );

@@ -25,7 +25,7 @@ export default function BreadCrumbs() {
     <nav className="flex transition-all duration-200 items-center gap-x-1 text-sm border-2 dark:border-gray-600 bg-secondary font-light  rounded-r-full rounded-l-lg">
       <Link
         className=" text-muted-foreground hover:text-black dark:hover:text-muted-foreground
-        hover:bg-sky-300/50 dark:hover:bg-[#020617a0]  p-2  rounded-r-full"
+        hover:bg-sky-300/50 dark:hover:bg-[#020617a0]  px-2 py-[6px] rounded-r-full"
         href={"/home"}
       >
         Home

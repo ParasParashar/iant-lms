@@ -8,8 +8,8 @@ import Searchbar from "./Searchbar";
 
 const NotesNavbar = () => {
   return (
-    <nav className="p-2 flex items-center justify-between dark:border-neutral-600 rounded-lg border bg-secondary">
-      <div className="flex items-center justify-center">
+    <nav className="p-[6px] flex items-center justify-between dark:border-neutral-600 rounded-lg border bg-secondary">
+      <div className="flex items-center justify-center gap-1">
         <MobileNotesSideBar />
         <BreadCrumbs />
       </div>
@@ -21,9 +21,9 @@ const NotesNavbar = () => {
           <Button
             variant="outline"
             size="icon"
-            className="lg:hidden rounded-full"
+            className="lg:hidden rounded-full p-0"
           >
-            <IoSearch size={24} className="text-[#226eb4bb]   " />
+            <IoSearch size={23} className="text-[#226eb4bb]   " />
           </Button>
         </MobileSearchBar>
         <div className="w-full hidden lg:flex gap-1 justify-around">

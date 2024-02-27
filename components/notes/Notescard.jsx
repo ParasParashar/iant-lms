@@ -34,8 +34,8 @@ const Notescard = ({
   return (
     <Card
       className={cn(
-        "w-full h-[250px]   notescardhover notecardbg dark:notecardbgdark shadow-md ",
-        isPublished && "notecardbg"
+        "w-full h-[250px]   notescardhover  dark:notecardbgdark shadow-md ",
+        isPublished?"notecardbg":"bg-pink-500/20"
       )}
     >
       <CardHeader className="p-0  w-full relative">

@@ -7,8 +7,8 @@ const MobileNotesSideBar = () => {
   return (
     <Popover>
       <PopoverTrigger asChild className="lg:hidden">
-        <Button variant="outline" size="icon" className="rounded-full">
-          <Menu size={32} className="text-[#226eb4bb] hover:text-[#4d69b8] " />
+        <Button variant="outline" size="icon" className="rounded-full p-0">
+          <Menu size={23} className="text-[#226eb4bb] hover:text-[#4d69b8] " />
         </Button>
       </PopoverTrigger>
       {/* <PopoverContent side="bottom" className=" w-56"> */}
