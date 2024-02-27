@@ -12,7 +12,7 @@ const SaveNotePage = async ({ searchParams }) => {
   return (
     <main className="grid custom-scrollbar grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4  h-full overflow-y-auto gap-2 px-2  rounded-lg ">
       {notes?.map((item) => (
-        <Suspense fallback={<NotesCardSkeleton />}>
+        <Suspense key={item._id} fallback={<NotesCardSkeleton />}>
           <Notescard
             key={item._id}
             title={item.title}

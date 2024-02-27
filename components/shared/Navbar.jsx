@@ -15,17 +15,11 @@ const Navbar = () => {
         <Image src={"/iantlogo.png"} fill alt={"iant-logo"} />
       </Link>
       <nav className="flex justify-center items-center gap-x-5 max-sm:gap-x-2">
-
         {navbarRoutes.map((item, index) => (
-        <div className="max-sm:hidden">
-          <NavBarItem
-            key={index}
-            name={item.name}
-            href={item.href}
-            icon={item.icon}
-            />
-            </div>
-            ))}
+          <div key={index} className="max-sm:hidden">
+            <NavBarItem name={item.name} href={item.href} icon={item.icon} />
+          </div>
+        ))}
 
         {/* toggle theme button */}
         <ThemeToggleButton />

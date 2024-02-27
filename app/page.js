@@ -11,13 +11,18 @@ const LoginPage = () => {
   return (
     <>
       <main className=" w-screen h-full relative overflow-hidden m-auto ">
-        <Image src={"/login_bg.png"} className="max-sm:hidden" fill />
+        <Image
+          src={"/login_bg.png"}
+          className="max-sm:hidden"
+          fill
+          alt="Logo Image"
+        />
 
         <div className=" absolute max-lg:top-[7%] top-[13%] right-[35%] left-[35%] ">
           <div className="flex flex-col items-center justify-evenly gap-20 max-lg:gap-8">
             <div>
               <div className="w-[275px] h-[82px]  relative ">
-                <Image src={"/iantlogo.png"} fill />
+                <Image src={"/iantlogo.png"} fill alt="Logo Image" />
               </div>
             </div>
             <div className="flex items-center gap-8 max-lg:flex-col max-lg:gap-8">
@@ -47,7 +52,7 @@ const LoginPage = () => {
               </div>
               <div>
                 <div className="w-[25vw] h-[380px] relative max-lg:w-[35vw] max-lg:h-[45vh] max-md:h-[45vh] max-md:w-[40vw] max-sm:h-[45vh] max-sm:w-[55vw]">
-                  <Image src={"/ai_img1.png"} fill />
+                  <Image src={"/ai_img1.png"} fill alt="Logo Image" />
                 </div>
               </div>
             </div>

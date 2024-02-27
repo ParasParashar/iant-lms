@@ -34,7 +34,7 @@ const AddUsersToGroup = ({ children, groupName, members, groupId }) => {
 
   useEffect(() => {
     debounce();
-  }, [search]);
+  }, [search, debounce]);
 
   //   searching
   const handleSearch = (e) => {

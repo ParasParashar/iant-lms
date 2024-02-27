@@ -29,7 +29,7 @@ const Slogan = () => {
     return () => {
       clearInterval(intervalID);
     };
-  }, [index]);
+  }, []);
 
   return (
     <Card className=" h-[20%] text-center rounded-full p-4">

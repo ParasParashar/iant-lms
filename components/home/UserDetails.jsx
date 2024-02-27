@@ -24,6 +24,7 @@ const UserDetails = async () => {
               src="/ai_img.png"
               fill
               className="  border-2 border-blue-300  rounded-full"
+              alt="User Image"
             />
           </div>
           <div className="flex flex-col gap-4 md:gap-12 ">
@@ -40,7 +41,7 @@ const UserDetails = async () => {
                 size="sm"
                 className=" mx-auto  bg-[#d8e8f7] rounded-full font-mono text-black hover:bg-[#b1cae3] hover:font-semibold"
               >
-                <span>Enrolled Courses : {enrolledCourses.length}</span> 
+                <span>Enrolled Courses : {enrolledCourses.length}</span>
               </Button>
             </Link>
           </div>

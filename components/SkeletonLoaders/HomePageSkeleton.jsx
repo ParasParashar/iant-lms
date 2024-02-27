@@ -35,8 +35,8 @@ export default function HomePageSkeleton() {
       {/* courses */}
       <div className="flex gap-2">
         {arr.map((item) => (
-          <div className=" w-[250px] h-full ">
-            <CourseCardSkeleton key={item} />
+          <div key={item} className=" w-[250px] h-full ">
+            <CourseCardSkeleton />
           </div>
         ))}
       </div>

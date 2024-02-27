@@ -36,7 +36,7 @@ const CreateGroup = ({ children }) => {
   const debounce = useDebounce(searchUser, 200);
   useEffect(() => {
     debounce();
-  }, [search]);
+  }, [search, debounce]);
 
   // handleSelect
   const handleSelect = (obj) => {

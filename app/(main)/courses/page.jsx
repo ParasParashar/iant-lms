@@ -1,5 +1,6 @@
 import { getAllCourses, getCourseCategory } from "@/actions/course.actions";
 import { courseCompletionData, findOrCreateUser } from "@/actions/user.actions";
+import CourseCardSkeleton from "@/components/SkeletonLoaders/CourseCardSkeleton";
 import CategoryBarItem from "@/components/shared/CategoryBarItem";
 import dynamic from "next/dynamic";
 
@@ -14,6 +15,7 @@ export default async function Courses({ searchParams }) {
 
   const CourseCard = dynamic(() => import("@/components/shared/CourseCard"), {
     loading: () => <CourseCardSkeleton />,
+    ssr: false,
   });
 
   return (

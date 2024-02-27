@@ -24,7 +24,7 @@ const SearchUsers = ({ children }) => {
   // Handle search on input change
   useEffect(() => {
     debounceSearch();
-  }, [search]);
+  }, [search, debounceSearch]);
 
   // Search user function
   async function searchUser() {

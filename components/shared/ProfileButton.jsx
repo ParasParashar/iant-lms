@@ -47,7 +47,7 @@ const ProfileButton = () => {
         <DropdownMenuContent>
           <div className={!isActive ? "sm:hidden" : ""}>
             {navbarRoutes.map((item) => (
-              <Link href={item.href}>
+              <Link key={item.href} href={item.href}>
                 <DropdownMenuItem className="flex items-center gap-2">
                   <item.icon />
                   <div>{item.name}</div>

@@ -3,7 +3,7 @@ const ChapterVideo = ({ src }) => {
   if (!src) {
     return (
       <p className="text-lg w-full p-8 text-center text-muted-foreground">
-        Chapter Don't have any Video
+        Chapter Don&apos;t have any Video
       </p>
     );
   }
