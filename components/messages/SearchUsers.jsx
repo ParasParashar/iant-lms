@@ -44,7 +44,7 @@ const SearchUsers = ({ children }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>{children}</DialogTrigger>
-      <DialogContent>
+      <DialogContent className="dark:bg-slate-900">
         <DialogHeader>
           <DialogTitle>Search User</DialogTitle>
           <input

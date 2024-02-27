@@ -63,7 +63,7 @@ const UserCard = ({
           </div>
           <p
             className={cn(
-              "text-xs font-light  group-hover:font-normal text-muted-foreground line-clamp-1 truncate",
+              "text-[10px] font-light  group-hover:font-normal text-muted-foreground line-clamp-1 truncate",
               isActive && "font-normal"
             )}
           >

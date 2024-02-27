@@ -84,7 +84,7 @@ const CreateGroup = ({ children }) => {
   return (
     <Dialog>
       <DialogTrigger>{children}</DialogTrigger>
-      <DialogContent>
+      <DialogContent className="dark:bg-slate-900">
         <DialogHeader className="flex flex-col items-center justify-center gap-2 w-full">
           <DialogTitle className="text-center">Create Group</DialogTitle>
           {/* name of the group */}

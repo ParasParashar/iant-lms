@@ -31,15 +31,8 @@ const ChatArea = ({ userConversations }) => {
   useEffect(() => {
     const div = messageRef.current;
     div?.scrollTo(0, div.scrollHeight);
-  }, [conversation])
+  }, [conversation]);
 
-  if(!conversation[0]){
-    return(
-      <div className="flex flex-col items-center justify-center text-2xl bg-gray-600 h-screen">
-        haa ji chate start kro
-      </div>
-    )
-  }
   return (
     <section
       ref={messageRef}

@@ -15,7 +15,7 @@ const UserDetails = async () => {
   return (
     <Card className="w-full md:w-[30%]  ">
       <div className="flex flex-col p-4 md:p-6 w-full h-full bg-secondary ">
-        <h3 className="text-lg lg:text-xl text-muted-foreground font-semibold font-serif">
+        <h3 className="text-lg text-center lg:text-xl text-muted-foreground font-semibold font-serif">
           Student Details
         </h3>
         <div className="flex gap-8 md:gap-2 md:flex-col rounded-lg items-center w-full h-full  lg:pt-3  bg-secondary">
