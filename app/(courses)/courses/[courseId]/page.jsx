@@ -40,7 +40,7 @@ const page = async ({ params }) => {
         <h1 className="text-center font-extrabold text-xl text-muted-foreground">
           Course Overview
         </h1>
-        <div className="relative mx-auto  w-60 h-60 md:w-60 md:h-60">
+        <div className="relative mx-auto w-60 h-60 md:w-60 md:h-60">
           <Image
             alt="Course Image"
             src={result?.img_Url}
