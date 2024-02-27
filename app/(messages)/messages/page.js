@@ -13,11 +13,14 @@ const page = () => {
         <section className="relative h-1/2 w-1/2">
           <Image src={"/chatImage.png"} alt="Chat Image" fill />
         </section>
-        <div className="text-lg font-mono text-muted-foreground flex items-center">
-          <h4>Select a conversation to start messaging.</h4>
-          <div className="block lg:hidden">
+        <div className="text-sm lg:text-lg font-mono text-muted-foreground flex items-center">
+          <h4 className="text-center">
+            Select a conversation to start messaging.
+          </h4>
+          <Button variant="secondary" size="sm" className="block lg:hidden">
             <MobileSidebar />
-          </div>
+            <span>Select Conversation</span>
+          </Button>
         </div>
         <SearchUsers>
           <Button
