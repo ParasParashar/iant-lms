@@ -23,8 +23,8 @@ const ChatCard = ({ conversation, group }) => {
       className={cn(
         "flex gap-2 items-start  p-2 rounded-md min-w-[30%] shadow-lg max-w-[80%] messagechatcard  cursor-default",
         isReceiver
-          ? "bg-sky-500/30 dark:bg-sky-500/30"  //alok
-          : "bg-blue-950/20 dark:bg-blue-700/20"  //other
+          ? "bg-sky-500/30 dark:bg-sky-500/30" //alok
+          : "bg-blue-950/20 dark:bg-blue-700/20" //other
       )}
     >
       <UserAvatar name={senderName} />

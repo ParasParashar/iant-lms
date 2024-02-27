@@ -24,7 +24,7 @@ const Slogan = () => {
       if (index === 10) {
         index = 0;
       }
-    }, 10000);
+    }, 4000);
 
     return () => {
       clearInterval(intervalID);
@@ -32,9 +32,10 @@ const Slogan = () => {
   }, [index]);
 
   return (
-    <Card className=" h-[20%] rounded-full p-4">
-
-<marquee behavior="scroll" direction="left"  className=" font-serif  w-full h-full text-xl text-center"> {slogans[index]} </marquee>
+    <Card className=" h-[20%] text-center rounded-full p-4">
+      <p className=" font-serif  slogan_animate  w-full h-full text-xl text-center">
+        {slogans[index]}
+      </p>
     </Card>
   );
 };

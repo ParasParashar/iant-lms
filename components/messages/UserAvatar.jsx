@@ -5,7 +5,7 @@ const UserAvatar = ({ img, name, group }) => {
   return (
     <Avatar>
       {group ? (
-        <AvatarFallback className="bg-green-800/40 ring-2 text-white font-bold dark:bg-green-800/40">
+        <AvatarFallback className="bg-zinc-900/80 dark:bg-zinc-900 ring-2 text-white font-bold">
           {name?.substr(0, 1).toUpperCase()}
         </AvatarFallback>
       ) : (

@@ -36,9 +36,12 @@ const SearchUsers = ({ children }) => {
   const handleSearchKeyPress = (e) => {
     if (e.key === "Enter" && result.length > 0) {
       router.push(`/messages/${result[0]._id}`);
-      setOpen(false);
+      handleClickTrigger();
       setSearch("");
     }
+  };
+  const handleClickTrigger = () => {
+    setOpen(false);
   };
 
   return (
@@ -63,6 +66,7 @@ const SearchUsers = ({ children }) => {
                   name={item.name}
                   email={item.email}
                   id={item._id}
+                  handleClickTrigger={handleClickTrigger}
                 />
               ))}
             </div>

@@ -1,6 +1,7 @@
 import { getAllConversationsOfUser } from "@/actions/messages.actions";
 import MessageSidebar from "@/components/messages/MessageSidebar";
 import Navbar from "@/components/shared/Navbar";
+import Loading from "./loading";
 
 const MessageLayout = async ({ children }) => {
   const data = await getAllConversationsOfUser();

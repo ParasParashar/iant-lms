@@ -139,3 +139,27 @@ body,
     0 6px 12px rgba(2, 81, 134, 0.322);
     text-decoration: none;
 }
+
+/* slogan animation */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.slogan_animate {
+  animation-name: fadeInOut;
+  animation-duration: 8s; 
+  animation-timing-function: ease-in-out; 
+  animation-iteration-count: infinite; 
+}
+/* chat card css */
+.messagechatcard{
+   border-radius: 1.125rem 1.125rem 1.125rem 0; 
+  }

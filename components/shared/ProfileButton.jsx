@@ -14,7 +14,6 @@ import Link from "next/link";
 import { usePathname, useParams } from "next/navigation";
 import { navbarRoutes } from "@/lib/Routes";
 
-
 const ProfileButton = () => {
   const { user } = useUser();
   const pathName = usePathname();
@@ -46,16 +45,16 @@ const ProfileButton = () => {
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-        <div className={!isActive ?"sm:hidden":""}>
-        {navbarRoutes.map((item)=>(
-          <Link href={item.href}>
-          <DropdownMenuItem className="flex items-center gap-2">
-            <item.icon/>
-            <div>{item.name}</div>
-          </DropdownMenuItem>
-          </Link>
-        ))}
-        </div>
+          <div className={!isActive ? "sm:hidden" : ""}>
+            {navbarRoutes.map((item) => (
+              <Link href={item.href}>
+                <DropdownMenuItem className="flex items-center gap-2">
+                  <item.icon />
+                  <div>{item.name}</div>
+                </DropdownMenuItem>
+              </Link>
+            ))}
+          </div>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
             <SignOutButton />

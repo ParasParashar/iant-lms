@@ -23,6 +23,7 @@ const CreateGroup = ({ children }) => {
   const [result, setResult] = useState([]);
   const [selectUser, setSelectUser] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState(false);
   const groupInputRef = useRef();
   const router = useRouter();
   // searchUser function
@@ -79,10 +80,11 @@ const CreateGroup = ({ children }) => {
     });
     setSelectUser([]);
     router.push(`/messages/group/${routeId}`);
+    setOpen(false);
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>{children}</DialogTrigger>
       <DialogContent className="dark:bg-slate-900">
         <DialogHeader className="flex flex-col items-center justify-center gap-2 w-full">

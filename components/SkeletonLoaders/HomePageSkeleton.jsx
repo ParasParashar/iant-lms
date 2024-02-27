@@ -8,7 +8,7 @@ export default function HomePageSkeleton() {
       {/* user details and charts */}
       <main className="flex  gap-1 flex-col w-full justify-between md:h-[60%] md:flex-row">
         {/* user profile */}
-        <section className="w-full md:w-[30%] gap-3 flex flex-col p-4 md:p-6 h-full">
+        <section className="w-full flex-1 md:w-[30%] gap-3 flex flex-col p-6 md:p-8 h-full border dark:border-white/10 rounded-lg">
           <Skeleton className=" mx-auto w-40 h-8 rounded-full" />
           <div className="flex md:flex-col gap-8 md:gap-2 items-center">
             <Skeleton className=" w-20 h-20 md:w-24 md:h-24 rounded-full mb-2" />
@@ -26,7 +26,7 @@ export default function HomePageSkeleton() {
           {/* slogan */}
           <Skeleton className=" h-16 rounded-full p-4" />
           {/* graph */}
-          <div className="p-3 h-full">
+          <div className="p-3 h-full border dark:border-white/10 rounded-lg">
             <Skeleton className="w-44 h-6 rounded-full p-4 mb-2" />
             <Skeleton className="w-full   h-72 rounded-md p-4" />
           </div>
@@ -35,7 +35,7 @@ export default function HomePageSkeleton() {
       {/* courses */}
       <div className="flex gap-2">
         {arr.map((item) => (
-          <div className=" w-[250px] h-full">
+          <div className=" w-[250px] h-full ">
             <CourseCardSkeleton key={item} />
           </div>
         ))}

@@ -17,9 +17,13 @@ const UserCard = ({
   isAdmin,
   isUserAdmin,
   isForSidebar,
+  handleClickTrigger,
 }) => {
   const router = useRouter();
   const handleClick = () => {
+    if (handleClickTrigger !== undefined) {
+      handleClickTrigger();
+    }
     router.push(`/messages/${id}`);
   };
   const { onlineUsers } = useSocket();
