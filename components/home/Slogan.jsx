@@ -25,7 +25,7 @@ const Slogan = () => {
       if (index === 10) {
         index = 0;
       }
-    }, 5000);
+    }, 3000);
 
     return () => {
       clearInterval(intervalID);

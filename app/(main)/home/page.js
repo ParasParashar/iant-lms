@@ -13,10 +13,7 @@ const page = async () => {
   return (
     <div className="flex flex-col justify-between gap-2 w-full min-h-full py-3 max-sm:py-1">
       <Suspense fallback={<HomePageSkeletonForUser />}>
-        <>
-          <HomePageSkeletonForUser />
-          <ProfileDetails />
-        </>
+        <ProfileDetails />
       </Suspense>
       <Suspense fallback={<HomePageSkeleton />}>
         <EnrolledCourses />

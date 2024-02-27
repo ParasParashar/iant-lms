@@ -1,6 +1,5 @@
 import { getAllCourses, getCourseCategory } from "@/actions/course.actions";
 import { courseCompletionData, findOrCreateUser } from "@/actions/user.actions";
-import CourseCardSkeleton from "@/components/SkeletonLoaders/CourseCardSkeleton";
 import CategoryBarItem from "@/components/shared/CategoryBarItem";
 import dynamic from "next/dynamic";
 
@@ -25,6 +24,7 @@ export default async function Courses({ searchParams }) {
         ))}
       </section>
       {/* <Suspense fallback="loading....."> */}
+
       <main className=" grid max-sm:grid-cols-1 grid-cols-2 gap-3 md:grid-cols-3  ">
         {data?.map(async (item) => {
           const { completionPercentage } = await courseCompletionData(item._id);
@@ -42,6 +42,7 @@ export default async function Courses({ searchParams }) {
           );
         })}
       </main>
+
       {/* </Suspense> */}
     </div>
   );
