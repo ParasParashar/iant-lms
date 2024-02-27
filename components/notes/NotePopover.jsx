@@ -5,10 +5,21 @@ import { IoIosRemoveCircle } from "react-icons/io";
 import { MdDeleteForever, MdPublish } from "react-icons/md";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { ConfirmModel } from "../shared/ConfirmModel";
+import { useState } from "react";
 
 export function NotePopover({ isPublished, handleActions, handleDeleteNote }) {
+  const [open, setOpen] = useState(false);
+  const deleteButton = () => {
+    handleDeleteNote();
+    // setOpen(false);
+  };
+  const actionButton = () => {
+    handleDeleteNote();
+    setOpen(false);
+  };
+
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
           varinat="link"
@@ -22,7 +33,7 @@ export function NotePopover({ isPublished, handleActions, handleDeleteNote }) {
         <Button
           varinat="outline"
           size="sm"
-          onClick={handleActions}
+          onClick={actionButton}
           className=" w-full text-sm flex bg-tranperent hover:bg-white/30 dark:text-primary"
         >
           {isPublished ? (
@@ -39,7 +50,7 @@ export function NotePopover({ isPublished, handleActions, handleDeleteNote }) {
         </Button>
         <ConfirmModel
           message="This action will permanently delete your note"
-          onConfirm={handleDeleteNote}
+          onConfirm={deleteButton}
         >
           <Button
             varinat="outline"
@@ -47,8 +58,8 @@ export function NotePopover({ isPublished, handleActions, handleDeleteNote }) {
             className=" w-full bg-tranperent hover:bg-white/30 mt-1"
           >
             <div className="flex items-center justify-center gap-1">
-            <MdDeleteForever size={18} className="text-red-500" />
-            <span className="text-sm dark:text-primary">Delete Note</span>
+              <MdDeleteForever size={18} className="text-red-500" />
+              <span className="text-sm dark:text-primary">Delete Note</span>
             </div>
           </Button>
         </ConfirmModel>

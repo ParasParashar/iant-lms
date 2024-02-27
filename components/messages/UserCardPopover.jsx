@@ -21,7 +21,7 @@ import { ConfirmModel } from "../shared/ConfirmModel";
 const UserCardPopover = ({ userId }) => {
   const params = useParams();
   const [loading, setLoading] = useState(false);
-
+  const [open, setOpen] = useState(false);
   const handleCreateAdmin = async () => {
     setLoading(true);
     try {
@@ -30,6 +30,7 @@ const UserCardPopover = ({ userId }) => {
       console.error("Error creating ", error.message);
     } finally {
       setLoading(false);
+      setOpen(false);
     }
   };
 
@@ -41,11 +42,12 @@ const UserCardPopover = ({ userId }) => {
       console.error("Error removing ", error.message);
     } finally {
       setLoading(false);
+      setOpen(false);
     }
   };
 
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button variant="ghost" size="icon" className="rounded-full h-6 w-6">
           <IoEllipsisVerticalSharp

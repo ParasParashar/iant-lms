@@ -63,7 +63,7 @@ const AddUsersToGroup = ({ children, groupName, members, groupId }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className="w-full">{children}</DialogTrigger>
-      <DialogContent className=" ">
+      <DialogContent className=" bg-slate-900 rounded-lg">
         <DialogHeader>
           <DialogTitle className="text-center truncate">
             Add User to {groupName} group
@@ -106,7 +106,9 @@ const AddUsersToGroup = ({ children, groupName, members, groupId }) => {
                     {isMember ? (
                       <div className="flex rounded-full line-clamp-1 bg-gray-400 dark:bg-sky-300 text-secondary text-xs p-1">
                         <FaUserCheck size={15} className="text-sky-500" />
-                        <span>Already a member</span>
+                        <span className="hidden lg:block">
+                          Already a member
+                        </span>
                       </div>
                     ) : (
                       <div
