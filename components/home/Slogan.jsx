@@ -17,7 +17,6 @@ const Slogan = () => {
   ];
 
   let [index, setIndex] = useState(0);
-
   useEffect(() => {
     let intervalID = setInterval(() => {
       setIndex(index);
@@ -25,7 +24,7 @@ const Slogan = () => {
       if (index === 10) {
         index = 0;
       }
-    }, 3000);
+    }, 10000);
 
     return () => {
       clearInterval(intervalID);
@@ -34,9 +33,8 @@ const Slogan = () => {
 
   return (
     <Card className=" h-[20%] rounded-full p-4">
-      <h4 className=" font-serif transition-all duration-300 ease-in w-full h-full text-xl text-center">
-        {slogans[index]}
-      </h4>
+
+<marquee behavior="scroll" direction="left"  className=" font-serif  w-full h-full text-xl text-center"> {slogans[index]} </marquee>
     </Card>
   );
 };

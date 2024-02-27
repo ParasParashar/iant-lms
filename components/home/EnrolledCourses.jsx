@@ -16,7 +16,7 @@ const EnrolledCourses = async () => {
       </h3>
       <section
         id="enrolledCourses"
-        className="flex w-full  overflow-x-auto scroll-smooth custom-scrollbar gap-2"
+        className="flex w-full  overflow-x-auto scroll-smooth main-scrollbar gap-2"
       >
         {userEnrolledCourses ? (
           userEnrolledCourses?.map(async (item) => {

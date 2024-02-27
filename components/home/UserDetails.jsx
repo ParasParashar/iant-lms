@@ -38,9 +38,9 @@ const UserDetails = async () => {
             <Link className=" mx-auto" href="/home/#enrolledCourses">
               <Button
                 size="sm"
-                className=" mx-auto gap-4 md:gap-8 bg-[#d8e8f7] rounded-full font-mono text-black hover:bg-[#b1cae3] hover:font-semibold"
+                className=" mx-auto  bg-[#d8e8f7] rounded-full font-mono text-black hover:bg-[#b1cae3] hover:font-semibold"
               >
-                <span>Enrolled Courses:</span> {enrolledCourses.length}
+                <span>Enrolled Courses : {enrolledCourses.length}</span> 
               </Button>
             </Link>
           </div>

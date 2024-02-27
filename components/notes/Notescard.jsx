@@ -9,6 +9,7 @@ import {
 import { cn, formatDate } from "@/lib/utils";
 import Link from "next/link";
 import SaveNote from "./SaveNote";
+import Preview from "../shared/Preview";
 const Notescard = ({
   noteId,
   time,
@@ -34,7 +35,7 @@ const Notescard = ({
   return (
     <Card
       className={cn(
-        "w-full h-[250px]   notescardhover  dark:notecardbgdark shadow-md ",
+        "w-full h-[250px] notescardhover  dark:notecardbgdark shadow-md transition duration-700 ease-in-out ",
         isPublished?"notecardbg":"bg-pink-500/20"
       )}
     >
@@ -60,12 +61,9 @@ const Notescard = ({
             {title.slice(0,15)}
           </span>
         </CardTitle>
-        <div className=" cursor-pointer w-full h-[80%]  text-start font-[400]  mt-2 ">
-          <div
-            dangerouslySetInnerHTML={{
-              __html: content.split(" ").slice(0, 20).join(" "),
-            }}
-            className="truncate text-[1rem] text-wrap leading-tight "
+        <div className=" w-full h-[80%]  text-start font-[400]  mt-2 overflow-hidden cursor-pointer ">
+          <Preview
+            value={content.split(" ").slice(0,30).join(" ")}
           />
         </div>
         <CardFooter className="flex flex-col gap-1 items-start p-0 leading-none">

@@ -48,14 +48,14 @@ const UserCard = ({
                     Online
                   </span>
                 ) : (
-                  <span className="text-[10px] text-muted-foreground">
+                  <span className="text-xs text-muted-foreground">
                     Offline
                   </span>
                 )}
                 {isAdmin && (
-                  <div className=" flex items-center">
-                    <FaUser className="text-blue-500" />
-                    <span className="text-blue-500 font-mono">Admin</span>
+                  <div className=" flex  justify-center gap-[2px]">
+                    <FaUser className="text-blue-500" size={12}/>
+                    <span className="text-blue-500 font-mono leading-none  text-[14px]">Admin</span>
                   </div>
                 )}
               </div>

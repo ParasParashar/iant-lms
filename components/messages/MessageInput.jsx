@@ -34,7 +34,7 @@ const MessageInput = ({ receiverId, group, groupId, senderId }) => {
   return (
     <form
       onSubmit={handleCreateMessage}
-      className="flex sticky  bottom-0 right-0  p-0.5  items-center w-full   bg-slate-300  dark:bg-slate-700 rounded-lg"
+      className="flex sticky  bottom-0 right-0  p-0.5  items-center w-full   bg-slate-300  dark:bg-slate-700 rounded-b-lg"
     >
       <input
         autoFocus

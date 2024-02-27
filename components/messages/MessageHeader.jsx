@@ -9,7 +9,7 @@ const MessageHeader = ({ title, email, authId, group, path, converId }) => {
   const { onlineUsers } = useSocket();
   const onlineUser = onlineUsers?.includes(authId);
   return (
-    <header className="flex  rounded-lg  items-center justify-between w-full h-14 p-1 bg-slate-300/90 dark:bg-slate-700  px-2 lg:px-5 ">
+    <header className="flex  rounded-t-lg  items-center justify-between w-full h-14 p-1 bg-slate-300/90 dark:bg-slate-700  px-2 lg:px-5 ">
       <div className="flex gap-x-1 items-center  justify-start ">
         <div className="block lg:hidden">
           <MobileSidebar />
