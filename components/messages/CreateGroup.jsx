@@ -149,6 +149,7 @@ const CreateGroup = ({ children }) => {
                         .includes(item._id);
                       return (
                         <section
+                          key={item._id}
                           onClick={() =>
                             handleSelect({ userId: item._id, name: item.name })
                           }

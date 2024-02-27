@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Card } from "../ui/card";
 
 const Slogan = () => {
@@ -16,14 +16,10 @@ const Slogan = () => {
     "Embrace the Challenge, Conquer the Books: Study for Success.",
   ];
 
-  let [index, setIndex] = useState(0);
+  let indexRef = useRef(0);
   useEffect(() => {
-    let intervalID = setInterval(() => {
-      setIndex(index);
-      index = index + 1;
-      if (index === 10) {
-        index = 0;
-      }
+    const intervalID = setInterval(() => {
+      indexRef.current = (indexRef.current + 1) % slogans.length;
     }, 4000);
 
     return () => {
@@ -34,7 +30,7 @@ const Slogan = () => {
   return (
     <Card className=" h-[20%] text-center rounded-full p-4">
       <p className=" font-serif  slogan_animate  w-full h-full text-xl text-center">
-        {slogans[index]}
+        {slogans[indexRef.current]}
       </p>
     </Card>
   );

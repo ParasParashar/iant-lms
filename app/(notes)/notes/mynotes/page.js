@@ -14,7 +14,7 @@ const page = async ({ searchParams }) => {
       {notes?.map((item) => (
         <Suspense key={item._id} fallback={<NotesCardSkeleton />}>
           <Notescard
-            // key={item._id}
+            key={item._id}
             title={item.title}
             content={item.content}
             noteId={JSON.parse(JSON.stringify(item._id))}

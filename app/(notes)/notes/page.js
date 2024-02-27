@@ -17,7 +17,7 @@ const page = async ({ searchParams }) => {
         const isUserNote = uesrNoteIds?.includes(items._id);
         return (
           <>
-            <Suspense fallback={<NotesCardSkeleton />}>
+            <Suspense key={items._id} fallback={<NotesCardSkeleton />}>
               <Notescard
                 key={items._id}
                 noteId={items._id}
