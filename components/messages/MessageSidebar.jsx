@@ -79,25 +79,25 @@ const MessageSidebar = ({ data }) => {
                 />
               );
             } else {
-              const isActive = pathName?.includes(item.group._id);
+              const isActive = pathName?.includes(item?.group?._id);
               // for groups
               return (
                 <section
-                  key={item.group._id}
-                  onClick={() => handleClick(item.group._id)}
+                  key={item?.group?._id}
+                  onClick={() => handleClick(item?.group._id)}
                   className={cn(
                     "flex cursor-pointer   group  rounded-lg items-center gap-2 border-b-2 border-slate-300 shadow-inner dark:border-slate-700 p-1 hover:bg-white dark:hover:bg-slate-600/80 hover:shadow-lg ",
                     isActive && " bg-white dark:bg-slate-600/80  "
                   )}
                 >
-                  <UserAvatar group name={item.group.name} />
+                  <UserAvatar group name={item?.group?.name} />
                   <p
                     className={cn(
                       "text-sm font-light uppercase line-clamp-2 group-hover:font-semibold",
                       isActive && "font-semibold p-1"
                     )}
                   >
-                    {item.group.name}
+                    {item?.group?.name}
                   </p>
                 </section>
               );

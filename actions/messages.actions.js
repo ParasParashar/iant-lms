@@ -157,7 +157,7 @@ export async function createGroup({ groupName, participants }) {
       },
       { upsert: true, new: true }
     );
-
+    revalidatePath(`/messages/group/${group._id}`);
     return JSON.parse(JSON.stringify(group._id));
   } catch (error) {
     console.log("group creation error", error);
@@ -345,7 +345,7 @@ export async function exitTheGroup({ groupId }) {
       userId: user?._id,
       isAdmin: true,
     });
-    revalidatePath(`/messages/group/${groupId}`);
+    revalidatePath(`/messages`);
   } catch (error) {
     console.log("group name error", error);
   }
@@ -453,6 +453,7 @@ export async function addMemberToGroup({ groupId, members }) {
       conversation.participants.push(item);
     }
     await Promise.all([group.save(), conversation.save()]);
+    revalidatePath(`/messages/group/${groupId}`);
   } catch (error) {
     console.log("add group member error", error.message);
   }

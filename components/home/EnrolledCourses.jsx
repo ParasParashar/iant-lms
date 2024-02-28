@@ -1,6 +1,5 @@
 import { getAllCourses } from "@/actions/course.actions";
 import CourseCard from "../shared/CourseCard";
-import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import {
   courseCompletionData,
   getAllUserEnrolledCourses,
