@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { NoteEditor } from "../notes/NoteEditor";
 import { Button } from "../ui/button";
 import { PlusCircleIcon } from "lucide-react";
-import { CgCloseO } from "react-icons/cg";
+import { IoIosRemoveCircle } from "react-icons/io";
 
 const CreateNotes = ({ data, courseId, chapterId }) => {
   const [notes, setNotes] = useState([...data]);
@@ -56,9 +56,9 @@ const CreateNotes = ({ data, courseId, chapterId }) => {
             onClick={() => handleDeleteNote(item._id)}
             variant="ghost"
             size="icon2"
-            className="absolute  top-[-7px] left-[-1px]"
+            className="absolute  top-[-7px] md:left-[-1px] left-[-10px]"
           >
-            <CgCloseO size={25} className="text-red-500"/>
+            <IoIosRemoveCircle size={25} className="text-red-500" />
           </Button>
         </section>
       ))}

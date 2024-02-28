@@ -14,7 +14,11 @@ const BigEditor = ({
   const ReactQuill = useMemo(
     () =>
       dynamic(() => import("react-quill"), {
-        loading: () => <EditorSkeleton />,
+        loading: () => (
+          <div className="h-[80vh] w-full">
+            <EditorSkeleton />
+          </div>
+        ),
         ssr: false,
       }),
     []
@@ -32,7 +36,7 @@ const BigEditor = ({
         theme="snow"
         value={Content}
         onChange={HandleContentChange}
-        className="dark:text-white dark:bg-transparitent border-none outline-none w-full custom-scrollbar pb-12 h-[80vh] mainEditerHight rounded-lg"
+        className="dark:text-white dark:bg-transparitent border-none outline-none w-full custom-scrollbar pb-12 h-[80vh]   rounded-lg"
       />
     </>
   );

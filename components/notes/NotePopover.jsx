@@ -9,12 +9,8 @@ import { useState } from "react";
 
 export function NotePopover({ isPublished, handleActions, handleDeleteNote }) {
   const [open, setOpen] = useState(false);
-  const deleteButton = () => {
-    handleDeleteNote();
-    // setOpen(false);
-  };
   const actionButton = () => {
-    handleDeleteNote();
+    handleActions();
     setOpen(false);
   };
 
@@ -50,7 +46,7 @@ export function NotePopover({ isPublished, handleActions, handleDeleteNote }) {
         </Button>
         <ConfirmModel
           message="This action will permanently delete your note"
-          onConfirm={deleteButton}
+          onConfirm={handleDeleteNote}
         >
           <Button
             varinat="outline"

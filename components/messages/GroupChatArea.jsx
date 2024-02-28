@@ -6,7 +6,7 @@ import { useSocket } from "@/context/SocketProvider";
 
 const GroupChatArea = ({ groupConversation }) => {
   const { socket } = useSocket();
-  const [conversation, setConversation] = useState(groupConversation);
+  const [conversation, setConversation] = useState(groupConversation || []);
   const messageRef = useRef(null);
   // setting the conversations.
   useEffect(() => {
@@ -15,9 +15,11 @@ const GroupChatArea = ({ groupConversation }) => {
 
   // handleing socket io message
   const handleNewMessage = (message) => {
-    setConversation((prevConversation) => [...prevConversation, message]);
+    setConversation((prevConversation) => [
+      ...(prevConversation || []),
+      message,
+    ]);
   };
-
   // listen for receive-message event
   useEffect(() => {
     socket?.on("receive-group-message", handleNewMessage);

@@ -17,7 +17,7 @@ const LinkButton = ({ href, type }) => {
       onClick={handleClick}
       size="sm"
       variant="outline"
-      className=" group  dark:hover:border-black border  rounded-full text-center flex items-center"
+      className=" group  dark:hover:border-black border w-full  rounded-full text-center flex items-center"
     >
       {type === "create" && (
         <div className="flex items-center justify-center gap-1">

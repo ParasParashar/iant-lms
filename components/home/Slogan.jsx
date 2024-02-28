@@ -19,7 +19,7 @@ const Slogan = () => {
   let indexRef = useRef(0);
   useEffect(() => {
     const intervalID = setInterval(() => {
-      indexRef.current = (indexRef.current + 1) % slogans.length;
+      indexRef.current = indexRef.current + 1;
     }, 4000);
 
     return () => {

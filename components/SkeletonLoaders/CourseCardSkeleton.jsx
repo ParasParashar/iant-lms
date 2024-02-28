@@ -4,7 +4,7 @@ import { Skeleton } from "../ui/skeleton";
 
 const CourseCardSkeleton = () => {
   return (
-    <div className="p-2 flex flex-col gap-2 border dark:border-white/10">
+    <div className="p-2 flex flex-col rounded-lg gap-2 border dark:border-white/10">
       <div className="w-full h-full p-4">
         <Skeleton className=" aspect-square" />
       </div>

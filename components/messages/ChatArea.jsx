@@ -6,7 +6,7 @@ import { useSocket } from "@/context/SocketProvider";
 
 const ChatArea = ({ userConversations }) => {
   const { socket } = useSocket();
-  const [conversation, setConversation] = useState(userConversations);
+  const [conversation, setConversation] = useState(userConversations || []);
   const messageRef = useRef(null);
   // setting the conversations.
   useEffect(() => {
@@ -15,9 +15,8 @@ const ChatArea = ({ userConversations }) => {
 
   // handleing socket io message
   const handleNewMessage = (message) => {
-    setConversation((prevConversation) => [...prevConversation, message]);
+    setConversation((prev) => [...(prev || []), message]);
   };
-
   // listen for receive-message event
   useEffect(() => {
     socket?.on("receive-message", handleNewMessage);

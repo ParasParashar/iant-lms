@@ -31,7 +31,7 @@ const MainNotesEditor = ({ defaultTitle, defaultContent, type, noteId }) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-1">
+    <div className="flex flex-col h-full  items-center justify-center gap-1">
       <Button
         onClick={(e) => handleCreateNote(e)}
         disabled={!data.title.trim() || !data.content.trim()}

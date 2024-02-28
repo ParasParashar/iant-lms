@@ -19,7 +19,7 @@ const EnrolledCourses = async () => {
         id="enrolledCourses"
         className="flex w-full overflow-x-auto scroll-smooth enroll-scrollbar gap-2 relative"
       >
-        {userEnrolledCourses ? (
+        {userEnrolledCourses?.length > 0 ? (
           userEnrolledCourses?.map(async (item) => {
             const { completionPercentage } = await courseCompletionData(
               item._id

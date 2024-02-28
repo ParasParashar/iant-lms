@@ -1,4 +1,4 @@
-// import LoginButton from "@/components/shared/LoginButton";
+import LoginButton from "@/components/shared/LoginButton";
 import { Button } from "@/components/ui/button";
 import { SignInButton, auth } from "@clerk/nextjs";
 import Image from "next/image";
@@ -10,7 +10,7 @@ const LoginPage = () => {
   if (userId) redirect("/home");
   return (
     <>
-      <main className=" w-screen h-full relative overflow-hidden m-auto ">
+      <main className=" w-screen h-full relative overflow-hidden m-auto  bg-white">
         <Image
           src={"/login_bg.png"}
           className="max-sm:hidden"
@@ -35,19 +35,20 @@ const LoginPage = () => {
                   Management System
                 </div>
                 <div>
-                  {!userId && (
+                  {!userId ? (
                     <SignInButton>
                       <Button
-                        variant="ghost"
+                        variant="outline"
                         size={"lg"}
-                        className="text-lg border-2 border-white "
+                        className="text-lg border-2 border-black bg-secondary hover:bg-gray-300 "
                       >
                         <AiOutlineLogin className="mr-3 " />
                         Login to continue.
                       </Button>
                     </SignInButton>
+                  ) : (
+                    <LoginButton />
                   )}
-                  {/* <LoginButton /> */}
                 </div>
               </div>
               <div>

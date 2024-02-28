@@ -36,7 +36,7 @@ const page = async ({ params }) => {
       action={handleCourseAccess}
       className=" px-5 py-3 w-full  flex  justify-center"
     >
-      <article className="flex flex-col gap-2 md:gap-5 xl:w-[700px] fixed lg:py-4  px-6 py-2  rounded-lg  bg-sky-100/70 dark:bg-[#020617] shadow-lg">
+      <article className="flex flex-col gap-2 md:gap-5 xl:w-[700px] lg:py-4  px-6 py-2  rounded-lg  bg-sky-100/70 dark:bg-[#020617] shadow-lg">
         <h1 className="text-center font-extrabold text-xl text-muted-foreground">
           Course Overview
         </h1>

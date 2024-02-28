@@ -158,7 +158,7 @@ export const NoteEditor = ({
           <Button
             disabled={!title.trim() || !value.trim() || isLoading || isDeleting}
             onClick={handleSubmit}
-            className="text-lg myAccessBtn hover:bg-blue-600"
+            className="text-lg myAccessBtn max-sm:mt-10 hover:bg-blue-600"
           >
             {isLoading ? (
               <Loader className="text-muted-foreground animate-spin" />
