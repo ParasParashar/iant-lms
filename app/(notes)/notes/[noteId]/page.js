@@ -17,9 +17,11 @@ const NotePage = async ({ params }) => {
       <div className="flex justify-between ">
         <section className="flex flex-col space-y-1">
           <p className="font-bold text-[14px] font-sans">
-           By - {notes.note.userId.name}
+            By - {notes.note.userId.name}
           </p>
-          <p className="dark:text-white/60 text-xs">{notes.note.userId.email}</p>
+          <p className="dark:text-white/60 text-xs">
+            {notes.note.userId.email}
+          </p>
           <p className="dark:text-white/60 text-xs">{newtime}</p>
         </section>
         {notes?.isUserNote && (
@@ -28,16 +30,18 @@ const NotePage = async ({ params }) => {
       </div>
 
       <div className=" py-3 ">
-        <div className="flex flex-col items-start justify-start gap-1">
-          <span className="text-[#f85151] font-semibold text-xl">
-            Title :-{" "}
-          </span>
-          <h4 className=" w-[89%]  text-xl font-bold antialiased pl-[15px] dark:text-white">
-            {notes.note?.title}
-          </h4>
+        <div className="flex justify-center">
+          <div>
+            <span className="text-[#8a9fe9b1] dark:text-[#8a9fe970] font-semibold text-xl">
+              Title :-
+            </span>
+            <span className=" w-[89%] text-xl font-bold antialiased pl-[10px] dark:text-white">
+              {notes.note?.title}
+            </span>
+          </div>
         </div>
         <div className="flex flex-col items-start gap-1">
-          <span className="text-[#f85151] font-semibold text-xl">
+          <span className="text-[#8a9fe9b1] dark:text-[#8a9fe970] font-semibold text-xl">
             Content :-{" "}
           </span>
           <Preview value={notes.note?.content} />

@@ -6,7 +6,7 @@ export default function HomePageSkeleton() {
   return (
     <div className="flex flex-col justify-between gap-2 w-full min-h-full py-3 max-sm:py-1">
       {/* user details and charts */}
-      <main className="flex  gap-1 flex-col w-full justify-between md:h-[60%] md:flex-row">
+      <main className="flex  gap-1 flex-col w-full justify-between md:h-[80%] md:flex-row">
         {/* user profile */}
         <section className="w-full flex-1 md:w-[30%] gap-3 flex flex-col p-6 md:p-8 h-full border dark:border-white/10 rounded-lg">
           <Skeleton className=" mx-auto w-40 h-8 rounded-full" />

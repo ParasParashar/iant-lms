@@ -1,5 +1,6 @@
 import { getAllCourses } from "@/actions/course.actions";
 import CourseCard from "../shared/CourseCard";
+import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import {
   courseCompletionData,
   getAllUserEnrolledCourses,
@@ -16,7 +17,7 @@ const EnrolledCourses = async () => {
       </h3>
       <section
         id="enrolledCourses"
-        className="flex w-full  overflow-x-auto scroll-smooth main-scrollbar gap-2"
+        className="flex w-full overflow-x-auto scroll-smooth enroll-scrollbar gap-2 relative"
       >
         {userEnrolledCourses ? (
           userEnrolledCourses?.map(async (item) => {
