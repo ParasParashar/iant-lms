@@ -28,18 +28,17 @@ const ProfileButton = () => {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger>
-          <div className=" flex flex-col leading-none items-center justify-center px-2 group ">
-            <div className="relative rounded-full w-[25px] h-[25px] items-center justify-center flex">
+          <div className=" flex flex-col leading-none items-center justify-center  group mt-2">
+            <div className="relative rounded-full w-[28px] h-[28px] items-center justify-center flex">
               <Image
                 src={user?.imageUrl}
                 fill
                 alt="Logo"
-                className="rounded-full "
+                className="rounded-full"
               />
             </div>
-            {/* <span>Me</span> */}
             <IoMdArrowDropdown
-              size={18}
+              size={20}
               className="text-muted-foreground group-hover:text-black "
             />
           </div>

@@ -9,7 +9,7 @@ import { BiSolidMessageDetail } from "react-icons/bi";
 const page = () => {
   return (
     <Suspense fallback={<MessageHomeSkeleton />}>
-      <main className="flex flex-col  items-center  w-full h-full  justify-center gap-2">
+      <main className="flex flex-col  items-center realtive w-full h-full  justify-center gap-2">
         <section className="relative h-1/2 w-1/2">
           <Image src={"/chatImage.png"} alt="Chat Image" fill />
         </section>
@@ -17,8 +17,8 @@ const page = () => {
           <h4 className="text-center">
             Select a conversation to start messaging.
           </h4>
-          <div className="block lg:hidden">
-            <MobileSidebar />
+          <div className="block lg:hidden  absolute top-[60px] left-2">
+            <MobileSidebar /> 
           </div>
         </div>
         <SearchUsers>
