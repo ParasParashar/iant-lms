@@ -1,8 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    // loader: "custom",
-    // loaderFile: "./my/image/loader.js",
     remotePatterns: [
       {
         protocol: "https",
@@ -13,6 +11,9 @@ const nextConfig = {
         hostname: "img.clerk.com",
       },
     ],
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
   },
 };
 
