@@ -11,10 +11,15 @@ import {
 } from "@/components/ui/alert-dialog";
 
 export function ConfirmModel({ children, message, onConfirm }) {
+  const handleClick = (e) => {
+    e.stopPropagation(); // Stop event propagation here
+    onConfirm(e);
+  };
+
   return (
     <AlertDialog>
       <AlertDialogTrigger className="w-full">{children}</AlertDialogTrigger>
-      <AlertDialogContent className="bg-secondary">
+      <AlertDialogContent className="">
         <AlertDialogHeader>
           <AlertDialogTitle className="text-center">
             Are you absolutely sure?
@@ -27,7 +32,7 @@ export function ConfirmModel({ children, message, onConfirm }) {
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
             className="bg-red-500 hover:bg-red-800 text-white"
-            onClick={onConfirm}
+            onClick={handleClick}
           >
             Continue
           </AlertDialogAction>

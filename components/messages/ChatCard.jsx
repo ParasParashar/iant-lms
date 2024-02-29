@@ -33,7 +33,7 @@ const ChatCard = ({ conversation, group }) => {
           {senderName}
           <span className="text-[10px]">{formatDate(timestamp)}</span>
         </p>
-        <div className="text-sm font-light text-break break-words  text-ellipsis ">
+        <div className="text-sm font-light  break-all  text-break break-words  ">
           {content}
         </div>
       </div>

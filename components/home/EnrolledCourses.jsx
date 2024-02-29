@@ -24,7 +24,10 @@ const EnrolledCourses = async () => {
               item._id
             );
             return (
-              <div key={item._id} className="h-full min-w-[250px] max-w-[300px">
+              <div
+                key={item._id}
+                className=" min-w-[250px] max-w-[300px] border h-[400px] "
+              >
                 <CourseCard
                   id={JSON.parse(JSON.stringify(item._id))}
                   title={item.title}

@@ -11,8 +11,11 @@ import UserCard from "./UserCard";
 import CreateGroup from "./CreateGroup";
 import UserAvatar from "./UserAvatar";
 import { cn } from "@/lib/utils";
+import { useConRefresh } from "@/hooks/useMessageSidebar";
+// import useConRefresh from "@/hooks/useMessageSidebar";
 
 const MessageSidebar = ({ data }) => {
+  const { isRefresh, toggleRefresh } = useConRefresh();
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const pathName = usePathname();
@@ -31,11 +34,11 @@ const MessageSidebar = ({ data }) => {
       }
     }
     getData();
-  }, [data]);
+  }, [data, isRefresh]);
+
   const handleClick = (id) => {
     router.push(`/messages/group/${id}`);
   };
-
   return (
     <aside className="bg-secondary h-full w-full  rounded-lg">
       {/* Search bar */}
@@ -93,7 +96,7 @@ const MessageSidebar = ({ data }) => {
                   <UserAvatar group name={item?.group?.name} />
                   <p
                     className={cn(
-                      "text-sm font-light uppercase line-clamp-2 group-hover:font-semibold",
+                      "text-sm font-light uppercase line-clamp-1 group-hover:font-semibold",
                       isActive && "font-semibold p-1"
                     )}
                   >

@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/dialog";
 import { useEffect, useState } from "react";
 import { searchUserByName } from "@/actions/user.actions";
-import { useDebounce } from "@/hooks/useDebounce";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import UserAvatar from "./UserAvatar";
@@ -17,24 +16,34 @@ import { FaUserCheck } from "react-icons/fa";
 import { IoPersonAddSharp, IoPersonRemoveSharp } from "react-icons/io5";
 import { Button } from "../ui/button";
 import { addMemberToGroup } from "@/actions/messages.actions";
+import { useGroupRefresh } from "@/hooks/useMessageSidebar";
 
 const AddUsersToGroup = ({ children, groupName, members, groupId }) => {
+  const { toggleGRefresh } = useGroupRefresh();
   const [search, setSearch] = useState("");
   const [result, setResult] = useState([]);
   const [selectUser, setSelectUser] = useState([]);
   const [open, setOpen] = useState(false);
   const router = useRouter();
-  // searchUser function
+
+  // Handle search on input change with debounce
+  useEffect(() => {
+    const debounceTimer = setTimeout(() => {
+      searchUser();
+    }, 200);
+    return () => clearTimeout(debounceTimer);
+  }, [search]);
+
+  // Search user function
   async function searchUser() {
-    const data = await searchUserByName(search);
+    let data;
+    if (search === "") {
+      data = await searchUserByName("");
+    } else {
+      data = await searchUserByName(search);
+    }
     setResult(data);
   }
-  // using debounce to create latency in search
-  const debounce = useDebounce(searchUser, 200);
-
-  useEffect(() => {
-    debounce();
-  }, [search, debounce]);
 
   //   searching
   const handleSearch = (e) => {
@@ -53,17 +62,23 @@ const AddUsersToGroup = ({ children, groupName, members, groupId }) => {
       setSelectUser((prev) => [...prev, user]);
     }
   };
-  const handleClick = async () => {
+  const handleClick = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     await addMemberToGroup({
       members: selectUser,
       groupId: groupId,
-    }).then(() => setOpen(false));
+    })
+      .then(() => {
+        return toggleGRefresh();
+      })
+      .then(() => setOpen(false));
   };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className="w-full">{children}</DialogTrigger>
-      <DialogContent className=" bg-slate-900 rounded-lg">
+      <DialogContent className=" dark:bg-slate-900 rounded-lg">
         <DialogHeader>
           <DialogTitle className="text-center truncate">
             Add User to {groupName} group
@@ -146,10 +161,10 @@ const AddUsersToGroup = ({ children, groupName, members, groupId }) => {
         </DialogHeader>
         <DialogFooter>
           <Button
-            onClick={handleClick}
+            onClick={(e) => handleClick(e)}
             disabled={selectUser.length === 0}
             variant="outline"
-            size="sm"
+            size="lg"
             className="w-full bg-blue-500 hover:bg-blue-400 transition-all ease-in rounded-lg"
           >
             Add users

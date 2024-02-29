@@ -25,6 +25,8 @@ const UserDetails = async () => {
               fill
               className="  border-2 border-blue-300  rounded-full"
               alt="User Image"
+              sizes="(max-width:90px),(max-height:90px)"
+              priority={true}
             />
           </div>
           <div className="flex flex-col gap-4 md:gap-12 ">

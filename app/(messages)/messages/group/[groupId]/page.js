@@ -4,7 +4,7 @@ import {
 } from "@/actions/messages.actions";
 import { findOrCreateUser } from "@/actions/user.actions";
 import GroupChatArea from "@/components/messages/GroupChatArea";
-import GroupUsersSidebar from "@/components/messages/GroupUsersSidebar";
+import GroupInfoSidebar from "@/components/messages/GroupInfoSidebar";
 import MessageHeader from "@/components/messages/MessageHeader";
 import MessageHeaderPopover from "@/components/messages/MessageHeaderPopover";
 import MessageInput from "@/components/messages/MessageInput";
@@ -52,7 +52,7 @@ const GroupPage = async ({ params }) => {
         <MessageInput group groupId={params.groupId} />
       </main>
       <div className="hidden  w-[23rem] xl:flex h-full">
-        <GroupUsersSidebar id={params.groupId} />
+        <GroupInfoSidebar id={params.groupId} />
       </div>
     </div>
   );

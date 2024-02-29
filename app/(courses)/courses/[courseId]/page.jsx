@@ -43,9 +43,12 @@ const page = async ({ params }) => {
         <div className="relative mx-auto w-60 h-60 md:w-60 md:h-60">
           <Image
             alt="Course Image"
-            src={result?.img_Url}
+            src={result.img_Url}
+            quality={80}
             fill
-            className="rounded-md object-fill shadow-lg"
+            sizes="(max-width:200px) ,(max-height:200px)"
+            priority={true}
+            className="rounded-lg transition-all  ease-in duration-1000"
           />
         </div>
         <div className="flex items-center gap-x-4">

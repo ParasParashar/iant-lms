@@ -1,4 +1,3 @@
-"use client";
 import { Comment } from "react-loader-spinner";
 
 export default function MessagePageLoader() {

@@ -77,14 +77,14 @@ export async function createMessage({ receiverId, content }) {
     const populatedMessage = await Message.findById(message._id)
       .populate("senderId", "_id name image authId")
       .populate("receiverId", "_id name image authId");
-
-    revalidatePath(`/messages/${receiverId}`);
     return {
       message: JSON.parse(JSON.stringify(populatedMessage)),
       receiverAuthId: receiver.authId,
     };
   } catch (error) {
     console.log("message create error", error.message);
+  } finally {
+    revalidatePath(`/messages/${receiverId}`);
   }
 }
 // getting user chats with other persons
@@ -157,8 +157,9 @@ export async function createGroup({ groupName, participants }) {
       },
       { upsert: true, new: true }
     );
-    revalidatePath(`/messages/group/${group._id}`);
-    return JSON.parse(JSON.stringify(group._id));
+    const groupId = JSON.parse(JSON.stringify(group._id));
+    revalidatePath(`/messages/group/${groupId}`);
+    return groupId;
   } catch (error) {
     console.log("group creation error", error);
   }
@@ -481,6 +482,7 @@ export async function deleteConversationMessages({
     console.log("group conversation found error", error.message);
   }
 }
+
 // delete conversation completely for personal user
 export async function deletePersonalUserConversations({ receiverId }) {
   try {
@@ -493,5 +495,22 @@ export async function deletePersonalUserConversations({ receiverId }) {
     revalidatePath("/messages");
   } catch (error) {
     console.log("group conversation found error", error.message);
+  }
+}
+
+// finding that user is Admin or not of the group
+export async function isUserAdmin({ groupId }) {
+  try {
+    connectToDb();
+    // finding gropu info and the currentUserInfo
+    const groupInfo = await getGroupUsersInfo({ groupId: groupId });
+    const currentUser = await findOrCreateUser();
+    const adminUsers = groupInfo.members
+      .filter((admin) => admin.isAdmin)
+      .map((user) => user.userId._id.toString());
+    const isUserAdmin = adminUsers?.includes(currentUser?._id.toString());
+    return isUserAdmin;
+  } catch (error) {
+    console.log("member find error", error.message);
   }
 }

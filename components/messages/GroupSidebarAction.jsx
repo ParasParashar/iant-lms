@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { deleteGroup, exitTheGroup } from "@/actions/messages.actions";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
@@ -9,16 +9,28 @@ import { RiDeleteBin5Fill } from "react-icons/ri";
 import { ConfirmModel } from "../shared/ConfirmModel";
 import { MdPersonAddAlt1 } from "react-icons/md";
 import AddUsersToGroup from "./AddUserToGroup";
+import { useConRefresh, useGroupSideOpen } from "@/hooks/useMessageSidebar";
 
 const GroupSidebarAction = ({ groupId, isUserAdmin, members, groupName }) => {
   const router = useRouter();
+  const { toggleRefresh } = useConRefresh();
+  const { closeSide } = useGroupSideOpen();
+  const [isAdmin, setIsAdmin] = useState(isUserAdmin);
   const [loading, setLoading] = useState(false);
 
-  const handleExitGroup = async () => {
+  useEffect(() => {
+    setIsAdmin(isUserAdmin);
+  }, [isUserAdmin]);
+
+  const handleExitGroup = async (e) => {
+    e.preventDefault();
     setLoading(true);
     try {
-      await exitTheGroup({ groupId: groupId });
-      router.push("/messages");
+      await exitTheGroup({ groupId: groupId }).then(() => {
+        closeSide();
+        toggleRefresh();
+        router.push("/messages");
+      });
     } catch (error) {
       console.error("Error exiting group:", error);
     } finally {
@@ -26,11 +38,15 @@ const GroupSidebarAction = ({ groupId, isUserAdmin, members, groupName }) => {
     }
   };
 
-  const handleDeleteGroup = async () => {
+  const handleDeleteGroup = async (e) => {
+    e.preventDefault();
     setLoading(true);
     try {
-      await deleteGroup({ groupId: groupId });
-      router.push("/messages");
+      await deleteGroup({ groupId: groupId }).then(() => {
+        closeSide();
+        toggleRefresh();
+        router.push("/messages");
+      });
     } catch (error) {
       console.error("Error deleting group:", error);
     } finally {
@@ -42,7 +58,7 @@ const GroupSidebarAction = ({ groupId, isUserAdmin, members, groupName }) => {
     <footer className="w-full rounded-lg p-2 space-y-1  text-muted-foreground bg-slate-300/90 dark:bg-slate-700 ">
       <p className="text-xs ">Group Actions</p>
       <ConfirmModel
-        onConfirm={handleExitGroup}
+        onConfirm={(e) => handleExitGroup(e)}
         message={
           "This action will remove you from the group and delete all your group conversations. "
         }
@@ -58,7 +74,7 @@ const GroupSidebarAction = ({ groupId, isUserAdmin, members, groupName }) => {
           <ImExit size={18} className="text-primary" /> Exit group
         </Button>
       </ConfirmModel>
-      {isUserAdmin && (
+      {isAdmin && (
         <>
           <AddUsersToGroup
             groupId={groupId}
@@ -77,7 +93,7 @@ const GroupSidebarAction = ({ groupId, isUserAdmin, members, groupName }) => {
             </Button>
           </AddUsersToGroup>
           <ConfirmModel
-            onConfirm={handleDeleteGroup}
+            onConfirm={(e) => handleDeleteGroup(e)}
             message={`This action will delete your group ${groupName} permanetly with all conversations of the group.`}
           >
             <Button

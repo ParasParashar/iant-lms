@@ -20,7 +20,7 @@ const CourseCard = ({ title, isEnrollred, img_Url, category, id, value }) => {
   return (
     <Card
       onClick={handleClick}
-      className="flex flex-col justify-between hover:shadow-lg cursor-pointer group"
+      className="flex flex-col justify-between h-full hover:shadow-lg cursor-pointer group"
     >
       <CardHeader>
         <div className="relative aspect-square">
@@ -28,7 +28,10 @@ const CourseCard = ({ title, isEnrollred, img_Url, category, id, value }) => {
             src={img_Url}
             alt={title}
             fill
-            className="rounded-lg object-fill  "
+            quality={80}
+            sizes="(max-width:200px) ,(max-height:200px)"
+            priority
+            className="rounded-lg transition-opacity ease-in   duration-1000"
           />
         </div>
       </CardHeader>

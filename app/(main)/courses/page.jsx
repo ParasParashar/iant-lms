@@ -1,23 +1,16 @@
 import { getAllCourses, getCourseCategory } from "@/actions/course.actions";
 import { courseCompletionData, findOrCreateUser } from "@/actions/user.actions";
-import CourseCardSkeleton from "@/components/SkeletonLoaders/CourseCardSkeleton";
 import AllCategoryBarItem from "@/components/shared/AllCategoryBarItem";
 import CategoryBarItem from "@/components/shared/CategoryBarItem";
-import dynamic from "next/dynamic";
+import CourseCard from "@/components/shared/CourseCard";
 
 export default async function Courses({ searchParams }) {
   const user = await findOrCreateUser();
   const data = await getAllCourses({
     category: searchParams.category,
   });
-  // handle the ui if data is not present
   const courseCategoryArr = await getCourseCategory();
   const category = Array.from(new Set(courseCategoryArr));
-
-  const CourseCard = dynamic(() => import("@/components/shared/CourseCard"), {
-    loading: () => <CourseCardSkeleton />,
-    ssr: false,
-  });
 
   return (
     <div className="flex flex-col gap-4 max-sm:px-3">
@@ -29,8 +22,6 @@ export default async function Courses({ searchParams }) {
           ))}
         </section>
       </div>
-
-      {/* <Suspense fallback="loading....."> */}
 
       <main className=" grid max-sm:grid-cols-1 grid-cols-2 gap-3 md:grid-cols-3  ">
         {data?.map(async (item) => {
@@ -49,8 +40,6 @@ export default async function Courses({ searchParams }) {
           );
         })}
       </main>
-
-      {/* </Suspense> */}
     </div>
   );
 }

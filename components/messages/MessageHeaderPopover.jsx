@@ -14,6 +14,7 @@ import {
   deletePersonalUserConversations,
 } from "@/actions/messages.actions";
 import { RiDeleteBin6Fill } from "react-icons/ri";
+import { useConRefresh } from "@/hooks/useMessageSidebar";
 
 const MessageHeaderPopover = ({
   converId,
@@ -22,14 +23,19 @@ const MessageHeaderPopover = ({
   receiverId,
   personal,
 }) => {
+  const { toggleRefresh } = useConRefresh();
   const [loading, setLoading] = useState(false);
-  const handleDeleteChat = async () => {
+  const [open, setOpen] = useState(false);
+  const handleDeleteChat = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     setLoading(true);
     try {
       if (personal && receiverId) {
         await deletePersonalUserConversations({
           receiverId: receiverId,
         });
+        toggleRefresh();
       } else {
         await deleteConversationMessages({
           conversationId: converId,
@@ -41,11 +47,12 @@ const MessageHeaderPopover = ({
       console.error("Error removing ", error.message);
     } finally {
       setLoading(false);
+      setOpen(false);
     }
   };
 
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button variant="ghost" size="icon" className="rounded-full h-6 w-6">
           <IoEllipsisVerticalSharp
@@ -56,7 +63,7 @@ const MessageHeaderPopover = ({
       </PopoverTrigger>
       <PopoverContent className="w-40 p-2">
         <ConfirmModel
-          onConfirm={handleDeleteChat}
+          onConfirm={(e) => handleDeleteChat(e)}
           message={
             personal
               ? "This will permanently delete your conversations"

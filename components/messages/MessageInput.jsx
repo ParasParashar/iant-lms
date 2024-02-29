@@ -39,11 +39,16 @@ const MessageInput = ({ receiverId, group, groupId, senderId }) => {
       <input
         autoFocus
         value={value}
-        onChange={(e) => handleChange(e)}
+        onChange={handleChange}
         className="w-full font-light p-2 text-sm lg:text-lg bg-transparent outline-none border-none  rounded-l-full"
         placeholder="Enter your message........"
       />
-      <Button type="submit" variant="ghost" size="icon">
+      <Button
+        onClick={handleCreateMessage}
+        type="submit"
+        variant="ghost"
+        size="icon"
+      >
         <BiSolidSend size={25} className="text-sky-500" />
       </Button>
     </form>

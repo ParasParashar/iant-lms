@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/dialog";
 import { useEffect, useRef, useState } from "react";
 import { searchUserByName } from "@/actions/user.actions";
-import { useDebounce } from "@/hooks/useDebounce";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import UserAvatar from "./UserAvatar";
@@ -16,8 +15,10 @@ import { Button } from "../ui/button";
 import { IoIosRemoveCircle } from "react-icons/io";
 import UserSearchSkeleton from "../SkeletonLoaders/UserSearchSkeleton";
 import { createGroup } from "@/actions/messages.actions";
+import { useConRefresh } from "@/hooks/useMessageSidebar";
 
 const CreateGroup = ({ children }) => {
+  const { toggleRefresh } = useConRefresh();
   const [name, setName] = useState("");
   const [search, setSearch] = useState("");
   const [result, setResult] = useState([]);
@@ -32,11 +33,17 @@ const CreateGroup = ({ children }) => {
     setResult(data);
     setLoading(false);
   }
-  // using debounce to create latency in search
-  const debounce = useDebounce(searchUser, 200);
   useEffect(() => {
-    debounce();
-  }, [search, debounce]);
+    searchUser();
+  }, []);
+
+  // using debounce to create latency in search
+  useEffect(() => {
+    const debounceTimer = setTimeout(() => {
+      searchUser();
+    }, 300);
+    return () => clearTimeout(debounceTimer);
+  }, [search]);
 
   // handleSelect
   const handleSelect = (obj) => {
@@ -73,14 +80,26 @@ const CreateGroup = ({ children }) => {
       handleSelect(data);
     }
   };
-  const handleCreateGroup = async () => {
-    const routeId = await createGroup({
-      groupName: name,
-      participants: selectUser.map((item) => item.userId),
-    });
-    setSelectUser([]);
-    router.push(`/messages/group/${routeId}`);
-    setOpen(false);
+
+  const handleCreateGroup = async (e) => {
+    try {
+      e.preventDefault();
+      e.stopPropagation();
+      setLoading(true);
+      await createGroup({
+        groupName: name,
+        participants: selectUser.map((item) => item.userId),
+      }).then((routeId) => {
+        router.push(`/messages/group/${routeId}`);
+        toggleRefresh();
+        setSelectUser([]);
+        setOpen(false);
+      });
+    } catch (error) {
+      console.log("group creation erreor");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -101,7 +120,7 @@ const CreateGroup = ({ children }) => {
           <div className="w-full">
             <div className="flex flex-wrap gap-1 bg-secondary rounded-lg border w-full p-1">
               {selectUser?.map((item) => (
-                <div key={item._id} className="relative group">
+                <div key={item.userId} className="relative group">
                   <Button
                     variant="outline"
                     size="sm"
@@ -135,7 +154,7 @@ const CreateGroup = ({ children }) => {
               <div className="flex flex-col gap-1  items-start ">
                 {Array.from({ length: 2 }, (_, index) => index + 1).map(
                   (item) => (
-                    <UserSearchSkeleton key={item._id} />
+                    <UserSearchSkeleton key={item} />
                   )
                 )}
               </div>
@@ -191,9 +210,9 @@ const CreateGroup = ({ children }) => {
             )}
           </div>
           <Button
-            onClick={handleCreateGroup}
+            onClick={(e) => handleCreateGroup(e)}
             variant="outline"
-            disabled={name.trim() === "" || selectUser.length === 0}
+            disabled={name.trim() === "" || selectUser.length === 0 || loading}
             className="w-full text-white bg-blue-600 hover:bg-blue-500 text-sm hover:text-white rounded-lg  "
           >
             Create Group

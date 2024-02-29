@@ -3,7 +3,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -13,12 +12,11 @@ import { SignOutButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { usePathname, useParams } from "next/navigation";
 import { navbarRoutes } from "@/lib/Routes";
+import UserAvatar from "../messages/UserAvatar";
 
 const ProfileButton = () => {
   const { user } = useUser();
   const pathName = usePathname();
-  // const isShow =
-  // pathName?.includes("/courses/6") && pathName?.includes("/chapters");
 
   const params = useParams();
   const isActive =
@@ -30,12 +28,14 @@ const ProfileButton = () => {
         <DropdownMenuTrigger>
           <div className=" flex flex-col leading-none items-center justify-center  group mt-2">
             <div className="relative rounded-full w-[28px] h-[28px] items-center justify-center flex">
-              <Image
+              {/* <Image
                 src={user?.imageUrl}
                 fill
-                alt="Logo"
+                alt="Profile Image"
                 className="rounded-full"
-              />
+                sizes="(max-width:28px) ,(max-height:28px)"
+              /> */}
+              <UserAvatar name={user?.firstName} />
             </div>
             <IoMdArrowDropdown
               size={20}

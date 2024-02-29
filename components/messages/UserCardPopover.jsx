@@ -17,32 +17,42 @@ import {
 } from "@/actions/messages.actions";
 import { useParams } from "next/navigation";
 import { ConfirmModel } from "../shared/ConfirmModel";
+import { useGroupRefresh } from "@/hooks/useMessageSidebar";
 
 const UserCardPopover = ({ userId }) => {
+  const { toggleGRefresh } = useGroupRefresh();
   const params = useParams();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const handleCreateAdmin = async () => {
+  const handleCreateAdmin = async (e) => {
+    e.preventDefault();
     setLoading(true);
     try {
-      await createAdminUser({ groupId: params.groupId, userId });
+      await createAdminUser({ groupId: params.groupId, userId })
+        .then(() => {
+          return toggleGRefresh();
+        })
+        .then(() => setOpen(false));
     } catch (error) {
       console.error("Error creating ", error.message);
     } finally {
       setLoading(false);
-      setOpen(false);
     }
   };
 
-  const handleRemoveUser = async () => {
+  const handleRemoveUser = async (e) => {
+    e.preventDefault();
     setLoading(true);
     try {
-      await removeMembersFromGroup({ groupId: params.groupId, userId });
+      await removeMembersFromGroup({ groupId: params.groupId, userId })
+        .then(() => {
+          return toggleGRefresh();
+        })
+        .then(() => setOpen(false));
     } catch (error) {
       console.error("Error removing ", error.message);
     } finally {
       setLoading(false);
-      setOpen(false);
     }
   };
 
@@ -57,31 +67,35 @@ const UserCardPopover = ({ userId }) => {
         </Button>
       </PopoverTrigger>
       <PopoverContent className="flex flex-col gap-1 w-36 divide-y-2 p-2">
-        <button
-          onClick={handleCreateAdmin}
+        <Button
+          onClick={(e) => handleCreateAdmin(e)}
           disabled={loading}
-          className={`border-muted-foreground flex p-1 text-sm rounded-lg hover:bg-secondary items-center gap-0.5 text-muted-foreground hover:text-primary ${
+          variant="ghost"
+          size="sm"
+          className={`border-muted-foreground w-full flex p-1 text-sm rounded-lg hover:bg-secondary items-center gap-0.5 text-muted-foreground hover:text-primary ${
             loading && "opacity-50 cursor-not-allowed"
           }`}
         >
           <IoPersonAdd size={15} className="text-blue-400" />
           Create Admin
-        </button>
+        </Button>
         <ConfirmModel
-          onConfirm={handleRemoveUser}
+          onConfirm={(e) => handleRemoveUser(e)}
           message={
             "This will remove the user from the group and his all conversation in the group."
           }
         >
-          <button
+          <Button
             disabled={loading}
-            className={`border-muted-foreground flex p-1 text-sm rounded-lg hover:bg-secondary items-center gap-0.5 text-muted-foreground hover:text-primary ${
+            variant="ghost"
+            size="sm"
+            className={`border-muted-foreground  w-full flex p-1 text-sm rounded-lg hover:bg-secondary items-center gap-0.5 text-muted-foreground hover:text-primary ${
               loading && "opacity-50 cursor-not-allowed"
             }`}
           >
             <IoPersonRemoveSharp size={15} className="text-red-500" />
             Remove User
-          </button>
+          </Button>
         </ConfirmModel>
       </PopoverContent>
     </Popover>

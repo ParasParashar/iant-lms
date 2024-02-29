@@ -22,6 +22,7 @@ const UserCard = ({
   const router = useRouter();
   const handleClick = () => {
     if (handleClickTrigger !== undefined) {
+      router.push(`/messages/${id}`);
       handleClickTrigger();
     }
     router.push(`/messages/${id}`);
@@ -52,14 +53,14 @@ const UserCard = ({
                     Online
                   </span>
                 ) : (
-                  <span className="text-xs text-muted-foreground">
-                    Offline
-                  </span>
+                  <span className="text-xs text-muted-foreground">Offline</span>
                 )}
                 {isAdmin && (
                   <div className=" flex  justify-center gap-[2px]">
-                    <FaUser className="text-blue-500" size={12}/>
-                    <span className="text-blue-500 font-mono leading-none  text-[14px]">Admin</span>
+                    <FaUser className="text-blue-500" size={12} />
+                    <span className="text-blue-500 font-mono leading-none  text-[14px]">
+                      Admin
+                    </span>
                   </div>
                 )}
               </div>
