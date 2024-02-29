@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   FaGlobe,
   FaPhoneAlt,
@@ -15,33 +16,39 @@ const Footer = () => {
           Stay in touch
         </p>
         <p className="text-[24px] cursor-default max-[400px]:text-sm max-[500px]:text-[20px] text-black dark:text-white/90 mb-4">
-          IANT Education Pri Lmt.
+          IANT Education Pvt. Ltd
         </p>
         <ul className="flex flex-col gap-1">
           <li className="flex items-center gap-3">
             <FaGlobe className="a" />
-            <a
+
+            <Link
               className="max-[400px]:text-sm hover:text-blue-600 hover:underline"
               href="https://iantindia.com"
+              target="_blank"
             >
               https://iantindia.com
-            </a>
+            </Link>
           </li>
           <li className="flex items-center gap-3">
             <FaPhoneAlt />
-            <a className="max-[400px]:text-sm hover:text-blue-600 hover:underline">
+            <Link
+              className="max-[400px]:text-sm hover:text-blue-600 hover:underline"
+              target="_blank"
+              href="tel:+91 937 791 6611"
+            >
               +91 9377916611
-            </a>
+            </Link>
           </li>
           <li className="flex items-center gap-3">
             <FaMailBulk />
-            <a
+            <Link
               className="text-[16px] max-[400px]:text-sm hover:text-blue-600 hover:underline"
               href="mailto:contact@iantindia.com"
               target="_blank"
             >
               contact@iantindia.com
-            </a>
+            </Link>
           </li>
         </ul>
       </div>
@@ -49,31 +56,34 @@ const Footer = () => {
         <ul className="flex flex-col gap-2">
           <li className="flex items-center gap-2 ">
             <FaYoutube color="red" size={24} />
-            <a
+            <Link
               className="text-xl max-[400px]:text-sm max-[500px]:text-lg hover:text-blue-600 hover:underline"
-              href="https://www.youtube.com/"
+              href="https://www.youtube.com/channel/UCDXpTmcSSW5NlMp7rQnf0bw"
+              target="_blank"
             >
               YouTube
-            </a>
+            </Link>
           </li>
           <li className="flex items-center gap-2 ">
             <FaLinkedin color="#0A66C2" size={24} />
 
-            <a
+            <Link
               className="text-xl max-[400px]:text-sm max-[500px]:text-lg hover:text-blue-600 hover:underline"
-              href="https://www.linkedin.com/"
+              href="https://www.linkedin.com/school/iant-official-page/"
+              target="_blank"
             >
               Linkedin
-            </a>
+            </Link>
           </li>
           <li className="flex items-center gap-2 ">
             <FaFacebook className=" text-blue-600" size={24} />
-            <a
+            <Link
               className=" text-xl max-[400px]:text-sm max-[500px]:text-lg hover:text-blue-600 hover:underline"
-              href="https://www.youtube.com/"
+              href="https://www.facebook.com/IANT.Official.Page"
+              target="_blank"
             >
               Facebook
-            </a>
+            </Link>
           </li>
         </ul>
       </div>
