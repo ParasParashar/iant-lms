@@ -3,7 +3,7 @@ import {
   getReceiverUser,
 } from "@/actions/messages.actions";
 import { findOrCreateUser } from "@/actions/user.actions";
-import MessagePageLoader from "@/components/SkeletonLoaders/MessagePageLoader";
+import PersonalMessageSkeleton from "@/components/SkeletonLoaders/PersonalMessageSkeleton";
 import ChatArea from "@/components/messages/ChatArea";
 import MessageHeader from "@/components/messages/MessageHeader";
 import MessageInput from "@/components/messages/MessageInput";
@@ -19,7 +19,7 @@ const page = async ({ params }) => {
   });
 
   return (
-    <Suspense fallback={<MessagePageLoader />}>
+    <Suspense fallback={<PersonalMessageSkeleton />}>
       <div className="h-full">
         <main className="flex flex-col px-2 lg:px-0  items-center w-full h-full">
           <MessageHeader
