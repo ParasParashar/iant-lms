@@ -12,7 +12,7 @@ const page = async ({ searchParams }) => {
     return <NotFoundPage message={"Sorry!! Notes not found"} />;
   }
   return (
-    <main className="grid custom-scrollbar grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 pb-4 gap-2 px-2  rounded-lg ">
+    <main className="grid  grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 pb-4 gap-2 px-2  rounded-lg ">
        
       {PublicNotes?.map((items) => {
         const isUserNote = uesrNoteIds?.includes(items._id);
