@@ -13,7 +13,7 @@ const MobileNotesSideBar = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="lg:hidden">
         <Button variant="outline" size="icon" className="rounded-full p-0">
-          <Menu size={23} className="text-[#226eb4bb] hover:text-[#4d69b8] " />
+          <Menu size={28} className="text-[#226eb4bb] hover:text-[#4d69b8] " />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-36 flex flex-col  lg:hidden gap-1 justify-around">

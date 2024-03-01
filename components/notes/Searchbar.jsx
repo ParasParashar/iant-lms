@@ -25,7 +25,7 @@ const Searchbar = () => {
     debouncedSearch(searchTerm);
   };
   return (
-    <div className=' flex items-center '>
+    <div className=' flex items-center  w-full'>
       <button className=' m-auto  notecardbg  w-full flex justify-between bg-none items-center rounded-2xl px-2 mx-1  text-white border  dark:border-neutral-600'>
         <input
           type="text"

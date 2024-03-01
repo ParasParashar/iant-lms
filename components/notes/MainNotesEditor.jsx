@@ -29,9 +29,8 @@ const MainNotesEditor = ({ defaultTitle, defaultContent, type, noteId }) => {
       router.push(`/notes/${response}`);
     }
   };
-
   return (
-    <div className="flex flex-col h-full  items-center justify-center gap-1">
+    <div className="flex flex-col h-full  items-center  justify-center gap-1">
       <Button
         onClick={(e) => handleCreateNote(e)}
         disabled={!data.title.trim() || !data.content.trim()}

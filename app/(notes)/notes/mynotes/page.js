@@ -10,7 +10,7 @@ const page = async ({ searchParams }) => {
     return <NotFoundPage message={"You Can Create Some Future Assets.📘"} />;
   }
   return (
-    <main className="grid custom-scrollbar grid-cols-1 sm:grid-cols-2 md:grid-cols-3 pb-4 lg:grid-cols-4  h-full overflow-y-auto gap-2 px-2  rounded-lg ">
+    <main className="grid custom-scrollbar grid-cols-1 sm:grid-cols-2 md:grid-cols-3 pb-4 lg:grid-cols-4 min-h-screen  gap-2 px-2  rounded-lg ">
       {notes?.map((item) => (
         <Suspense key={item._id} fallback={<NotesCardSkeleton />}>
           <Notescard

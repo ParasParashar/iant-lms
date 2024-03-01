@@ -10,10 +10,11 @@ const SaveNotePage = async ({ searchParams }) => {
     return <NotFoundPage message="You note  have any saved notes." />;
   }
   return (
-    <main className="grid custom-scrollbar grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4  h-full overflow-y-auto gap-2 px-2  rounded-lg ">
+    <main className="grid custom-scrollbar grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 min-h-screen overflow-y-auto gap-2 px-2  rounded-lg ">
       {notes?.map((item) => (
         <Suspense key={item._id} fallback={<NotesCardSkeleton />}>
-          <Notescard
+        
+         <Notescard
             key={item._id}
             title={item.title}
             content={item.content}
@@ -24,6 +25,7 @@ const SaveNotePage = async ({ searchParams }) => {
             email={item?.userId?.email}
             isUserNote={false}
           />
+        
         </Suspense>
       ))}
     </main>

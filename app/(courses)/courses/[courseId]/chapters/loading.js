@@ -1,4 +1,4 @@
-import MessagePageLoader from "@/components/SkeletonLoaders/MessagePageLoader";
+
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Loading() {

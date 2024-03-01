@@ -7,7 +7,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Iant-LMS",
+  title: "IANT Learning Management System",
   description: "This is created by Paras Alok and Goutam",
 };
 

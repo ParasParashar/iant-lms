@@ -12,11 +12,12 @@ const page = async ({ searchParams }) => {
     return <NotFoundPage message={"Sorry!! Notes not found"} />;
   }
   return (
-    <main className="grid custom-scrollbar grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 pb-4 h-full overflow-y-auto gap-2 px-2  rounded-lg ">
+    <main className="grid custom-scrollbar grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 pb-4 gap-2 px-2  rounded-lg ">
+       
       {PublicNotes?.map((items) => {
         const isUserNote = uesrNoteIds?.includes(items._id);
         return (
-          <>
+ 
             <Suspense key={items._id} fallback={<NotesCardSkeleton />}>
               <Notescard
                 key={items._id}
@@ -29,8 +30,7 @@ const page = async ({ searchParams }) => {
                 isUserNote={isUserNote}
                 isPublished={items.isPublished}
               />
-            </Suspense>
-          </>
+            </Suspense> 
         );
       })}
     </main>

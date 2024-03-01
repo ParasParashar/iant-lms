@@ -15,7 +15,7 @@ const BigEditor = ({
     () =>
       dynamic(() => import("react-quill"), {
         loading: () => (
-          <div className="h-[80vh] w-full">
+          <div className="w-full">
             <EditorSkeleton />
           </div>
         ),

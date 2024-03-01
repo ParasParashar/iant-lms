@@ -13,7 +13,7 @@ const NotePage = async ({ params }) => {
   }
   const newtime = formatDate(notes.note.timestamp);
   return (
-    <main className=" bg-secondary relative h-full custom-scrollbar overflow-y-auto dark:border-neutral-600 dark:text-white flex flex-col">
+    <main className=" bg-secondary relative h-full min-h-screen custom-scrollbar overflow-y-auto dark:border-neutral-600 dark:text-white flex flex-col">
       <div className="flex justify-between ">
         <section className="flex flex-col space-y-1">
           <p className="font-bold text-[14px] font-sans">
@@ -24,9 +24,9 @@ const NotePage = async ({ params }) => {
           </p>
           <p className="dark:text-white/60 text-xs">{newtime}</p>
         </section>
-        {notes?.isUserNote && (
+       <div cl> {notes?.isUserNote && (
           <LinkButton href={`/notes/edit/${notes.note._id}`} type="edit" />
-        )}
+        )}</div>
       </div>
 
       <div className=" py-3 ">
