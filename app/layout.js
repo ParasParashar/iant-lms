@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { SocketContextProvider } from "@/context/SocketProvider";
 import { ClerkProvider } from "@clerk/nextjs";
+import ChatBotModel from "@/components/shared/ChatBotModel";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +25,10 @@ export default function RootLayout({ children }) {
               enableSystem
               disableTransitionOnChange
             >
-              {children}
+              <div className="h-full w-full">
+                <ChatBotModel />
+                {children}
+              </div>
             </ThemeProvider>
           </body>
         </html>

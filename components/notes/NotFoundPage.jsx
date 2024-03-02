@@ -10,6 +10,7 @@ const NotFoundPage = ({ message }) => {
           className="object-contain"
           alt="Image not found"
           sizes="(max-width:400px),(max-height:400px),(min-width:300px),(min-height:300px)"
+          priority={true}
         />
       </div>
       <p className="text-[#f56b5a] text-xl max-sm:text-sm font-serif antialiased font-semibold">

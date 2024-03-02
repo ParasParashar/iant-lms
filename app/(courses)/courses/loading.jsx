@@ -24,14 +24,15 @@ export default function loading() {
             <Skeleton className="h-10 rounded-full w-10 md:hidden" />
             <Skeleton className="h-full p-2  rounded-r-full w-44 max-[400px]:w-28" />
           </div>
-          <div className="flex items-center justify-between  gap-3">
+          <div className="flex items-center justify-between  gap-x-3">
+            <Skeleton className="h-10 rounded-full w-10" />
             <Skeleton className="h-10 rounded-full w-10" />
             <Skeleton className="h-10 rounded-full w-10" />
           </div>
         </header>
         {/* main box */}
         <section className="flex justify-center px-5 py-3 h-full w-full">
-          <div className="flex flex-col items-center gap-3 md:gap-5 xl:w-[700px] lg:py-4 px-6 py-2 w-[80%] max-[400px]:w-[90%] h-full border">
+          <div className="flex flex-col items-center gap-3 md:gap-5 xl:w-[700px] lg:py-4 px-6 py-2 w-[80%] max-[400px]:w-[90%] h-full border rounded-lg">
             <div className="flex flex-col items-center gap-2">
               <Skeleton className=" w-36 h-8" />
               <Skeleton className="w-60 h-60 " />

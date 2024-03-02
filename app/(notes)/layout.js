@@ -11,10 +11,10 @@ const NotesLayout = ({ children }) => {
         <Navbar />
         <main className="flex flex-col gap-2  text-black  w-full px-10 max-sm:px-2 lg:px-40  min-h-screen mt-[70px]">
           <div className="flex flex-col w-full gap-2">
-          <NotesNavbar />
-          <MobileSearchBar />
+            <NotesNavbar />
+            <MobileSearchBar />
           </div>
-          <div className="flex rounded-lg flex-col bg-secondary min-h-screen w-full p-2 h-full dark:border-neutral-600 border-2">
+          <div className="flex rounded-lg flex-col bg-secondary min-h-screen w-full p-2 h-full dark:border-neutral-600 border">
             {children}
           </div>
         </main>

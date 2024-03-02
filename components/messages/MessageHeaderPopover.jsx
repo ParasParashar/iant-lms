@@ -15,6 +15,8 @@ import {
 } from "@/actions/messages.actions";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { useConRefresh } from "@/hooks/useMessageSidebar";
+import { deleteUserAiChats } from "@/actions/chatbot.actions";
+import { useAiModel } from "@/hooks/useChatBot";
 
 const MessageHeaderPopover = ({
   converId,
@@ -22,21 +24,31 @@ const MessageHeaderPopover = ({
   isGroup,
   receiverId,
   personal,
+  aiChat,
 }) => {
   const { toggleRefresh } = useConRefresh();
   const [loading, setLoading] = useState(false);
+  const { closeAiModel } = useAiModel();
   const [open, setOpen] = useState(false);
   const handleDeleteChat = async (e) => {
     e.preventDefault();
     e.stopPropagation();
     setLoading(true);
     try {
+      // for deleting ai chats
+      if (aiChat && !converId && !isGroup && !personal) {
+        await deleteUserAiChats();
+        closeAiModel();
+        return;
+      }
+      // for deleting groups conversations
       if (personal && receiverId) {
         await deletePersonalUserConversations({
           receiverId: receiverId,
         });
         toggleRefresh();
       } else {
+        // for deleting personal conversations
         await deleteConversationMessages({
           conversationId: converId,
           path: path,

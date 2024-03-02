@@ -6,12 +6,15 @@ import { MdDeleteForever, MdPublish } from "react-icons/md";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { ConfirmModel } from "../shared/ConfirmModel";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export function NotePopover({ isPublished, handleActions, handleDeleteNote }) {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
   const actionButton = () => {
     handleActions();
     setOpen(false);
+    router.refresh();
   };
 
   return (

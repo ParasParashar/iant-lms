@@ -5,6 +5,7 @@ import { navbarRoutes } from "@/lib/Routes";
 import NavBarItem from "./NabBarItem";
 import ProfileButton from "./ProfileButton";
 import Link from "next/link";
+import AiChatBotButton from "./AiChatBotButton";
 const Navbar = () => {
   return (
     <header className=" px-3 md:px-20 lg:px-40 z-[9999] bg-secondary shadow-lg flex justify-between text-lg fixed top-0 left-0 w-full h-[55px] items-center  dark:border-b  border-neutral-600  ">
@@ -29,6 +30,7 @@ const Navbar = () => {
         ))}
 
         {/* toggle theme button */}
+        <AiChatBotButton />
         <ThemeToggleButton />
         <div>
           <ProfileButton />

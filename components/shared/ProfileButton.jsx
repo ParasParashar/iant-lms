@@ -12,7 +12,6 @@ import { SignOutButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { usePathname, useParams } from "next/navigation";
 import { navbarRoutes } from "@/lib/Routes";
-import UserAvatar from "../messages/UserAvatar";
 
 const ProfileButton = () => {
   const { user } = useUser();
@@ -28,14 +27,13 @@ const ProfileButton = () => {
         <DropdownMenuTrigger>
           <div className=" flex flex-col leading-none items-center justify-center  group mt-2">
             <div className="relative rounded-full w-[28px] h-[28px] items-center justify-center flex">
-              {/* <Image
+              <Image
                 src={user?.imageUrl}
                 fill
                 alt="Profile Image"
                 className="rounded-full"
                 sizes="(max-width:28px) ,(max-height:28px)"
-              /> */}
-              <UserAvatar name={user?.firstName} />
+              />
             </div>
             <IoMdArrowDropdown
               size={20}

@@ -19,7 +19,7 @@ export function ConfirmModel({ children, message, onConfirm }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger className="w-full">{children}</AlertDialogTrigger>
-      <AlertDialogContent className="">
+      <AlertDialogContent className=" bg-white dark:bg-slate-900">
         <AlertDialogHeader>
           <AlertDialogTitle className="text-center">
             Are you absolutely sure?

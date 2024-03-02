@@ -29,8 +29,8 @@ const AllCategoryBarItem = ({ category }) => {
         All
       </Button>
       <section className="flex gap-2 overflow-x-auto w-full flex-nowrap scroll-smooth custom-scrollbar  items-center ">
-        {category.map((item) => (
-          <CategoryBarItem key={item._id} item={item} />
+        {category.map((item, index) => (
+          <CategoryBarItem key={index} item={item} />
         ))}
       </section>
     </div>
