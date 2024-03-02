@@ -14,8 +14,8 @@ const CoursePageSkeletons = () => {
 
       <div className=" grid max-sm:grid-cols-1 grid-cols-2 gap-2 md:grid-cols-3">
         {arr.map((it) => (
-          <div className="h-full w-full  ">
-            <CourseCardSkeleton key={it} />
+          <div key={it} className="h-full w-full">
+            <CourseCardSkeleton />
           </div>
         ))}
       </div>
