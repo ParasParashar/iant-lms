@@ -12,7 +12,7 @@ import UserAvatar from "../messages/UserAvatar";
 import { useUser } from "@clerk/nextjs";
 import { createAiChat, getUserAiChats } from "@/actions/chatbot.actions";
 import { useAiModel } from "@/hooks/useChatBot";
-
+import ReactMarkdown from "react-markdown";
 const ChatBot = () => {
   const { user } = useUser();
   const [search, setSearch] = useState("");
@@ -121,7 +121,22 @@ const ChatBot = () => {
                 />
               </span>
             )}
-            <p className="text-sm">{message.content}</p>
+            <ReactMarkdown
+              components={{
+                pre: ({ node, ...props }) => (
+                  <div className="overflow-auto w-full my-2 bg-black/10 p-2 rounded-lg">
+                    <pre {...props} />
+                  </div>
+                ),
+                code: ({ node, ...props }) => (
+                  <code className="bg-black/10 rounded-lg p-1" {...props} />
+                ),
+              }}
+              className="text-sm overflow-hidden leading-7"
+            >
+              {message.content || ""}
+            </ReactMarkdown>
+            {/* <p className="text-sm">{message.content}</p> */}
           </div>
         ))}
       </div>
