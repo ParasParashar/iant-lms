@@ -20,19 +20,21 @@ const page = async ({ params }) => {
 
   return (
     <Suspense fallback={<PersonalMessageSkeleton />}>
-      <div className="h-full">
-        <main className="flex flex-col px-2 lg:px-0  items-center w-full h-full">
-          <MessageHeader
-            title={messageReceiver.name}
-            email={messageReceiver.email}
-            authId={messageReceiver.authId}
-            converId={userConversations._id}
-            path={params.messageId}
-          />
-          <ChatArea userConversations={userConversations.messages} />
-          <MessageInput receiverId={params.messageId} />
-        </main>
-      </div>
+      {
+        <div className="h-full">
+          <main className="flex flex-col px-2 lg:px-0  items-center w-full h-full">
+            <MessageHeader
+              title={messageReceiver.name}
+              email={messageReceiver.email}
+              authId={messageReceiver.authId}
+              converId={userConversations._id}
+              path={params.messageId}
+            />
+            <ChatArea userConversations={userConversations.messages} />
+            <MessageInput receiverId={params.messageId} />
+          </main>
+        </div>
+      }
     </Suspense>
   );
 };

@@ -11,7 +11,6 @@ const CategoryBarItem = ({ item }) => {
   const pathName = usePathname();
   const searchParams = useSearchParams();
   const currentCategory = searchParams.get("category");
-  console.log(currentCategory, "dd");
   const isSelected = currentCategory === item;
   const handleClick = () => {
     const url = qs.stringifyUrl({

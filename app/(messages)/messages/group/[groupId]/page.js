@@ -35,7 +35,6 @@ const GroupPage = async ({ params }) => {
     <Suspense fallback={<GroupPageSkeleton />}>
       <div className=" flex pb-3 w-full items-center h-full  gap-3">
         <main className="flex flex-col items-center w-full h-full rounded-lg bg-secondary">
-          {/* group header */}
           <header className="w-full rounded-lg flex  justify-between items-center  bg-slate-300/90 dark:bg-slate-700 pr-1">
             <MessageHeader title={groupInfo?.name} group />
             <div className="flex gap-1 items-center">

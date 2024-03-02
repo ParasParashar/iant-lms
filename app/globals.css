@@ -150,12 +150,6 @@ body,
   }
 }
 
-.slogan_animate {
-  animation-name: fadeInOut;
-  animation-duration: 8s;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-}
 /* chat card css */
 .messagechatcard {
   border-radius: 1.125rem 1.125rem 1.125rem 0;
