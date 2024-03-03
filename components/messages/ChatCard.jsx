@@ -6,35 +6,43 @@ import { useAuth } from "@clerk/nextjs";
 import { useParams } from "next/navigation";
 
 const ChatCard = ({ conversation, group }) => {
-  const { senderId, receiverId, content, timestamp } = conversation;
   const { userId } = useAuth();
   const params = useParams();
   let isReceiver;
   let senderName;
+  let bgColorClass;
   if (group) {
-    isReceiver = senderId.authId === userId;
-    senderName = senderId?.name;
+    isReceiver = conversation?.senderId?.authId === userId;
+    senderName = isReceiver !== true ? conversation?.senderId?.name : "me";
+    senderName = senderName || "me";
+    bgColorClass =
+      isReceiver || senderName === "me"
+        ? "bg-blue-950/20 dark:bg-blue-700/20"
+        : "bg-sky-500/30 dark:bg-sky-500/30";
   } else {
-    isReceiver = senderId._id === params.messageId;
-    senderName = isReceiver ? senderId?.name : "Me";
+    isReceiver = conversation?.senderId?._id === params.messageId;
+    senderName = isReceiver ? conversation?.senderId?.name : "Me";
+    bgColorClass = isReceiver
+      ? "bg-sky-500/30 dark:bg-sky-500/30"
+      : "bg-blue-950/20 dark:bg-blue-700/20";
   }
   return (
     <section
       className={cn(
         "flex gap-2 items-start  p-2 rounded-md min-w-[30%] shadow-lg max-w-[80%] messagechatcard  cursor-default",
-        isReceiver
-          ? "bg-sky-500/30 dark:bg-sky-500/30"
-          : "bg-blue-950/20 dark:bg-blue-700/20"
+        bgColorClass
       )}
     >
       <UserAvatar name={senderName} />
       <div className="flex flex-col w-full justify-start">
         <p className="text-xs text-muted-foreground font-mono flex items-center justify-between w-full">
           {senderName}
-          <span className="text-[10px]">{formatDate(timestamp)}</span>
+          <span className="text-[10px]">
+            {formatDate(conversation?.timestamp)}
+          </span>
         </p>
         <div className="text-sm font-light  break-all  text-break break-words  ">
-          {content}
+          {conversation?.content}
         </div>
       </div>
     </section>

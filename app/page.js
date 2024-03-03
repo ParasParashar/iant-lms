@@ -22,7 +22,13 @@ const LoginPage = () => {
           <div className="flex flex-col items-center justify-evenly gap-20 max-lg:gap-8">
             <div>
               <div className="w-[275px] h-[82px]  relative ">
-                <Image src={"/iantlogo.png"} fill alt="Logo Image" />
+                <Image
+                  src={"/iantlogo.png"}
+                  fill
+                  alt="Logo Image"
+                  sizes="(max-width:275px) ,(max-height:82px) "
+                  priority={true}
+                />
               </div>
             </div>
             <div className="flex items-center gap-8 max-lg:flex-col max-lg:gap-8">
@@ -53,7 +59,13 @@ const LoginPage = () => {
               </div>
               <div>
                 <div className="w-[25vw] h-[380px] relative max-lg:w-[35vw] max-lg:h-[45vh] max-md:h-[45vh] max-md:w-[40vw] max-sm:h-[45vh] max-sm:w-[55vw]">
-                  <Image src={"/ai_img1.png"} fill alt="Logo Image" />
+                  <Image
+                    src={"/ai_img1.png"}
+                    fill
+                    alt="Logo Image"
+                    sizes="(max-width:35vw), (max-height:45vh)"
+                    priority={true}
+                  />
                 </div>
               </div>
             </div>

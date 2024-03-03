@@ -26,7 +26,7 @@ const EnrolledCourses = async () => {
             return (
               <div
                 key={item._id}
-                className=" min-w-[250px] max-w-[300px] border h-[400px] "
+                className=" min-w-[250px] max-w-[300px]  h-[400px] "
               >
                 <CourseCard
                   id={JSON.parse(JSON.stringify(item._id))}
@@ -43,13 +43,18 @@ const EnrolledCourses = async () => {
           <>
             {allCourse?.slice(0, 4).map((item) => {
               return (
-                <CourseCard
+                <div
                   key={item._id}
-                  id={JSON.parse(JSON.stringify(item._id))}
-                  title={item.title}
-                  category={item.category}
-                  img_Url={item.img_Url}
-                />
+                  className=" min-w-[250px] max-w-[300px]  h-[400px] "
+                >
+                  <CourseCard
+                    key={item._id}
+                    id={JSON.parse(JSON.stringify(item._id))}
+                    title={item.title}
+                    category={item.category}
+                    img_Url={item.img_Url}
+                  />
+                </div>
               );
             })}
           </>

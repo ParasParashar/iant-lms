@@ -11,22 +11,19 @@ import {
   useState,
   useTransition,
 } from "react";
-import { useParams } from "next/navigation";
 
-const PersonalMessageArea = ({
-  userConversations,
+const GroupMessagesArea = ({
+  groupConversations,
   senderId,
-  receiverId,
   handleCreateMessage,
 }) => {
-  const params = useParams();
   const formRef = useRef();
   const messagesRef = useRef();
   const { socket } = useSocket();
   useEffect(() => {
-    setConversation(userConversations);
-  }, [userConversations, socket]);
-  const [conversation, setConversation] = useState(userConversations || []);
+    setConversation(groupConversations);
+  }, [groupConversations, , socket]);
+  const [conversation, setConversation] = useState(groupConversations || []);
   const [isPending, startTransition] = useTransition();
 
   //   receiving latest messages
@@ -36,11 +33,11 @@ const PersonalMessageArea = ({
     });
   };
   useEffect(() => {
-    socket?.on("receive-message", handleNewMessage);
+    socket?.on("receive-group-message", handleNewMessage);
 
     // cleanup event the istener
     return () => {
-      socket?.off("receive-message", handleNewMessage);
+      socket?.off("receive-group-message", handleNewMessage);
     };
   }, [socket]);
 
@@ -60,13 +57,13 @@ const PersonalMessageArea = ({
     addOptimisticMessages({
       _id: new Date(),
       content: formData.get("value"),
-      receiverId: receiverId,
+      //   receiverId: receiverId,
       senderId: senderId,
       timestamp: new Date(),
     });
     formRef.current.reset();
     await handleCreateMessage(formData.get("value")).then((res) => {
-      socket?.emit("newMessages", res);
+      socket?.emit("groupMessages", res);
     });
   }
 
@@ -78,8 +75,8 @@ const PersonalMessageArea = ({
         className="flex-1 flex-col items-start flex gap-2 pb-20 lg:pb-10 bg-secondary p-2 overflow-y-auto w-full border-secondary transition-all duration-300 ease-in-out main-scrollbar"
         style={{ maxHeight: "calc(100vh - 150px)" }}
       >
-        {optimisticMessages?.map((item) => (
-          <ChatCard key={item._id} conversation={item} />
+        {optimisticMessages?.map((item, index) => (
+          <ChatCard key={index} conversation={item} group />
         ))}
       </section>
 
@@ -95,7 +92,7 @@ const PersonalMessageArea = ({
           type="text"
           name="value"
           className="w-full font-light p-2 text-sm lg:text-lg bg-transparent outline-none border-none  rounded-l-full"
-          placeholder="Enter your message........"
+          placeholder="Enter your group message........"
         />
         <Button type="submit" variant="ghost" size="icon">
           <BiSolidSend size={25} className="text-sky-500" />
@@ -105,4 +102,4 @@ const PersonalMessageArea = ({
   );
 };
 
-export default PersonalMessageArea;
+export default GroupMessagesArea;

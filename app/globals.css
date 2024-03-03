@@ -168,10 +168,11 @@ body,
   @apply bg-gray-400/50 rounded-lg transition-all duration-200  hover:bg-gray-400/70 dark:bg-gray-700 dark:hover:bg-gray-700;
 }
 
-
-.bgcolor{
-  font: waight 900px;
- background: linear-gradient(to right,red,rgb(0, 251, 255));
- color:transparent;
- -webkit-background-clip: text;
+/* main home page heading */
+.bgcolor {
+  font-weight: 900;
+  background: linear-gradient(to left, rgb(110, 129, 147), rgba(0, 89, 255, 0.742));
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text; 
 }

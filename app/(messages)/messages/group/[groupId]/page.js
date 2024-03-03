@@ -1,14 +1,14 @@
 import {
+  createGroupMessage,
   getGroupConversation,
   getGroupUsersInfo,
 } from "@/actions/messages.actions";
 import { findOrCreateUser } from "@/actions/user.actions";
 import GroupPageSkeleton from "@/components/SkeletonLoaders/GroupPageSkeleton";
-import GroupChatArea from "@/components/messages/GroupChatArea";
 import GroupInfoSidebar from "@/components/messages/GroupInfoSidebar";
+import GroupMessagesArea from "@/components/messages/GroupMessagesArea";
 import MessageHeader from "@/components/messages/MessageHeader";
 import MessageHeaderPopover from "@/components/messages/MessageHeaderPopover";
-import MessageInput from "@/components/messages/MessageInput";
 import MobileGroupSidebar from "@/components/messages/MobileGroupSidebar";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
@@ -31,6 +31,14 @@ const GroupPage = async ({ params }) => {
   const groupConversation = await getGroupConversation({
     groupId: params.groupId,
   });
+  async function createGroupMessages(value) {
+    "use server";
+    const response = await createGroupMessage({
+      groupId: params.groupId,
+      content: value,
+    });
+    return response;
+  }
   return (
     <Suspense fallback={<GroupPageSkeleton />}>
       <div className=" flex pb-3 w-full items-center h-full  gap-3">
@@ -48,10 +56,13 @@ const GroupPage = async ({ params }) => {
               />
             </div>
           </header>
-          {/* group chat section */}
-          <GroupChatArea groupConversation={groupConversation.messages} />
-          {/* group input section */}
-          <MessageInput group groupId={params.groupId} />
+          {/* <GroupChatArea groupConversation={groupConversation.messages} /> */}
+          {/* <MessageInput group groupId={params.groupId} /> */}
+          <GroupMessagesArea
+            groupConversations={groupConversation.messages}
+            senderId={_id}
+            handleCreateMessage={createGroupMessages}
+          />
         </main>
         <div className="hidden  w-[23rem] xl:flex h-full">
           <GroupInfoSidebar id={params.groupId} />
