@@ -15,7 +15,7 @@ const Searchbar = () => {
   const handleClick = (e) => {
     e.preventDefault();
     setsearch("");
-    handleHide();
+   
     router.push("/notes");
   };
 
