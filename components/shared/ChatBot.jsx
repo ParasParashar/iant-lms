@@ -34,6 +34,7 @@ const ChatBot = () => {
     setSearch(e.target.value);
   };
   const handleSubmit = async (e) => {
+    if (search.trim() === "") return;
     e.preventDefault();
     try {
       setLoading(true);
@@ -66,7 +67,7 @@ const ChatBot = () => {
   };
 
   return (
-    <main className=" flex flex-col h-screen px-1  pb-6 gap-y-2">
+    <main className=" flex flex-col h-screen px-3   pb-6 gap-y-2">
       <form
         onSubmit={(e) => handleSubmit(e)}
         className="flex  flex-col p-1 rounded-lg  gap-y-2 bg-muted  justify-between items-center w-full"
@@ -92,7 +93,7 @@ const ChatBot = () => {
       {loading && <AiLoader />}
       {/* show the fallback if messages is empty */}
       {messages?.length === 0 && !loading && (
-        <div className="p-3 flex h-full flex-col w-full justify-center items-center text-muted-foreground  overflow-y-hidden">
+        <div className="p-3 flex flex-col justify-center items-center text-muted-foreground overflow-y-hidden">
           <AiFillRobot size={80} className="text-blue-600 " />
           <span className="text-center text-lg font-bold text-sky-300 ">
             Let&apos;s start the solving doubts.
@@ -100,12 +101,13 @@ const ChatBot = () => {
           <span className="text-sm ">How can I help You?</span>
         </div>
       )}
-      <div className="overflow-y-auto h-full items-start justify-end   main-scrollbar flex  flex-col-reverse gap-y-3  px-1 lg:px-2 ">
+      <div className="overflow-y-auto flex flex-col-reverse gap-y-3 px-3 main-scrollbar">
+        {/* <div className="flex-grow flex flex-col-reverse gap-2"> */}
         {messages?.map((message, index) => (
           <div
             key={index}
             className={cn(
-              "p-2 w-full flex items-start gap-x-4 rounded-lg text-lg justify-start",
+              "p-2 w-full  flex items-start gap-x-4 rounded-lg text-lg",
               message.role === "user"
                 ? "   border border-black/15"
                 : " bg-muted "
@@ -136,10 +138,10 @@ const ChatBot = () => {
             >
               {message.content || ""}
             </ReactMarkdown>
-            {/* <p className="text-sm">{message.content}</p> */}
           </div>
         ))}
       </div>
+      {/* </div> */}
     </main>
   );
 };

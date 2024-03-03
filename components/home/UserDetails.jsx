@@ -34,7 +34,7 @@ const UserDetails = async () => {
               <h2 className="text-xl md:text-2xl font-serif md:text-center">
                 {userName}
               </h2>
-              <p className=" text-sm lg:text-lg   font-serif md:text-center text-muted-foreground">
+              <p className=" text-xs lg:text-lg   font-serif md:text-center text-muted-foreground">
                 {userEmail}
               </p>
             </div>

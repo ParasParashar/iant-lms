@@ -471,6 +471,9 @@ export async function deleteConversationMessages({
     const conversation = await Conversation.findById({
       _id: conversationId,
     });
+    // deleting the message
+    await Message.deleteMany(conversation.message);
+    // clear all teh conversation messages
     conversation.messages = [];
     await conversation.save();
     if (isGroup) {
