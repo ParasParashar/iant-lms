@@ -31,7 +31,7 @@ const UserDetails = async () => {
           </div>
           <div className="flex flex-col gap-4 md:gap-12 ">
             <div>
-              <h2 className="text-xl md:text-2xl font-serif md:text-center">
+              <h2 className="text-xl md:text-3xl font-sans md:text-center">
                 {userName}
               </h2>
               <p className=" text-xs lg:text-lg   font-serif md:text-center text-muted-foreground">

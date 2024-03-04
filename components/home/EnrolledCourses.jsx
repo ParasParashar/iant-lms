@@ -11,7 +11,7 @@ const EnrolledCourses = async () => {
   const userEnrolledCourses = await getAllUserEnrolledCourses();
   return (
     <Card className=" p-4 rounded-lg  w-full  flex flex-col gap-2 overflow-auto flex-nowrap scroll-smooth custom-scrollbar  bg-secondary   ">
-      <h3 className="text-lg lg:text-xl text-muted-foreground font-semibold font-serif">
+      <h3 className="text-lg lg:text-xl text-muted-foreground font-semibold font-sans">
         Enrolled Courses
       </h3>
       <section

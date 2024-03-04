@@ -24,12 +24,15 @@ const NotePage = async ({ params }) => {
           </p>
           <p className="dark:text-white/60 text-xs">{newtime}</p>
         </section>
-       <div cl> {notes?.isUserNote && (
-          <LinkButton href={`/notes/edit/${notes.note._id}`} type="edit" />
-        )}</div>
+        <div cl>
+          {" "}
+          {notes?.isUserNote && (
+            <LinkButton href={`/notes/edit/${notes.note._id}`} type="edit" />
+          )}
+        </div>
       </div>
 
-      <div className=" py-3 ">
+      <div className=" py-3">
         <div className="flex justify-center">
           <div>
             <span className="text-[#8a9fe9b1] dark:text-[#8a9fe970] font-semibold text-xl">
