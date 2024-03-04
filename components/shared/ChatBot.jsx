@@ -37,10 +37,9 @@ const ChatBot = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    e.stopPropagation();
     try {
+      setLoading(true);
       if (search.trim() !== "") {
-        setLoading(true);
         const userMessage = {
           content: search,
           role: "user",
