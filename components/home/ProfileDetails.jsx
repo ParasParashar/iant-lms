@@ -14,7 +14,7 @@ const ProfileDetails = async () => {
         {/* chart */}
         <div className="h-[80%] ">
           <div className="w-full lg:p-2  p-1 h-full rounded-lg bg-[#f1f5f9] dark:bg-[#1e293bd7]">
-            <h3 className="text-lg lg:text-xl text-muted-foreground font-semibold font-serif">
+            <h3 className="text-lg lg:text-xl text-muted-foreground font-semibold font-sans">
               Overall Progress
             </h3>
 
