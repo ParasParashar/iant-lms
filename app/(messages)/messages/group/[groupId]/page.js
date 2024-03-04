@@ -60,11 +60,7 @@ const GroupPage = async ({ params }) => {
           {/* <MessageInput group groupId={params.groupId} /> */}
           <GroupMessagesArea
             groupConversations={groupConversation.messages}
-<<<<<<< Updated upstream
             senderId={JSON.parse(JSON.stringify(_id))}
-=======
-            senderId={_id}
->>>>>>> Stashed changes
             handleCreateMessage={createGroupMessages}
           />
         </main>
