@@ -17,7 +17,7 @@ const GroupSidebarTitle = ({ name, isUserAdmin, groupId }) => {
   useEffect(() => {
     setTitle(name);
     setIsAdmin(isUserAdmin);
-  }, [name, isUserAdmin]);
+  }, [name, isUserAdmin, toggleRefresh]);
 
   const handleEdit = () => {
     setIsEdit(!isEdit);
