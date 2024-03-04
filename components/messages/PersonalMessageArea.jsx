@@ -57,17 +57,19 @@ const PersonalMessageArea = ({
 
   //   form actions
   async function formAction(formData) {
-    addOptimisticMessages({
-      _id: new Date(),
-      content: formData.get("value"),
-      receiverId: receiverId,
-      senderId: senderId,
-      timestamp: new Date(),
-    });
-    formRef.current.reset();
-    await handleCreateMessage(formData.get("value")).then((res) => {
-      socket?.emit("newMessages", res);
-    });
+    if (formData.get("value").trim() !== "") {
+      addOptimisticMessages({
+        _id: new Date(),
+        content: formData.get("value"),
+        receiverId: receiverId,
+        senderId: senderId,
+        timestamp: new Date(),
+      });
+      formRef.current.reset();
+      await handleCreateMessage(formData.get("value")).then((res) => {
+        socket?.emit("newMessages", res);
+      });
+    }
   }
 
   return (
