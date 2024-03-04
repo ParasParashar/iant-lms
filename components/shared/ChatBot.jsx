@@ -37,28 +37,28 @@ const ChatBot = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (search.trim() === "") return;
     try {
       setLoading(true);
-      if (search.trim() !== "") {
-        const userMessage = {
-          content: search,
-          role: "user",
-        };
-        const newMessages = [...messages, userMessage];
 
-        await createAiChat({
-          content: search,
-          role: "user",
-        });
-        // Make the axios.post call and wait for the response
-        const response = await axios.post("/api/conversation", {
-          messages: newMessages,
-        });
-        setMessages((prev) => [...prev, userMessage, response.data]);
-        setSearch("");
-      }
+      const userMessage = {
+        content: search,
+        role: "user",
+      };
+
+      const newMessages = [...messages, userMessage];
+
+      await createAiChat(userMessage);
+
+      const response = await axios.post("/api/conversation", {
+        messages: newMessages,
+      });
+
+      setMessages((prev) => [...prev, userMessage, response.data]);
+      setSearch("");
     } catch (error) {
-      console.log("Error in submit chat ai", error.message);
+      console.error("Error in submit chat ai", error.message);
     } finally {
       setLoading(false);
     }
