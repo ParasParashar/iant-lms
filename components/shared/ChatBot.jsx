@@ -19,7 +19,7 @@ const ChatBot = () => {
   const [search, setSearch] = useState("");
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { isOpenAiModel } = useAiModel();
+  const { isOpenAiModel, openAiModel } = useAiModel();
   // display previous ai chats
   useEffect(() => {
     async function getPreviousAiChats() {
@@ -29,11 +29,12 @@ const ChatBot = () => {
       setLoading(false);
     }
     getPreviousAiChats();
-  }, [isOpenAiModel]);
+  }, [isOpenAiModel, openAiModel]);
 
   const handleChange = (e) => {
     setSearch(e.target.value);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -41,24 +42,21 @@ const ChatBot = () => {
       if (search.trim() !== "") {
         setLoading(true);
         const userMessage = {
-          role: "user",
           content: search,
+          role: "user",
         };
         const newMessages = [...messages, userMessage];
+
+        await createAiChat({
+          content: search,
+          role: "user",
+        });
+        // Make the axios.post call and wait for the response
         const response = await axios.post("/api/conversation", {
           messages: newMessages,
         });
         setMessages((prev) => [...prev, userMessage, response.data]);
-        // creating chat message for the user and ai
-        await createAiChat({
-          content: search,
-          role: "user",
-        }),
-          await createAiChat({
-            content: response.data.content,
-            role: "assistant",
-          }),
-          setSearch("");
+        setSearch("");
       }
     } catch (error) {
       console.log("Error in submit chat ai", error.message);
@@ -72,6 +70,7 @@ const ChatBot = () => {
     const screen = chatRef.current;
     screen.scrollTo(0, screen.scrollHeight);
   }, [messages]);
+
   return (
     <main className=" flex flex-col h-screen px-3   pb-20 gap-y-2">
       <form

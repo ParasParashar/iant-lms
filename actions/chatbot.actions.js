@@ -14,7 +14,6 @@ export async function createAiChat({ content, role }) {
       role: role,
       content: content,
     });
-    console.log("chat", chat);
   } catch (error) {
     console.log("ai chat message error", error.message);
   }
@@ -33,6 +32,7 @@ export async function getUserAiChats() {
     console.log("ai chat message error", error.message);
   }
 }
+
 export async function deleteUserAiChats() {
   try {
     connectToDb();

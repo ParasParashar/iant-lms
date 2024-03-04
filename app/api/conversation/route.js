@@ -1,4 +1,9 @@
-import { getAllUserEnrolledCourses } from "@/actions/user.actions";
+import { createAiChat } from "@/actions/chatbot.actions";
+import {
+  findOrCreateUser,
+  getAllUserEnrolledCourses,
+} from "@/actions/user.actions";
+import Chatbot from "@/lib/models/chatbot.model";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
@@ -15,6 +20,7 @@ async function getUserCoursesName() {
 // creating post route
 export async function POST(req) {
   try {
+    const { _id } = await findOrCreateUser();
     const { userId } = auth();
     const body = await req.json();
     const { messages } = body;
@@ -24,7 +30,6 @@ export async function POST(req) {
         content: item.content,
       };
     });
-
     if (!userId) {
       return new NextResponse("Unauthorised", { status: 401 });
     }
@@ -44,6 +49,12 @@ export async function POST(req) {
     const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [instructionMessage, ...data],
+    });
+    // creating create chatbot model field
+    const chat = await Chatbot.create({
+      userId: _id,
+      role: "assistant",
+      content: response.choices[0].message.content,
     });
     return NextResponse.json(response.choices[0].message);
   } catch (error) {
