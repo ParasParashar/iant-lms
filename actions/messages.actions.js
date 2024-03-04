@@ -433,7 +433,6 @@ export async function getGroupConversation({ groupId }) {
 export async function addMemberToGroup({ groupId, members }) {
   try {
     connectToDb();
-    console.log(groupId);
     const { _id } = await findOrCreateUser();
     const group = await Group.findOne({
       _id: groupId,

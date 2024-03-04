@@ -1,7 +1,7 @@
 "use client";
 
 import { SlEnergy } from "react-icons/sl";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import axios from "axios";
@@ -15,6 +15,7 @@ import { useAiModel } from "@/hooks/useChatBot";
 import ReactMarkdown from "react-markdown";
 const ChatBot = () => {
   const { user } = useUser();
+  const chatRef = useRef();
   const [search, setSearch] = useState("");
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -34,31 +35,31 @@ const ChatBot = () => {
     setSearch(e.target.value);
   };
   const handleSubmit = async (e) => {
-    if (search.trim() === "") return;
     e.preventDefault();
+    e.stopPropagation();
     try {
-      setLoading(true);
-      const userMessage = {
-        role: "user",
-        content: search,
-      };
-      const newMessages = [...messages, userMessage];
-      const response = await axios.post("/api/conversation", {
-        messages: newMessages,
-      });
-      setMessages((prev) => [...prev, userMessage, response.data]);
-      // creating chat message for the user and ai
-      await Promise.all([
-        createAiChat({
+      if (search.trim() !== "") {
+        setLoading(true);
+        const userMessage = {
+          role: "user",
+          content: search,
+        };
+        const newMessages = [...messages, userMessage];
+        const response = await axios.post("/api/conversation", {
+          messages: newMessages,
+        });
+        setMessages((prev) => [...prev, userMessage, response.data]);
+        // creating chat message for the user and ai
+        await createAiChat({
           content: search,
           role: "user",
         }),
-        createAiChat({
-          content: response.data.content,
-          role: "assistant",
-        }),
-      ]);
-      setSearch("");
+          await createAiChat({
+            content: response.data.content,
+            role: "assistant",
+          }),
+          setSearch("");
+      }
     } catch (error) {
       console.log("Error in submit chat ai", error.message);
     } finally {
@@ -66,8 +67,13 @@ const ChatBot = () => {
     }
   };
 
+  // scroll ref to top
+  useEffect(() => {
+    const screen = chatRef.current;
+    screen.scrollTo(0, screen.scrollHeight);
+  }, [messages]);
   return (
-    <main className=" flex flex-col h-screen px-3   pb-6 gap-y-2">
+    <main className=" flex flex-col h-screen px-3   pb-20 gap-y-2">
       <form
         onSubmit={(e) => handleSubmit(e)}
         className="flex  flex-col p-1 rounded-lg  gap-y-2 bg-muted  justify-between items-center w-full"
@@ -101,7 +107,10 @@ const ChatBot = () => {
           <span className="text-sm ">How can I help You?</span>
         </div>
       )}
-      <div className="overflow-y-auto flex flex-col-reverse gap-y-3 px-3 main-scrollbar">
+      <div
+        ref={chatRef}
+        className="overflow-y-auto flex flex-col gap-y-3 px-3 main-scrollbar"
+      >
         {/* <div className="flex-grow flex flex-col-reverse gap-2"> */}
         {messages?.map((message, index) => (
           <div

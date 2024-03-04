@@ -12,14 +12,14 @@ import {
 
 export function ConfirmModel({ children, message, onConfirm }) {
   const handleClick = (e) => {
-    e.stopPropagation(); // Stop event propagation here
+    e.stopPropagation();
     onConfirm(e);
   };
 
   return (
     <AlertDialog>
       <AlertDialogTrigger className="w-full">{children}</AlertDialogTrigger>
-      <AlertDialogContent className=" bg-white dark:bg-slate-900">
+      <AlertDialogContent className=" bg-white dark:bg-slate-900 z-[9999993] ">
         <AlertDialogHeader>
           <AlertDialogTitle className="text-center">
             Are you absolutely sure?

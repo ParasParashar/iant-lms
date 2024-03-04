@@ -60,7 +60,7 @@ const GroupPage = async ({ params }) => {
           {/* <MessageInput group groupId={params.groupId} /> */}
           <GroupMessagesArea
             groupConversations={groupConversation.messages}
-            senderId={_id}
+            senderId={JSON.parse(JSON.stringify(_id))}
             handleCreateMessage={createGroupMessages}
           />
         </main>

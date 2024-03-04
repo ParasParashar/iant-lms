@@ -27,7 +27,7 @@ export async function getUserAiChats() {
     if (!_id) throw new Error("User not found");
     const chats = await Chatbot.find({
       userId: _id,
-    });
+    }).select("role content userId");
     return JSON.parse(JSON.stringify(chats));
   } catch (error) {
     console.log("ai chat message error", error.message);

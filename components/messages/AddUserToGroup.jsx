@@ -62,6 +62,7 @@ const AddUsersToGroup = ({ children, groupName, members, groupId }) => {
       setSelectUser((prev) => [...prev, user]);
     }
   };
+  // confirm the collections
   const handleClick = async (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -70,9 +71,12 @@ const AddUsersToGroup = ({ children, groupName, members, groupId }) => {
       groupId: groupId,
     })
       .then(() => {
+        setSelectUser([]);
         return toggleGRefresh();
       })
-      .then(() => setOpen(false));
+      .then(() => {
+        setOpen(false);
+      });
   };
 
   return (
