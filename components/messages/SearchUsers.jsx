@@ -69,15 +69,21 @@ const SearchUsers = ({ children }) => {
             onKeyDown={handleSearchKeyPress}
           />
           <div className="flex transition-all duration-300 ease-in-out  flex-col gap-2 mt-2 p-1">
-            {(search === "" ? allUsers : result)?.slice(0, 3)?.map((item) => (
-              <UserCard
-                key={item._id}
-                name={item.name}
-                email={item.email}
-                id={item._id}
-                handleClickTrigger={handleClickTrigger}
-              />
-            ))}
+            {search === "" ? (
+              allUsers
+            ) : (
+              <>
+                {result?.slice(0, 3)?.map((item) => (
+                  <UserCard
+                    key={item._id}
+                    name={item.name}
+                    email={item.email}
+                    id={item._id}
+                    handleClickTrigger={handleClickTrigger}
+                  />
+                ))}
+              </>
+            )}
           </div>
           {search !== "" && result?.length === 0 && (
             <p className="text-lg text-muted-foreground p-2 mt-4 text-center">

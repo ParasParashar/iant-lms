@@ -216,7 +216,7 @@ export async function searchUserByName(search) {
     );
     // const result =
     const result = users.filter((item) =>
-      item.name.toLowerCase().trim().includes(search.toLowerCase().trim())
+      item.name.trim().includes(search.trim())
     );
     return JSON.parse(JSON.stringify(result));
   } catch (error) {
