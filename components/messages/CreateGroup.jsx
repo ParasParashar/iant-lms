@@ -7,7 +7,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useEffect, useRef, useState } from "react";
-import { searchUserByName } from "@/actions/user.actions";
+import { groupSearchUserByName } from "@/actions/user.actions";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import UserAvatar from "./UserAvatar";
@@ -29,7 +29,7 @@ const CreateGroup = ({ children }) => {
   const router = useRouter();
   // searchUser function
   async function searchUser() {
-    const data = await searchUserByName(search);
+    const data = await groupSearchUserByName({ search: search });
     setResult(data);
     setLoading(false);
   }
@@ -131,7 +131,7 @@ const CreateGroup = ({ children }) => {
                   <IoIosRemoveCircle
                     onClick={() => handleRemove(item.userId)}
                     size={18}
-                    className="absolute hidden cursor-pointer group-hover:block top-[-2px] left-0 text-rose-600"
+                    className="absolute  opacity-60 cursor-pointer  group-hover:opacity-100 top-[-2px] left-0 text-rose-600"
                   />
                 </div>
               ))}

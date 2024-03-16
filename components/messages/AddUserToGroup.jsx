@@ -8,7 +8,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useEffect, useState } from "react";
-import { searchUserByName } from "@/actions/user.actions";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import UserAvatar from "./UserAvatar";
@@ -17,6 +16,7 @@ import { IoPersonAddSharp, IoPersonRemoveSharp } from "react-icons/io5";
 import { Button } from "../ui/button";
 import { addMemberToGroup } from "@/actions/messages.actions";
 import { useGroupRefresh } from "@/hooks/useMessageSidebar";
+import { groupSearchUserByName } from "@/actions/user.actions";
 
 const AddUsersToGroup = ({ children, groupName, members, groupId }) => {
   const { toggleGRefresh } = useGroupRefresh();
@@ -38,9 +38,9 @@ const AddUsersToGroup = ({ children, groupName, members, groupId }) => {
   async function searchUser() {
     let data;
     if (search === "") {
-      data = await searchUserByName("");
+      data = await groupSearchUserByName({ search: "" });
     } else {
-      data = await searchUserByName(search);
+      data = await groupSearchUserByName({ search: search });
     }
     setResult(data);
   }

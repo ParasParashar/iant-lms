@@ -7,25 +7,15 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useEffect, useState } from "react";
-import { searchUserByName } from "@/actions/user.actions";
+import { groupSearchUserByName } from "@/actions/user.actions";
 import UserCard from "./UserCard";
 import { useRouter } from "next/navigation";
 
 const SearchUsers = ({ children }) => {
   const [search, setSearch] = useState("");
   const [result, setResult] = useState([]);
-  const [allUsers, setAllUsers] = useState([]);
   const [open, setOpen] = useState(false);
   const router = useRouter();
-
-  useEffect(() => {
-    fetchAllUsers();
-  }, []);
-
-  async function fetchAllUsers() {
-    const allUsersData = await searchUserByName("");
-    setAllUsers(allUsersData);
-  }
 
   // Handle search on input change with debounce
   useEffect(() => {
@@ -37,7 +27,12 @@ const SearchUsers = ({ children }) => {
 
   // Search user function
   async function searchUser() {
-    const data = await searchUserByName(search);
+    let data;
+    if (search === "") {
+      data = await groupSearchUserByName({ search: "" });
+    } else {
+      data = await groupSearchUserByName({ search: search });
+    }
     setResult(data);
   }
 
@@ -53,10 +48,9 @@ const SearchUsers = ({ children }) => {
   const handleClickTrigger = () => {
     setOpen(false);
   };
-
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger>{children}</DialogTrigger>
+      <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="dark:bg-slate-900">
         <DialogHeader>
           <DialogTitle>Search User</DialogTitle>
@@ -69,21 +63,15 @@ const SearchUsers = ({ children }) => {
             onKeyDown={handleSearchKeyPress}
           />
           <div className="flex transition-all duration-300 ease-in-out  flex-col gap-2 mt-2 p-1">
-            {search === "" ? (
-              allUsers
-            ) : (
-              <>
-                {result?.slice(0, 3)?.map((item) => (
-                  <UserCard
-                    key={item._id}
-                    name={item.name}
-                    email={item.email}
-                    id={item._id}
-                    handleClickTrigger={handleClickTrigger}
-                  />
-                ))}
-              </>
-            )}
+            {result?.slice(0, 3)?.map((item) => (
+              <UserCard
+                key={item._id}
+                name={item.name}
+                email={item.email}
+                id={item._id}
+                handleClickTrigger={handleClickTrigger}
+              />
+            ))}
           </div>
           {search !== "" && result?.length === 0 && (
             <p className="text-lg text-muted-foreground p-2 mt-4 text-center">

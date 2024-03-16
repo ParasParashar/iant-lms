@@ -204,23 +204,27 @@ export async function courseCompletionData(courseId) {
 }
 
 // search user by name
-export async function searchUserByName(search) {
+export async function groupSearchUserByName({ search }) {
   try {
     connectToDb();
     const { userId } = auth();
-    const users = await User.find(
+    const user = await User.find(
       {
         authId: { $ne: userId },
       },
       { name: 1, email: 1, authId: 1 }
     );
-    // const result =
-    const result = users.filter((item) =>
-      item.name.trim().includes(search.trim())
-    );
+    const users = user.filter((user) => user.name !== null);
+    const result = users?.filter((user) => {
+      return (
+        user.name.toLowerCase().includes(search.toLowerCase().trim()) ||
+        user.email.toLowerCase().includes(search.toLowerCase().trim())
+      );
+    });
+
     return JSON.parse(JSON.stringify(result));
   } catch (error) {
-    console.log("Course overall completion check error", error);
+    console.log("user search error", error);
     return 0;
   }
 }
